@@ -1,0 +1,3980 @@
+{
+ "provenance": {
+  "commit": "c3e17ec053e7b94df22459b439c269672dac1c50",
+  "uncommitted_src": 0,
+  "regional_py_sha256": "87f0c6c86498c6a5",
+  "protocol_sha256": "a5234324972ab7af",
+  "started": "2026-10-27T13:31:42",
+  "seed": 9900000,
+  "anchors": {
+   "plus1": 6089,
+   "minus1": 6030,
+   "ndr": 6030
+  },
+  "finished": "2026-10-27T13:34:34"
+ },
+ "results": [
+  {
+   "kind": "null",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6089
+  },
+  {
+   "kind": "null",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6089
+  },
+  {
+   "kind": "null",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6089
+  },
+  {
+   "kind": "null",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6089
+  },
+  {
+   "kind": "null",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6089
+  },
+  {
+   "kind": "null",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6089
+  },
+  {
+   "kind": "null",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0001658374792703151,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "ndr",
+   "size": "sub",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0006633499170812604,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "ndr",
+   "size": "sub",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "ndr",
+   "size": "sub",
+   "cond": "0h",
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "ndr",
+   "size": "sub",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "ndr",
+   "size": "sub",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "null",
+   "anchor": "ndr",
+   "size": "sub",
+   "cond": "1h",
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": 0.0,
+   "shape_kernel": 0.0,
+   "shift": 0.0,
+   "diffSplice": 0.0,
+   "regions": 6030
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 4v4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3057 testable regions; null in 10 spread strata of ~10370 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 4v4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3015 testable regions; null in 10 spread strata of ~10234 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "ndr",
+   "size": "sub",
+   "label": "Sth1 4v4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 4368 testable regions; null in 10 spread strata of ~14824 values each",
+    "low depth: median 44 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Snf2 3v3",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3029 testable regions; null in 10 spread strata of ~2718 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Snf2 3v3",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0001658374792703151,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 2968 testable regions; null in 10 spread strata of ~2664 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "ndr",
+   "size": "sub",
+   "label": "Snf2 3v3",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 4162 testable regions; null in 10 spread strata of ~3744 values each",
+    "low depth: median 42 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|1+2+3",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3114 testable regions; null in 10 spread strata of ~2799 values each",
+    "low depth: median 12 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|1+2+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3225 testable regions; null in 10 spread strata of ~2898 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|1+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3255 testable regions; null in 10 spread strata of ~2925 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|2+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3118 testable regions; null in 10 spread strata of ~2799 values each",
+    "low depth: median 12 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|1+2+3",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3224 testable regions; null in 10 spread strata of ~2898 values each",
+    "low depth: median 22 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|1+2+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3343 testable regions; null in 10 spread strata of ~3006 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|1+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3370 testable regions; null in 10 spread strata of ~3033 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|2+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3211 testable regions; null in 10 spread strata of ~2889 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|1+2+3",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3145 testable regions; null in 10 spread strata of ~2826 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|1+2+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3242 testable regions; null in 10 spread strata of ~2916 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|1+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3307 testable regions; null in 10 spread strata of ~2970 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|2+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3160 testable regions; null in 10 spread strata of ~2844 values each",
+    "low depth: median 14 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|1+2+3",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3106 testable regions; null in 10 spread strata of ~2790 values each",
+    "low depth: median 12 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|1+2+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3229 testable regions; null in 10 spread strata of ~2898 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|1+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3255 testable regions; null in 10 spread strata of ~2925 values each",
+    "low depth: median 18 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "plus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|2+3+4",
+   "regions": 6089,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3127 testable regions; null in 10 spread strata of ~2808 values each",
+    "low depth: median 12 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|1+2+3",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3021 testable regions; null in 10 spread strata of ~2718 values each",
+    "low depth: median 16 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|1+2+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3139 testable regions; null in 10 spread strata of ~2817 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|1+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3177 testable regions; null in 10 spread strata of ~2853 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+3|2+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3064 testable regions; null in 10 spread strata of ~2754 values each",
+    "low depth: median 16 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|1+2+3",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3130 testable regions; null in 10 spread strata of ~2817 values each",
+    "low depth: median 28 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|1+2+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3242 testable regions; null in 10 spread strata of ~2916 values each",
+    "low depth: median 30 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|1+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3296 testable regions; null in 10 spread strata of ~2961 values each",
+    "low depth: median 30 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+2+4|2+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3154 testable regions; null in 10 spread strata of ~2835 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|1+2+3",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3065 testable regions; null in 10 spread strata of ~2754 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|1+2+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3170 testable regions; null in 10 spread strata of ~2853 values each",
+    "low depth: median 30 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|1+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3231 testable regions; null in 10 spread strata of ~2907 values each",
+    "low depth: median 30 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 1+3+4|2+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3096 testable regions; null in 10 spread strata of ~2781 values each",
+    "low depth: median 19 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|1+2+3",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3062 testable regions; null in 10 spread strata of ~2754 values each",
+    "low depth: median 16 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|1+2+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3158 testable regions; null in 10 spread strata of ~2835 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|1+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3227 testable regions; null in 10 spread strata of ~2898 values each",
+    "low depth: median 24 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "bio",
+   "anchor": "minus1",
+   "size": "nuc",
+   "label": "Sth1 3v3 2+3+4|2+3+4",
+   "regions": 6030,
+   "shape_any_share": 0.0,
+   "shape_kernel_share": 0.0,
+   "shift_share": 0.0,
+   "diffSplice_share": 0.0,
+   "overlap_any_diffSplice": 0.0,
+   "consistent_upstream": 0,
+   "consistent_downstream": 0,
+   "median_consistent_shift_bp": NaN,
+   "notes": [
+    "shape tests: 3092 testable regions; null in 10 spread strata of ~2781 values each",
+    "low depth: median 16 fragments per region and sample (BAM (exact)); per-region shape tests have little power below ~50 \u2014 a non-significant region is not evidence of no change"
+   ]
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.011824601740844145,
+    "power": 0.05916187345932621,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0014780752176055182,
+    "power": 0.007395234182415777,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.056696795398520954,
+    "direction_ok": 1.0,
+    "ratio": 1.0765701832096148
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.011988832320578091,
+    "power": 0.05834018077239113,
+    "fdp": 0.0273972602739726
+   },
+   "diffSplice": {
+    "called": 0.0006569223189357859,
+    "power": 0.003286770747740345,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.056696795398520954,
+    "direction_ok": 1.0,
+    "ratio": 1.06086673796731
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.02972573493184431,
+    "power": 0.14461791290057519,
+    "fdp": 0.027624309392265192
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03810149449827558,
+    "power": 0.18323746918652423,
+    "fdp": 0.03879310344827586
+   },
+   "diffSplice": {
+    "called": 0.020036130727541467,
+    "power": 0.09860312243221035,
+    "fdp": 0.01639344262295082
+   },
+   "translation": {
+    "coverage": 0.17584223500410848,
+    "direction_ok": 0.9906542056074766,
+    "ratio": 0.9609405543172533
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.023320742322220398,
+    "power": 0.114215283483977,
+    "fdp": 0.02112676056338028
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03514534406306454,
+    "power": 0.17091207888249796,
+    "fdp": 0.028037383177570093
+   },
+   "diffSplice": {
+    "called": 0.02266382000328461,
+    "power": 0.11175020542317174,
+    "fdp": 0.014492753623188406
+   },
+   "translation": {
+    "coverage": 0.16023007395234182,
+    "direction_ok": 1.0,
+    "ratio": 0.9587694088736054
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.035473805222532434,
+    "power": 0.16516023007395234,
+    "fdp": 0.06944444444444445
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.15447822514379622,
+    "direction_ok": 1.0,
+    "ratio": 1.0454202079122457
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.03235342420758745,
+    "power": 0.15119145439605589,
+    "fdp": 0.06598984771573604
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.040072261455082935,
+    "power": 0.18323746918652423,
+    "fdp": 0.0860655737704918
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.1676253081347576,
+    "direction_ok": 1.0,
+    "ratio": 1.0193733400469591
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.03678764986040401,
+    "power": 0.1725554642563681,
+    "fdp": 0.0625
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03810149449827558,
+    "power": 0.17830731306491374,
+    "fdp": 0.06465517241379311
+   },
+   "diffSplice": {
+    "called": 0.013466907538183609,
+    "power": 0.06737880032867707,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.17091207888249796,
+    "direction_ok": 1.0,
+    "ratio": 0.9671477462275775
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.03186073246838561,
+    "power": 0.15036976170912078,
+    "fdp": 0.05670103092783505
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.040072261455082935,
+    "power": 0.1865242399342646,
+    "fdp": 0.06967213114754098
+   },
+   "diffSplice": {
+    "called": 0.009361143044834949,
+    "power": 0.04683648315529992,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.1791290057518488,
+    "direction_ok": 1.0,
+    "ratio": 0.9637508229596344
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.011660371161110199,
+    "power": 0.05751848808545604,
+    "fdp": 0.014084507042253521
+   },
+   "diffSplice": {
+    "called": 0.0014780752176055182,
+    "power": 0.007395234182415777,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.05341002465078061,
+    "direction_ok": 1.0,
+    "ratio": 1.0683949551520666
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.01067498768270652,
+    "power": 0.05012325390304026,
+    "fdp": 0.06153846153846154
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.020036130727541467,
+    "power": 0.09695973705834018,
+    "fdp": 0.03278688524590164
+   },
+   "diffSplice": {
+    "called": 0.0014780752176055182,
+    "power": 0.00657354149548069,
+    "fdp": 0.1111111111111111
+   },
+   "translation": {
+    "coverage": 0.09449465899753492,
+    "direction_ok": 1.0,
+    "ratio": 1.0311430719889934
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.02036459188700936,
+    "power": 0.09942481511914544,
+    "fdp": 0.024193548387096774
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.025455739858761702,
+    "power": 0.12407559572719803,
+    "fdp": 0.025806451612903226
+   },
+   "diffSplice": {
+    "called": 0.019707669568073575,
+    "power": 0.09531635168447,
+    "fdp": 0.03333333333333333
+   },
+   "translation": {
+    "coverage": 0.11832374691865243,
+    "direction_ok": 0.9930555555555556,
+    "ratio": 0.9562133498409369
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.014452291016587288,
+    "power": 0.06820049301561217,
+    "fdp": 0.056818181818181816
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.01724421087206438,
+    "power": 0.08545603944124898,
+    "fdp": 0.009523809523809525
+   },
+   "diffSplice": {
+    "called": 0.012153062900312038,
+    "power": 0.05916187345932621,
+    "fdp": 0.02702702702702703
+   },
+   "translation": {
+    "coverage": 0.08216926869350863,
+    "direction_ok": 1.0,
+    "ratio": 0.9576807800536304
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.010510757102972574,
+    "power": 0.05094494658997535,
+    "fdp": 0.03125
+   },
+   "diffSplice": {
+    "called": 0.00016423057973394647,
+    "power": 0.0008216926869350862,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.04601479046836483,
+    "direction_ok": 1.0,
+    "ratio": 1.0677336561813795
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.012481524059779932,
+    "power": 0.05916187345932621,
+    "fdp": 0.05263157894736842
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0208572836262112,
+    "power": 0.10024650780608052,
+    "fdp": 0.03937007874015748
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.09367296631059983,
+    "direction_ok": 1.0,
+    "ratio": 1.0757341691086806
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.023156511742486452,
+    "power": 0.11257189811010682,
+    "fdp": 0.028368794326241134
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.023977664641156183,
+    "power": 0.11668036154478226,
+    "fdp": 0.0273972602739726
+   },
+   "diffSplice": {
+    "called": 0.009361143044834949,
+    "power": 0.04683648315529992,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.11175020542317174,
+    "direction_ok": 0.9926470588235294,
+    "ratio": 0.9567725319610388
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.008211528986697324,
+    "power": 0.04026294165981923,
+    "fdp": 0.02
+   },
+   "diffSplice": {
+    "called": 0.009196912465101003,
+    "power": 0.04601479046836483,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.03944124897288414,
+    "direction_ok": 1.0,
+    "ratio": 0.939723728720993
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.0,
+    "direction_ok": NaN,
+    "ratio": NaN
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.00016423057973394647,
+    "power": 0.0008216926869350862,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.0,
+    "direction_ok": NaN,
+    "ratio": NaN
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.011824601740844145,
+    "power": 0.05916187345932621,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.01954343898833963,
+    "power": 0.09778142974527526,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.005912300870422073,
+    "power": 0.029580936729663106,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.09531635168447,
+    "direction_ok": 1.0,
+    "ratio": 0.9605816662432396
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.02512727869929381,
+    "power": 0.1199671322925226,
+    "fdp": 0.0457516339869281
+   },
+   "diffSplice": {
+    "called": 0.0057480702906881264,
+    "power": 0.02875924404272802,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.11503697617091208,
+    "direction_ok": 1.0,
+    "ratio": 0.9553652475995206
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.02036459188700936,
+    "power": 0.0780608052588332,
+    "fdp": 0.23387096774193547
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0162588273936607,
+    "power": 0.07230895645028759,
+    "fdp": 0.1111111111111111
+   },
+   "diffSplice": {
+    "called": 0.0011496140581376253,
+    "power": 0.0049301561216105174,
+    "fdp": 0.14285714285714285
+   },
+   "translation": {
+    "coverage": 0.06655710764174198,
+    "direction_ok": 1.0,
+    "ratio": 1.0926572277727922
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.023484972901954344,
+    "power": 0.0961380443714051,
+    "fdp": 0.18181818181818182
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.02824765971423879,
+    "power": 0.1306491372226787,
+    "fdp": 0.0755813953488372
+   },
+   "diffSplice": {
+    "called": 0.0013138446378715717,
+    "power": 0.005751848808545604,
+    "fdp": 0.125
+   },
+   "translation": {
+    "coverage": 0.114215283483977,
+    "direction_ok": 1.0,
+    "ratio": 1.0463143388879772
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.03448842174412876,
+    "power": 0.13640098603122433,
+    "fdp": 0.20952380952380953
+   },
+   "shape_kernel": {
+    "called": 0.01067498768270652,
+    "power": 0.031224322103533278,
+    "fdp": 0.4153846153846154
+   },
+   "shift": {
+    "called": 0.027098045656101168,
+    "power": 0.12818405916187345,
+    "fdp": 0.05454545454545454
+   },
+   "diffSplice": {
+    "called": 0.017736902611266217,
+    "power": 0.08545603944124898,
+    "fdp": 0.037037037037037035
+   },
+   "translation": {
+    "coverage": 0.12407559572719803,
+    "direction_ok": 1.0,
+    "ratio": 0.9677183603443471
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.025455739858761702,
+    "power": 0.10517666392769104,
+    "fdp": 0.17419354838709677
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.026276892757431433,
+    "power": 0.12325390304026294,
+    "fdp": 0.0625
+   },
+   "diffSplice": {
+    "called": 0.01954343898833963,
+    "power": 0.09367296631059983,
+    "fdp": 0.04201680672268908
+   },
+   "translation": {
+    "coverage": 0.11914543960558752,
+    "direction_ok": 0.993103448275862,
+    "ratio": 0.964300179964851
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.00032846115946789294,
+    "power": 0.0016433853738701725,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "plus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.026699834162520728,
+    "power": 0.12189054726368159,
+    "fdp": 0.08695652173913043
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.036650082918739633,
+    "power": 0.17495854063018243,
+    "fdp": 0.04524886877828054
+   },
+   "diffSplice": {
+    "called": 0.0003316749585406302,
+    "power": 0.001658374792703151,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.16003316749585406,
+    "direction_ok": 1.0,
+    "ratio": 1.0206518656120787
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.023383084577114428,
+    "power": 0.11194029850746269,
+    "fdp": 0.0425531914893617
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.04079601990049751,
+    "power": 0.1956882255389718,
+    "fdp": 0.04065040650406504
+   },
+   "diffSplice": {
+    "called": 0.002321724709784411,
+    "power": 0.011608623548922056,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.18407960199004975,
+    "direction_ok": 1.0,
+    "ratio": 1.0351122568162507
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.03416252072968491,
+    "power": 0.16417910447761194,
+    "fdp": 0.038834951456310676
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03548922056384743,
+    "power": 0.17164179104477612,
+    "fdp": 0.03271028037383177
+   },
+   "diffSplice": {
+    "called": 0.02868988391376451,
+    "power": 0.14262023217247097,
+    "fdp": 0.005780346820809248
+   },
+   "translation": {
+    "coverage": 0.16417910447761194,
+    "direction_ok": 1.0,
+    "ratio": 0.9874636907142953
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.04162520729684909,
+    "power": 0.19900497512437812,
+    "fdp": 0.043824701195219126
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.04991708126036484,
+    "power": 0.236318407960199,
+    "fdp": 0.053156146179401995
+   },
+   "diffSplice": {
+    "called": 0.025870646766169153,
+    "power": 0.1285240464344942,
+    "fdp": 0.00641025641025641
+   },
+   "translation": {
+    "coverage": 0.22802653399668324,
+    "direction_ok": 1.0,
+    "ratio": 0.9641226974819646
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0001658374792703151,
+    "power": 0.0008291873963515755,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep2 vs sth1_0h_rep3+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.027529021558872307,
+    "power": 0.1318407960199005,
+    "fdp": 0.04216867469879518
+   },
+   "diffSplice": {
+    "called": 0.0004975124378109452,
+    "power": 0.0024875621890547263,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.12769485903814262,
+    "direction_ok": 1.0,
+    "ratio": 1.0211598294166677
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.04975124378109453,
+    "power": 0.23383084577114427,
+    "fdp": 0.06
+   },
+   "diffSplice": {
+    "called": 0.0006633499170812604,
+    "power": 0.003316749585406302,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.21641791044776118,
+    "direction_ok": 1.0,
+    "ratio": 1.0117164079219576
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.020729684908789386,
+    "power": 0.10033167495854063,
+    "fdp": 0.032
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.026533996683250415,
+    "power": 0.12769485903814262,
+    "fdp": 0.0375
+   },
+   "diffSplice": {
+    "called": 0.013764510779436153,
+    "power": 0.06882255389718077,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.12603648424543948,
+    "direction_ok": 1.0,
+    "ratio": 0.9727611832714713
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.022222222222222223,
+    "power": 0.10696517412935323,
+    "fdp": 0.03731343283582089
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03880597014925373,
+    "power": 0.18325041459369817,
+    "fdp": 0.05555555555555555
+   },
+   "diffSplice": {
+    "called": 0.015588723051409618,
+    "power": 0.0779436152570481,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.1824212271973466,
+    "direction_ok": 1.0,
+    "ratio": 0.9717556997637338
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep3 vs sth1_0h_rep2+sth1_0h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.03034825870646766,
+    "power": 0.14344941956882257,
+    "fdp": 0.0546448087431694
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.04046434494195688,
+    "power": 0.19651741293532338,
+    "fdp": 0.028688524590163935
+   },
+   "diffSplice": {
+    "called": 0.0011608623548922056,
+    "power": 0.005804311774461028,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.17661691542288557,
+    "direction_ok": 1.0,
+    "ratio": 1.0258200306482088
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03333333333333333,
+    "power": 0.15920398009950248,
+    "fdp": 0.04477611940298507
+   },
+   "diffSplice": {
+    "called": 0.001990049751243781,
+    "power": 0.00912106135986733,
+    "fdp": 0.08333333333333333
+   },
+   "translation": {
+    "coverage": 0.1451077943615257,
+    "direction_ok": 1.0,
+    "ratio": 1.0119335353543106
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.022553897180762852,
+    "power": 0.10696517412935323,
+    "fdp": 0.051470588235294115
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03316749585406302,
+    "power": 0.1583747927031509,
+    "fdp": 0.045
+   },
+   "diffSplice": {
+    "called": 0.02271973466003317,
+    "power": 0.11028192371475953,
+    "fdp": 0.029197080291970802
+   },
+   "translation": {
+    "coverage": 0.15422885572139303,
+    "direction_ok": 1.0,
+    "ratio": 0.9792651525969466
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.035157545605306796,
+    "power": 0.16086235489220563,
+    "fdp": 0.08490566037735849
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03565505804311774,
+    "power": 0.1691542288557214,
+    "fdp": 0.05116279069767442
+   },
+   "diffSplice": {
+    "called": 0.0263681592039801,
+    "power": 0.12603648424543948,
+    "fdp": 0.0440251572327044
+   },
+   "translation": {
+    "coverage": 0.16583747927031509,
+    "direction_ok": 1.0,
+    "ratio": 0.9842576929831084
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "0h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_0h_rep1+sth1_0h_rep4 vs sth1_0h_rep2+sth1_0h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.035157545605306796,
+    "power": 0.1691542288557214,
+    "fdp": 0.03773584905660377
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.1558872305140962,
+    "direction_ok": 1.0,
+    "ratio": 1.030687741310368
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03747927031509121,
+    "power": 0.1791044776119403,
+    "fdp": 0.04424778761061947
+   },
+   "diffSplice": {
+    "called": 0.0003316749585406302,
+    "power": 0.001658374792703151,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.16334991708126037,
+    "direction_ok": 1.0,
+    "ratio": 1.0418774300654212
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.011608623548922056,
+    "power": 0.05721393034825871,
+    "fdp": 0.014285714285714285
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.026533996683250415,
+    "power": 0.1285240464344942,
+    "fdp": 0.03125
+   },
+   "diffSplice": {
+    "called": 0.013266998341625208,
+    "power": 0.06633499170812604,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.12437810945273632,
+    "direction_ok": 1.0,
+    "ratio": 0.9705722059285128
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.017578772802653398,
+    "power": 0.087893864013267,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.02321724709784411,
+    "power": 0.11028192371475953,
+    "fdp": 0.05
+   },
+   "diffSplice": {
+    "called": 0.013930348258706468,
+    "power": 0.06965174129353234,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.1077943615257048,
+    "direction_ok": 1.0,
+    "ratio": 0.9518570727755028
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep2 vs sth1_1h_rep3+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.022885572139303482,
+    "power": 0.11359867330016583,
+    "fdp": 0.007246376811594203
+   },
+   "diffSplice": {
+    "called": 0.0001658374792703151,
+    "power": 0.0008291873963515755,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.1077943615257048,
+    "direction_ok": 1.0,
+    "ratio": 1.0630626052302525
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.007131011608623549,
+    "power": 0.03565505804311774,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.03399668325041459,
+    "direction_ok": 1.0,
+    "ratio": 1.0755906097550634
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.013101160862354893,
+    "power": 0.06550580431177445,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.016749585406301823,
+    "power": 0.08291873963515754,
+    "fdp": 0.009900990099009901
+   },
+   "diffSplice": {
+    "called": 0.006633499170812604,
+    "power": 0.03316749585406302,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.0812603648424544,
+    "direction_ok": 1.0,
+    "ratio": 0.9642798551065435
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.020563847429519073,
+    "power": 0.10281923714759536,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.025870646766169153,
+    "power": 0.1285240464344942,
+    "fdp": 0.00641025641025641
+   },
+   "diffSplice": {
+    "called": 0.007462686567164179,
+    "power": 0.03731343283582089,
+    "fdp": 0.0
+   },
+   "translation": {
+    "coverage": 0.12769485903814262,
+    "direction_ok": 1.0,
+    "ratio": 0.9680449748389601
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep3 vs sth1_1h_rep2+sth1_1h_rep4",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.023880597014925373,
+    "power": 0.10281923714759536,
+    "fdp": 0.1388888888888889
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.023383084577114428,
+    "power": 0.10613598673300166,
+    "fdp": 0.09219858156028368
+   },
+   "diffSplice": {
+    "called": 0.0013266998341625207,
+    "power": 0.005804311774461028,
+    "fdp": 0.125
+   },
+   "translation": {
+    "coverage": 0.09701492537313433,
+    "direction_ok": 1.0,
+    "ratio": 1.0650107188984461
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift20",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.011774461028192372,
+    "power": 0.0505804311774461,
+    "fdp": 0.14084507042253522
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.021890547263681594,
+    "power": 0.1011608623548922,
+    "fdp": 0.07575757575757576
+   },
+   "diffSplice": {
+    "called": 0.006135986733001658,
+    "power": 0.026533996683250415,
+    "fdp": 0.13513513513513514
+   },
+   "translation": {
+    "coverage": 0.09203980099502487,
+    "direction_ok": 1.0,
+    "ratio": 1.0350180101010946
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.03333333333333333,
+    "power": 0.14427860696517414,
+    "fdp": 0.13432835820895522
+   },
+   "shape_kernel": {
+    "called": 0.0067993366500829185,
+    "power": 0.02155887230514096,
+    "fdp": 0.36585365853658536
+   },
+   "shift": {
+    "called": 0.033499170812603646,
+    "power": 0.15422885572139303,
+    "fdp": 0.07920792079207921
+   },
+   "diffSplice": {
+    "called": 0.02404643449419569,
+    "power": 0.11359867330016583,
+    "fdp": 0.05517241379310345
+   },
+   "translation": {
+    "coverage": 0.14593698175787728,
+    "direction_ok": 1.0,
+    "ratio": 0.9728986935675019
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "shift40",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.03565505804311774,
+    "power": 0.15257048092868988,
+    "fdp": 0.14418604651162792
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.03548922056384743,
+    "power": 0.16334991708126037,
+    "fdp": 0.0794392523364486
+   },
+   "diffSplice": {
+    "called": 0.025207296849087894,
+    "power": 0.11857379767827529,
+    "fdp": 0.05921052631578947
+   },
+   "translation": {
+    "coverage": 0.15339966832504145,
+    "direction_ok": 0.9945945945945946,
+    "ratio": 0.9783425032277242
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0001658374792703151,
+    "power": 0.0,
+    "fdp": 1.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "broaden",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": 0.0,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0001658374792703151,
+    "power": 0.0,
+    "fdp": 1.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 0,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0001658374792703151,
+    "power": NaN,
+    "fdp": 1.0
+   }
+  },
+  {
+   "kind": "insert",
+   "anchor": "minus1",
+   "size": "nuc",
+   "cond": "1h",
+   "insertion": "amplitude",
+   "rep": 1,
+   "split": "sth1_1h_rep1+sth1_1h_rep4 vs sth1_1h_rep2+sth1_1h_rep3",
+   "shape_any": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shape_kernel": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "shift": {
+    "called": 0.0,
+    "power": NaN,
+    "fdp": 0.0
+   },
+   "diffSplice": {
+    "called": 0.0001658374792703151,
+    "power": NaN,
+    "fdp": 1.0
+   }
+  }
+ ]
+}

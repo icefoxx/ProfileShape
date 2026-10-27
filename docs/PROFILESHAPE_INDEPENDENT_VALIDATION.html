@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Independent real-data validation: protocol</title>
+<style>
+:root { --bg:#ffffff; --fg:#1f2328; --muted:#59636e; --line:#d1d9e0; --head:#f6f8fa; --accent:#0969da; --code:#eff1f3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#0d1117; --fg:#e6edf3; --muted:#9198a1; --line:#3d444d; --head:#151b23; --accent:#4493f8; --code:#262c36; } }
+:root[data-theme="dark"] { --bg:#0d1117; --fg:#e6edf3; --muted:#9198a1; --line:#3d444d; --head:#151b23; --accent:#4493f8; --code:#262c36; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 1.9rem; margin: 0 0 .4rem; }
+h2 { font-size: 1.35rem; margin: 2.2rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--line); }
+h3 { font-size: 1.1rem; margin: 1.6rem 0 .5rem; }
+p, li { max-width: 72ch; }
+em { color: var(--muted); }
+code { background: var(--code); padding: .1em .35em; border-radius: 4px; font-size: .9em; }
+a { color: var(--accent); }
+.table { overflow-x: auto; margin: .8rem 0 1.2rem; border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+th { background: var(--head); font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--fg); }
+</style>
+</head>
+<body><main>
+<h1>ProfileSeg v3.1 — independent real-data validation: protocol</h1>
+<p><em>Written 2026-10-27, before any read of this dataset was downloaded or inspected. Method frozen at the v3.1
+code on branch <code>profileseg-v3</code> (regional.py as of commit <code>c3e17ec</code>). Results will be added in a separate
+section below; changes to this protocol after data are seen will be listed as deviations.</em></p>
+<h2>Dataset</h2>
+<p>GEO GSE346229 (BioProject PRJNA1523976; released 2026; not used at any point during development; ATAC-seq,
+an assay type not used during development). <em>S. cerevisiae</em>, paired-end, NextSeq 2000.</p>
+<ul>
+<li>Primary: Sth1 anchor-away (RSC catalytic subunit depletion), 0 h (rep1–4) versus 1 h (rep1–4).</li>
+<li>Secondary: Snf2 anchor-away (SWI/SNF), 0 h (rep1–3) versus 1 h (rep1–3).</li>
+</ul>
+<p>Prior biological expectation (literature, not these data): RSC depletion narrows nucleosome-depleted regions —
+the −1 and +1 nucleosomes move into the NDR — and reduces NDR accessibility genome-wide (Kubik et al. 2018 and
+others). SWI/SNF depletion has more restricted effects.</p>
+<h2>Processing (fixed)</h2>
+<p>bowtie2 <code>--very-sensitive -X 1000</code> to sacCer3; MAPQ ≥ 10, proper pairs, duplicates removed (samtools markdup);
+Tn5 offset (+4 / −5). Fragment classes: sub-nucleosomal (≤ 120 bp; NDR accessibility) and nucleosomal
+(140–200 bp; nucleosome positions). Signal = fragment midpoints (ProfileSeg BAM path, midpoint mode), 10 bp bins.</p>
+<h2>Anchors (condition-blind)</h2>
+<p>Gene starts (ATG) from the sacCer3 RefSeq annotation, nuclear chromosomes, genes ≥ 500 bp apart from the
+nearest other gene start on the same strand. From the nucleosomal-fragment midpoints of all eight Sth1 samples
+pooled with equal weight (labels not used):</p>
+<ul>
+<li>+1 nucleosome dyad: maximum of the smoothed pooled density in [ATG − 200, ATG + 100] (oriented);</li>
+<li>−1 nucleosome dyad: maximum in [+1 − 450, +1 − 200];</li>
+<li>NDR centre: midpoint between −1 and +1.</li>
+</ul>
+<p>Windows: ±300 bp around each anchor (oriented by gene strand). Analyses per anchor set: +1 and −1 with nucleosomal
+fragments; NDR centre with sub-nucleosomal fragments.</p>
+<h2>Analyses and criteria</h2>
+<p>ProfileSeg v3.1 defaults (<code>shape_any</code>, <code>shape_kernel</code>, <code>shift</code>; BH 5 %). diffSplice comparator fixed as in round 6:
+edgeR QL diffSpliceDGE, support bins of the background-corrected pooled profile merged to 60 bp, gene-level F.</p>
+<p><strong>A. Real-null splits.</strong> Within-condition 2 vs 2 splits: 3 within Sth1 0 h, 3 within Sth1 1 h (6 splits), for
+each anchor set. Criteria (per test, per anchor set):
+- A1: mean share of regions called over the 6 splits ≤ 0.005 for <code>shape_any</code>;
+- A2: no single split with more than 1 % of regions called by <code>shape_any</code>.
+Reported: per-split calls for all tests and diffSplice, and the label-free-of-p-values replicate-pairing ratio.</p>
+<p><strong>B. Fragment-level insertion on the null splits.</strong> In each of the 6 splits, 20 % of regions (random, fixed seed)
+are modified in the second group only, at the level of individual fragments before binning: translation of
+nucleosomal-fragment midpoints by 20 or 40 bp (random sign per region); broadening (each midpoint jittered by
+N(0, 30 bp)); amplitude-only (binomial thinning of fragments by 0.5, which keeps the shape). Two insertion sets
+per split. Criteria for <code>shape_any</code>:
+- B1: mean FDP over runs ≤ 0.075 for each translation and broadening insertion;
+- B2: amplitude-only: mean share of regions called ≤ 0.01.
+Reported, not judged: power of all tests; end-to-end power and FDP of diffSplice on the same counts; ProfileSeg
+translation estimate ÷ true and coverage for consistent calls.</p>
+<p><strong>C. Biology (Sth1 1 h vs 0 h, 4 vs 4; Snf2 secondary).</strong> Predictions:
+- C1: at +1 nucleosomes, among <code>shift</code> calls with a consistent translation, the majority move upstream (towards
+  the NDR; negative in the oriented frame): share &gt; 0.5, one-sided binomial p &lt; 0.05;
+- C2: at −1 nucleosomes, the majority of consistent calls move downstream (towards the NDR): share &gt; 0.5,
+  binomial p &lt; 0.05;
+- C3: Sth1 has more <code>shape_any</code> calls than Snf2 at +1 and −1 nucleosomes (share of regions; Snf2 is 3 vs 3,
+  so Sth1 is also run on every 3 vs 3 subset of its replicates and the comparison uses the mean).
+Reported descriptively: sub-nucleosomal NDR signal change (amplitude tests are not claimed), diffSplice calls and
+overlap with ProfileSeg, replicate-structure diagnostics, depth.</p>
+<p>A failure of any criterion is reported as such; the method is not changed in response to these data.</p>
+<h2>Amendment before data (2026-10-27, before download)</h2>
+<p>The ProfileSeg BAM reader does not apply the Tn5 +4 / −5 offset. It moves fragment midpoints by 0.5 bp
+(negligible at 10 bp bins) and lengths by 9 bp, so the offset is not applied and the size classes are defined on
+the unshifted TLEN as written above (≤ 120 bp; 140–200 bp). Fragment-level insertion needs per-fragment
+midpoints, so midpoints are extracted once per sample with the same filters as the BAM reader (MAPQ ≥ 10, proper
+pairs, duplicates removed, each fragment counted once from its leftmost mate) and binned per experiment; the
+unmodified counts are cross-checked against the ProfileSeg BAM path for one sample.
+ProfileSeg configuration for every anchor set (fixed before data, by analogy with the earlier yeast settings):
+flank 600 bp, bins 10 bp, core ±300 bp (the analysed window), background = mean of the outer 200 bp on each side,
+oriented by gene strand. Fragments are extracted ±1300 bp around each gene start so that insertions of up to 40 bp
+move fragments into and out of the window correctly.</p>
+<hr />
+<h2>Results (2026-10-27; added after the run)</h2>
+<p>Run: commit <code>c3e17ec</code>, no uncommitted source changes, regional.py <code>87f0c6c86498c6a5</code>; protocol file as amended
+before download (sha256 <code>a5234324972ab7af</code>; the first version, before the two amendments, was <code>5f2f19efe1626ff3</code>).
+Outputs: <code>benchmarks/results/independent_gse346229/</code> (<code>INDEPENDENT_VALIDATION.md</code>, JSON, alignment summary).
+Processing: 14 samples, alignment 87–96 %, 0.78–2.78 M deduplicated fragments per sample. The extracted
+fragment counts were identical, bin by bin, to the ProfileSeg BAM path for the checked sample (400 regions).</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>criterion</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1 / A2 real-null splits (<code>shape_any</code> share ≤ 0.005; no split &gt; 1 %)</td>
+<td><strong>pass</strong> for all three anchor sets: no ProfileSeg call in any of the 18 null analyses (diffSplice: 0–0.07 % of regions)</td>
+</tr>
+<tr>
+<td>B1 insertion FDP ≤ 0.075</td>
+<td><strong>pass</strong> (<code>shape_any</code> mean FDP 0.000–0.055; the tolerance, not the nominal 0.05)</td>
+</tr>
+<tr>
+<td>B2 amplitude-only calls ≤ 1 %</td>
+<td><strong>pass</strong> (0 calls)</td>
+</tr>
+<tr>
+<td>C1 / C2 direction at +1 / −1 nucleosomes</td>
+<td><strong>fail — not evaluable</strong>: no region was called by any method, ProfileSeg or diffSplice</td>
+</tr>
+<tr>
+<td>C3 Sth1 more calls than Snf2</td>
+<td><strong>fail</strong> (0 vs 0)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Power was low throughout: translations of 20 / 40 bp inserted at the fragment level were detected in 4–12 %
+of regions by <code>shape_any</code> (<code>shift</code> 8–15 %; diffSplice 0–9 %), broadening in 0 %. The reason was flagged by
+the depth diagnostic in every analysis: a median of 18 (+1), 24 (−1) and 44 (NDR, sub-nucleosomal) fragments
+per region and sample in the ±300 bp windows, below the ~50 at which per-region shape tests have power, and
+only about half of the regions testable. Translation estimates for the few consistent calls were accurate
+(direction 1.00, estimate ÷ true 0.96–1.06; coverage 0.08–0.15).</p>
+<p>What this validation shows, and what it does not:</p>
+<ul>
+<li>It supports, on an independent dataset of a new assay type, that the shape tests do not produce false calls
+  on within-condition splits or under amplitude-only changes, and that FDP for inserted changes stays within the
+  pre-specified tolerance (≤ 0.075; point estimates 0.000–0.055, i.e. one cell slightly above the nominal 0.05).
+  With 12 runs per cell the FDP estimates are imprecise; neither a single high run nor these means establish
+  or refute FDR control.</li>
+<li>It does not provide positive biological evidence: at this depth no method detected per-region changes. The
+  protocol did not check depth before selecting the dataset, which in hindsight should have been a selection
+  criterion.</li>
+</ul>
+<h3>Exploratory, not pre-specified: aggregate replicate-level analysis</h3>
+<p>To ask whether the expected biology is present at all, per-sample meta-profiles over all regions were compared
+between 1 h and 0 h with replicates as units (<code>AGGREGATE_EXPLORATORY.md</code>). Sth1 depletion moved the +1 dyad by
+−1.9 bp (towards the NDR; Welch p = 0.07) and the −1 dyad by +1.0 bp (towards the NDR; p = 0.12); NDR
+accessibility and the −1 to +1 distance did not change detectably. The direction matches the literature, but the
+genome-wide effect at 1 h in these data is about 2 bp — far below what any per-region test can resolve at this
+depth. The prior expectation written in the protocol (clear NDR narrowing) was too strong for this time point.</p>
+<h3>Consequences</h3>
+<ol>
+<li>The calibration claims gain an independent, new-assay replication; the power and biology claims do not.</li>
+<li>A depth requirement belongs in dataset selection for positive validation (e.g. a median of ≥ 100 fragments
+   per region and sample in the analysed window, estimable from total depth before analysis).</li>
+<li>A positive biological validation still needs a deeper dataset with a larger expected per-region effect.</li>
+</ol>
+</main></body>
+</html>

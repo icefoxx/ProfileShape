@@ -1,0 +1,305 @@
+{
+ "provenance": {
+  "commit": "c3e17ec053e7b94df22459b439c269672dac1c50",
+  "uncommitted_src": 0,
+  "regional_py_sha256": "87f0c6c86498c6a5",
+  "started": "2026-10-27T15:45:06",
+  "finished": "2026-10-27T15:45:31"
+ },
+ "yeast": {
+  "WT(4) vs isw1\u0394 chd1\u0394(4)": {
+   "shape_any": {
+    "called": 1433,
+    "tested": 1555
+   },
+   "shape_kernel": {
+    "called": 1453,
+    "tested": 1555
+   },
+   "shift": {
+    "called": 553,
+    "tested": 1555,
+    "higher": 0,
+    "lower": 0,
+    "changed_no_direction": 553,
+    "downstream_share": 0.0,
+    "median_bp_consistent": NaN,
+    "iqr_bp_consistent": [
+     NaN,
+     NaN
+    ],
+    "flags": {
+     "direction_mismatch": 2,
+     "poor_translation_fit": 551
+    },
+    "high_r2": 0
+   },
+   "notes": [
+    "shape tests: 1555 testable regions; null in 7 spread strata of ~7548 values each",
+    "shift: 553 of 553 significant regions reported as Changed (see translation_flag: direction_mismatch, poor_translation_fit, ambiguous_match, search_edge); translation_consistent is a fit-consistency flag, not proof of a translation"
+   ],
+   "influence_flags": []
+  },
+  "WT(4) vs chd1\u0394(2)": {
+   "shape_any": {
+    "called": 905,
+    "tested": 1383
+   },
+   "shape_kernel": {
+    "called": 798,
+    "tested": 1383
+   },
+   "shift": {
+    "called": 492,
+    "tested": 1383,
+    "higher": 0,
+    "lower": 0,
+    "changed_no_direction": 492,
+    "downstream_share": 0.0,
+    "median_bp_consistent": NaN,
+    "iqr_bp_consistent": [
+     NaN,
+     NaN
+    ],
+    "flags": {
+     "poor_translation_fit": 492
+    },
+    "high_r2": 0
+   },
+   "notes": [
+    "shape tests: 1383 testable regions; null in 6 spread strata of ~3220 values each",
+    "shift: 492 of 492 significant regions reported as Changed (see translation_flag: direction_mismatch, poor_translation_fit, ambiguous_match, search_edge); translation_consistent is a fit-consistency flag, not proof of a translation"
+   ],
+   "influence_flags": []
+  },
+  "WT(4) vs isw1\u0394(2)": {
+   "shape_any": {
+    "called": 1043,
+    "tested": 1506
+   },
+   "shape_kernel": {
+    "called": 971,
+    "tested": 1506
+   },
+   "shift": {
+    "called": 442,
+    "tested": 1506,
+    "higher": 0,
+    "lower": 0,
+    "changed_no_direction": 442,
+    "downstream_share": 0.0,
+    "median_bp_consistent": NaN,
+    "iqr_bp_consistent": [
+     NaN,
+     NaN
+    ],
+    "flags": {
+     "poor_translation_fit": 442
+    },
+    "high_r2": 0
+   },
+   "notes": [
+    "shape tests: 1505 testable regions; null in 7 spread strata of ~3010 values each",
+    "shift: 442 of 442 significant regions reported as Changed (see translation_flag: direction_mismatch, poor_translation_fit, ambiguous_match, search_edge); translation_consistent is a fit-consistency flag, not proof of a translation"
+   ],
+   "influence_flags": []
+  },
+  "null WT WT_rep1+WT_rep2 vs rest": {
+   "shape_any": {
+    "called": 0,
+    "tested": 1490
+   },
+   "shape_kernel": {
+    "called": 0,
+    "tested": 1490
+   },
+   "shift": {
+    "called": 0,
+    "tested": 1490,
+    "higher": 0,
+    "lower": 0,
+    "changed_no_direction": 0,
+    "downstream_share": 0.0,
+    "median_bp_consistent": NaN,
+    "iqr_bp_consistent": [
+     NaN,
+     NaN
+    ],
+    "flags": {},
+    "high_r2": 0
+   },
+   "notes": [
+    "shape tests: 1490 testable regions; null in 1 spread strata of ~2980 values each (too few regions to stratify: per-class calibration as in v2.4; see docs/PROFILESEG_CALIBRATION.md)"
+   ],
+   "influence_flags": []
+  },
+  "null WT WT_rep1+WT_rep3 vs rest": {
+   "shape_any": {
+    "called": 0,
+    "tested": 1490
+   },
+   "shape_kernel": {
+    "called": 0,
+    "tested": 1490
+   },
+   "shift": {
+    "called": 0,
+    "tested": 1490,
+    "higher": 0,
+    "lower": 0,
+    "changed_no_direction": 0,
+    "downstream_share": 0.0,
+    "median_bp_consistent": NaN,
+    "iqr_bp_consistent": [
+     NaN,
+     NaN
+    ],
+    "flags": {},
+    "high_r2": 0
+   },
+   "notes": [
+    "shape tests: 1490 testable regions; null in 1 spread strata of ~2980 values each (too few regions to stratify: per-class calibration as in v2.4; see docs/PROFILESEG_CALIBRATION.md)"
+   ],
+   "influence_flags": []
+  },
+  "null WT WT_rep1+WT_rep4 vs rest": {
+   "shape_any": {
+    "called": 0,
+    "tested": 1490
+   },
+   "shape_kernel": {
+    "called": 0,
+    "tested": 1490
+   },
+   "shift": {
+    "called": 0,
+    "tested": 1490,
+    "higher": 0,
+    "lower": 0,
+    "changed_no_direction": 0,
+    "downstream_share": 0.0,
+    "median_bp_consistent": NaN,
+    "iqr_bp_consistent": [
+     NaN,
+     NaN
+    ],
+    "flags": {},
+    "high_r2": 0
+   },
+   "notes": [
+    "shape tests: 1490 testable regions; null in 1 spread strata of ~2980 values each (too few regions to stratify: per-class calibration as in v2.4; see docs/PROFILESEG_CALIBRATION.md)"
+   ],
+   "influence_flags": []
+  }
+ },
+ "yeast_phasing": {
+  "WT_rep1": 0.8077369716467995,
+  "WT_rep2": 0.8219737640756041,
+  "WT_rep3": 0.81934370188616,
+  "WT_rep4": 0.8183299932858297,
+  "dKO_rep1": 0.3582674169706198,
+  "dKO_rep2": 0.1744666329627158,
+  "dKO_rep3": 0.13916474129277095,
+  "dKO_rep4": 0.36973405980779755,
+  "chd1_rep1": 0.6678825028559208,
+  "chd1_rep2": 0.6813684101566202,
+  "isw1_rep1": 0.677853521247151,
+  "isw1_rep2": 0.6714098329587851
+ },
+ "proseq": {
+  "VHL2h": {
+   "shape_any": {
+    "called": 10867,
+    "tested": 13797
+   },
+   "shape_kernel": {
+    "called": 10605,
+    "tested": 13797
+   },
+   "shift": {
+    "called": 9117,
+    "tested": 13797,
+    "higher": 3455,
+    "lower": 22,
+    "changed_no_direction": 5640,
+    "downstream_share": 0.9936727063560541,
+    "median_bp_consistent": 15.962238012827994,
+    "iqr_bp_consistent": [
+     11.1916892258737,
+     22.23150677693095
+    ],
+    "flags": {
+     "direction_mismatch": 21,
+     "poor_translation_fit": 5612,
+     "search_edge": 7
+    },
+    "high_r2": 742
+   },
+   "notes": [
+    "shape tests: 12289 testable regions; null in 10 spread strata of ~2456 values each",
+    "shift: 5640 of 9117 significant regions reported as Changed (see translation_flag: direction_mismatch, poor_translation_fit, ambiguous_match, search_edge); translation_consistent is a fit-consistency flag, not proof of a translation"
+   ],
+   "influence_flags": []
+  },
+  "VHL48h": {
+   "shape_any": {
+    "called": 8667,
+    "tested": 13923
+   },
+   "shape_kernel": {
+    "called": 8652,
+    "tested": 13923
+   },
+   "shift": {
+    "called": 4816,
+    "tested": 13923,
+    "higher": 1885,
+    "lower": 7,
+    "changed_no_direction": 2924,
+    "downstream_share": 0.9963002114164905,
+    "median_bp_consistent": 13.920002875768516,
+    "iqr_bp_consistent": [
+     10.872596222922729,
+     19.181442092677496
+    ],
+    "flags": {
+     "direction_mismatch": 6,
+     "poor_translation_fit": 2910,
+     "search_edge": 8
+    },
+    "high_r2": 515
+   },
+   "notes": [
+    "shape tests: 12320 testable regions; null in 10 spread strata of ~2464 values each",
+    "shift: 2924 of 4816 significant regions reported as Changed (see translation_flag: direction_mismatch, poor_translation_fit, ambiguous_match, search_edge); translation_consistent is a fit-consistency flag, not proof of a translation"
+   ],
+   "influence_flags": []
+  }
+ },
+ "proseq_meta": {
+  "DMSO_rep1": {
+   "peak_bp": 35.0,
+   "centroid_0_300": 63.55451783489048
+  },
+  "DMSO_rep2": {
+   "peak_bp": 35.0,
+   "centroid_0_300": 57.93118917540129
+  },
+  "VHL2h_rep1": {
+   "peak_bp": 45.0,
+   "centroid_0_300": 80.98726135493712
+  },
+  "VHL2h_rep2": {
+   "peak_bp": 45.0,
+   "centroid_0_300": 80.35720505072617
+  },
+  "VHL48h_rep1": {
+   "peak_bp": 45.0,
+   "centroid_0_300": 80.70128878308587
+  },
+  "VHL48h_rep2": {
+   "peak_bp": 45.0,
+   "centroid_0_300": 74.40079771285073
+  }
+ }
+}
