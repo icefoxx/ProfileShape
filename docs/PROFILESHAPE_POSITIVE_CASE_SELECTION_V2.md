@@ -111,4 +111,13 @@ Every result is reported; exploratory analyses are labelled as such and never re
 
 ## Amendments
 
-(none)
+**R1 (2026-10-28, before prerequisite R is run).** (a) The CUT&RUN BAMs on disk are the first 4 M read pairs per
+replicate aligned to chr1 + chr2 only (made for the MMDiff2 comparison, `realbam_cutrun.py`); R uses them as
+they are, with the condition-blind anchors of `cutrun_null.py` on those two chromosomes; the number of regions
+and the depth are reported, and the limitation is stated with the result. The yeast BAMs are the first 3 M pairs
+(genome-wide); the ATAC fragments are those of the GSE346229 validation cache (all reads), from which coverage is
+rebuilt exactly (each fragment's span, from its midpoint and length). (b) The criterion applies to each of
+`shape_any`, `shape_kernel` and `shift`: coverage is "higher" on a dataset if it is higher for any of the three
+tests (stricter than one test). (c) Paths in each dataset: the same fragment filters for both representations
+(yeast and CUT&RUN: MAPQ ≥ 10, proper pairs, `extract` defaults otherwise; ATAC: the validation's nucleosomal /
+sub-nucleosomal ranges and anchors). Script `benchmarks/representation_null.py`.
