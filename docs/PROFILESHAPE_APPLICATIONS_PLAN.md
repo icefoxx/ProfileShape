@@ -116,6 +116,22 @@ with a ≈ 2 bp genome-wide effect. Reported as the depth boundary, with the GSE
   call (core-window counts, FDR 0.05); partly: one of the two; not supported: neither. Counts are exact (CPM × library
   / 10⁶ from the BAM cache).
 
+## Results (recorded after the runs; criteria unchanged)
+
+| scenario | grade | main numbers | result file |
+|---|---|---|---|
+| A · pause (PRO-seq NELFB, development data) | **consistent** (foreseeable: the data were seen in development) | downstream share 0.994 (2 h, 3455 / 22) and 0.996 (48 h); every VHL replicate centroid (74–81 bp) above both DMSO (58–64 bp); consistent shift +8 / +16 / +40 bp (5 / 50 / 95 %); 5612 genes `Changed` with `poor_translation_fit` (heterogeneity); diffSplice 5726 calls vs `shape_any` 10 867, and calls 69 % of the consistent downstream genes, without direction | `app_A_proseq` |
+| B · nucleosome arrays (yeast 4 vs 4, development data) | **consistent** | 1433 / 1555 genes called; `shift`: 553 called, 0 given a direction (551 `poor_translation_fit`); phasing loss called − not called −0.122 [−0.142, −0.094]; held-out (calls on reps 1–2, phasing on 3–4) −0.103 [−0.143, −0.081]; diffSplice −0.041; edgeR amount 82 calls, +0.045 (amount does not track phasing loss) | `app_B_yeast` |
+| C · missed by counts / aggregate (GSE218269, exploratory) | **partly consistent** | 69 % of 3 vs 3 shape calls without an amount call; aggregate centroid not moved, yet held-out centroid agreement 0.576 [0.547, 0.605] (upstream) and 0.674 [0.646, 0.700] (downstream); width: narrowing 0.704 [0.681, 0.726], widening 0.537 [0.500, 0.574] — the widening subgroup fails | `app_C_cdk7` |
+
+Limits stated with the results: B — 92 % of genes are called, so called versus not-called discriminates little (not
+called genes also lose phasing, −0.12); comparator counts are fragment equivalents from CPM coverage. C — not-called
+regions also agree above 0.5 (width narrowing 0.646, reported as reference), so part of the reproducible direction
+is a genome-wide trend; the aggregate width does narrow (MAD ≈ 198 → 189 bp), so what the aggregate hides is the
+direction of the centroid, not the width.
+
+Three cases graded: the data phase ends here (stop rule); writing follows.
+
 ## Order and stop
 
 A → B → C, each with its page completed by its result and grade. Three graded cases (whatever the grades) end

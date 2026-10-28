@@ -1,0 +1,124 @@
+{
+ "provenance": {
+  "commit": "cddb56ca9860fea216b16132a1539fb5f00fac91",
+  "uncommitted": 0,
+  "regional_py_sha256": "21ffd82395ee207f",
+  "plan_sha256": "3e077e717e8304af",
+  "script_sha256": "4c97913a8eb9b4f0",
+  "started": "2026-10-28T13:04:57",
+  "exploratory": "S3 not met; confirmatory case not evaluable",
+  "finished": "2026-10-28T13:05:17"
+ },
+ "aggregate": {
+  "DMSO_1": {
+   "centroid_bp": -11.535872611764034,
+   "mad_bp": 200.57846990185033,
+   "iqr_bp": 346.93096962290815
+  },
+  "DMSO_2": {
+   "centroid_bp": -15.146608045557695,
+   "mad_bp": 198.0334714390059,
+   "iqr_bp": 338.2507175518873
+  },
+  "DMSO_3": {
+   "centroid_bp": -15.49355817223804,
+   "mad_bp": 198.551446519453,
+   "iqr_bp": 340.07081648577844
+  },
+  "CDK7i_1": {
+   "centroid_bp": -15.211577981598932,
+   "mad_bp": 187.22837472342965,
+   "iqr_bp": 312.8711514295791
+  },
+  "CDK7i_2": {
+   "centroid_bp": -11.657892718295702,
+   "mad_bp": 190.24511955667455,
+   "iqr_bp": 322.4875669040762
+  },
+  "CDK7i_3": {
+   "centroid_bp": -11.896935666925511,
+   "mad_bp": 189.8020142715713,
+   "iqr_bp": 321.7501913528869
+  }
+ },
+ "calls_3v3": {
+  "tested": 7865,
+  "shape_any": 3148,
+  "amount": 2201,
+  "shape_without_amount": 2177,
+  "share_shape_without_amount": 0.6915501905972046,
+  "amount_without_shape": 1230,
+  "diffsplice": 1644,
+  "shape_and_diffsplice": 1294,
+  "diffsplice_without_amount": 1106
+ },
+ "heldout": {
+  "called_on_reps12": 2336,
+  "tested_on_reps12": 7861,
+  "width": {
+   "negative": {
+    "regions": 1617,
+    "agree": 1138,
+    "share": 0.7037724180581324,
+    "low": 0.6808528402654324,
+    "high": 0.7259498368979925
+   },
+   "positive": {
+    "regions": 719,
+    "agree": 386,
+    "share": 0.5368567454798331,
+    "low": 0.49962572949515627,
+    "high": 0.5737842091408939
+   }
+  },
+  "centroid": {
+   "negative": {
+    "regions": 1166,
+    "agree": 672,
+    "share": 0.5763293310463122,
+    "low": 0.5473748720388505,
+    "high": 0.6048977914215994
+   },
+   "positive": {
+    "regions": 1170,
+    "agree": 788,
+    "share": 0.6735042735042736,
+    "low": 0.6457962949784268,
+    "high": 0.7003369573928709
+   }
+  },
+  "width_not_called": {
+   "negative": {
+    "regions": 3370,
+    "agree": 2177,
+    "share": 0.6459940652818991,
+    "low": 0.6295789352481308,
+    "high": 0.6621554882051537
+   },
+   "positive": {
+    "regions": 2155,
+    "agree": 1179,
+    "share": 0.5470997679814386,
+    "low": 0.5257992353112456,
+    "high": 0.5682720278147009
+   }
+  },
+  "centroid_not_called": {
+   "negative": {
+    "regions": 2740,
+    "agree": 1445,
+    "share": 0.5273722627737226,
+    "low": 0.5084754260999762,
+    "high": 0.5462105574914969
+   },
+   "positive": {
+    "regions": 2785,
+    "agree": 1666,
+    "share": 0.5982046678635548,
+    "low": 0.5797217034002659,
+    "high": 0.6164809644339585
+   }
+  }
+ },
+ "grade": "partly consistent"
+}
