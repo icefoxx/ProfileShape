@@ -169,6 +169,17 @@ measured; the power is conditional on them, and the stage-2 predictions will use
 
 ## Amendments
 
+**R3 (2026-10-28, after the first step-2 estimate; before step 3 is run).** The step-2 estimate scaled
+deduplicated pilot counts linearly to the run size. Duplicate shares in the pilots grow with depth (heat shock: 3.1 /
+6.0 / 11.2 % at 25 / 50 / 100 % of the pilot, as expected for a library of ≈ 7 M distinct fragments), so linear
+scaling overstates the depth after duplicate removal (≈ 6× for heat shock) — the kind of error that misled the first
+attempt. Changed: duplicates are removed in the full analysis of these ChIP data (standard; `extract` default), and
+the scale factor is the expected number of distinct fragments at the run's size over that in the pilot, from a
+Poisson library-complexity curve fitted by least squares to the 25 / 50 / 100 % subsample points of each pilot
+(fit residuals reported). Where duplicates also arise without PCR (single-end reads at dense sites), the Poisson fit
+overstates duplication and so understates depth — the conservative direction. The linear estimate is kept in the
+result for comparison. Both estimates were seen before this amendment: heat shock 1195 (linear), NELF 166, KL-2 0.
+
 **R2 (2026-10-28, before step 3 is run; no pilot count looked at).** The protocol's noise from the PRO-seq group
 gives replicate sd 0.10 and bin dispersion 0.036 (deep PRO-seq tracks). Pol II ChIP is likely noisier, so this may
 overstate power. Added, reported only (not part of the requirement): the same runs with dispersion 0.15 (the

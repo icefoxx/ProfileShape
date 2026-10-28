@@ -44,6 +44,30 @@ def genes(path: Path) -> list[dict]:
     return out
 
 
+def complexity(bam: str, seed: int = 1) -> dict:
+    """Distinct fragments at 25 / 50 / 100 % of the pilot and a least-squares Poisson complexity C (amendment R3):
+    distinct(n) = C (1 − exp(−n / C))."""
+    import pysam
+    from scipy.optimize import minimize_scalar
+    keys = []
+    for a in pysam.AlignmentFile(bam):
+        if a.is_secondary or a.is_supplementary or a.is_unmapped:
+            continue
+        if a.is_paired:
+            if a.is_read1:
+                keys.append(hash((a.reference_id, a.reference_start, a.next_reference_start, a.template_length)))
+        else:
+            keys.append(hash((a.reference_id, a.reference_end if a.is_reverse else a.reference_start, a.is_reverse)))
+    keys = np.array(keys)
+    np.random.default_rng(seed).shuffle(keys)
+    pts = [(int(f * len(keys)), len(np.unique(keys[: int(f * len(keys))]))) for f in (0.25, 0.5, 1.0)]
+    n, u = np.array(pts, float).T
+    loss = lambda logc: float(np.sum((np.exp(logc) * (1 - np.exp(-n / np.exp(logc))) - u) ** 2))  # noqa: E731
+    C = float(np.exp(minimize_scalar(loss, bounds=(np.log(u[-1]), np.log(1e11)), method="bounded").x))
+    fit = C * (1 - np.exp(-n / C))
+    return dict(points=pts, C=C, max_rel_residual=float(np.max(np.abs(fit - u) / u)))
+
+
 def estimate(pilot: Path, genome: str, runs: dict) -> dict:
     regs = genes(ANNOT[genome])
     smp = [dict(sample_id=r, condition=c, signal_file=str(pilot / f"{r}.bam")) for r, (c, _) in runs.items()]
@@ -58,10 +82,16 @@ def estimate(pilot: Path, genome: str, runs: dict) -> dict:
     for i, (r, (cond, total)) in enumerate(runs.items()):
         med = float(np.median(core[i]))
         q = prof.qc.get(r, {})
-        out["samples"][r] = dict(condition=cond, pilot_median=med, run_reads=total, scale=total / PILOT_N,
-                                 estimated_full_median=med * total / PILOT_N, paired=q.get("paired"),
+        cx = complexity(str(pilot / f"{r}.bam"))
+        n_pilot, u_pilot = cx["points"][-1]
+        n_full = n_pilot * total / PILOT_N  # pilot reads after alignment and filters, scaled to the run
+        u_full = cx["C"] * (1 - np.exp(-n_full / cx["C"]))
+        out["samples"][r] = dict(condition=cond, pilot_median=med, run_reads=total, linear_scale=total / PILOT_N,
+                                 linear_full_median=med * total / PILOT_N, complexity=cx, complexity_scale=u_full / u_pilot,
+                                 estimated_full_median=med * u_full / u_pilot, paired=q.get("paired"),
                                  fragment_length=q.get("fragment_length"), fragment_median=q.get("median"))
     out["estimated_full_median_over_pilots"] = float(np.median([s["estimated_full_median"] for s in out["samples"].values()]))
+    out["linear_full_median_over_pilots"] = float(np.median([s["linear_full_median"] for s in out["samples"].values()]))
     # condition-blind templates for step 3: pooled pilot counts of the selected regions; fragment lengths
     qc = [prof.qc[r] for r in runs]
     if all(x.get("paired") for x in qc):  # paired: quartiles and median of the observed fragment lengths
@@ -80,8 +110,9 @@ def main(argv):
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(res, indent=1, default=str))
     for k, v in res.items():
-        print(k, "| selected", v["selected"], "| estimated full median", round(v["estimated_full_median_over_pilots"]),
-              {r: round(s["estimated_full_median"]) for r, s in v["samples"].items()})
+        print(k, "| selected", v["selected"], "| complexity-adjusted", round(v["estimated_full_median_over_pilots"]),
+              {r: (round(s["estimated_full_median"]), round(s["complexity"]["C"] / 1e6, 1), round(s["complexity"]["max_rel_residual"], 4))
+               for r, s in v["samples"].items()}, "| linear", round(v["linear_full_median_over_pilots"]))
 
 
 if __name__ == "__main__":
