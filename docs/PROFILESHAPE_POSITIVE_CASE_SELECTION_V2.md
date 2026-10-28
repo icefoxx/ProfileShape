@@ -169,6 +169,11 @@ measured; the power is conditional on them, and the stage-2 predictions will use
 
 ## Amendments
 
+**R2 (2026-10-28, before step 3 is run; no pilot count looked at).** The protocol's noise from the PRO-seq group
+gives replicate sd 0.10 and bin dispersion 0.036 (deep PRO-seq tracks). Pol II ChIP is likely noisier, so this may
+overstate power. Added, reported only (not part of the requirement): the same runs with dispersion 0.15 (the
+simulator default), fresh seeds (9 800 000 + 10 000 × candidate + 1000 + run).
+
 **R1 (2026-10-28, before prerequisite R is run).** (a) The CUT&RUN BAMs on disk are the first 4 M read pairs per
 replicate aligned to chr1 + chr2 only (made for the MMDiff2 comparison, `realbam_cutrun.py`); R uses them as
 they are, with the condition-blind anchors of `cutrun_null.py` on those two chromosomes; the number of regions

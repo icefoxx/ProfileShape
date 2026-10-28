@@ -62,6 +62,15 @@ def estimate(pilot: Path, genome: str, runs: dict) -> dict:
                                  estimated_full_median=med * total / PILOT_N, paired=q.get("paired"),
                                  fragment_length=q.get("fragment_length"), fragment_median=q.get("median"))
     out["estimated_full_median_over_pilots"] = float(np.median([s["estimated_full_median"] for s in out["samples"].values()]))
+    # condition-blind templates for step 3: pooled pilot counts of the selected regions; fragment lengths
+    qc = [prof.qc[r] for r in runs]
+    if all(x.get("paired") for x in qc):  # paired: quartiles and median of the observed fragment lengths
+        lengths = [float(np.median([x[k] for x in qc])) for k in ("q25", "median", "q75")]
+    else:  # single-end: the estimated fragment length
+        lengths = [float(np.median([x["fragment_length"] for x in qc]))] * 3
+    np.savez_compressed(pilot / f"templates_{genome}_{list(runs)[0]}.npz", pooled=c[:, keep].sum(0), edges=prof.edges,
+                        fragment_lengths=np.array(lengths))
+    out["templates"] = str(pilot / f"templates_{genome}_{list(runs)[0]}.npz")
     return out
 
 
