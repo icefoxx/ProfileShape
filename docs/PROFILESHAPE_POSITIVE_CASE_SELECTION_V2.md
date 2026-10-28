@@ -140,6 +140,33 @@ sample titles do not encode replicates; this is a limitation of the search, not 
 
 Next: step 2 (pilot depth) for the three long-list candidates, then step 3 (power simulation); ranking after both.
 
+## Step 3 specification (2026-10-28, written before any pilot count is looked at)
+
+Script `benchmarks/power_sim.py`; seeds 9 800 000 +; 100 runs per candidate and representation; 3 vs 3; 3000
+regions drawn from the candidate's condition-blind selection.
+
+- **Shapes:** each region's template is its pooled pilot profile (both pilot samples summed, condition-blind,
+  smoothed over 3 bins), used through `simulate(..., templates=...)`; depth scaled so that the median core-window
+  count equals the pilot estimate of the full run (step 2).
+- **Noise (fixed for all candidates, from `consistency_v2`, PRO-seq group, the closest assay to Pol II ChIP /
+  nascent RNA in that set):** replicate amplitude sd = median over the top-half regions of the within-group sd of
+  log region totals; bin dispersion = median CV² of the top-decile bins across replicates (an upper bound: it
+  includes the counting noise, so power is underestimated rather than overestimated); AR parameters at their
+  defaults. The values are written to the result file before the candidates run.
+- **Coverage representation:** the simulated midpoint counts convolved with the candidate's pilot fragment-length
+  distribution (paired-end) or its estimated fragment length (single-end).
+- **Expected effect and primary A1 criterion per candidate** (from the independent sources of step 1):
+
+| candidate | inserted in the alternative group | regions changed | primary A1 criterion (met in a run) |
+|---|---|---|---|
+| GSE112379 heat shock | signal downstream of +300 bp halved (reduced pause release; Mahat et al. 2016) | 30 % (repression of "several thousand" genes; conservative) | `shape_any` share ≥ 0.10 **and** ≥ 50 `shift`-significant regions with ≥ 0.80 upstream |
+| GSE205504 NELF depletion | profile translated +60 bp (accumulation at a second, +1-nucleosome-associated pause; Aoi et al. 2020) | 50 % | ≥ 50 `shift`-significant regions with ≥ 0.80 downstream |
+| GSE199086 KL-2 | signal downstream of +300 bp reduced by 30 % (impaired pause release; Liang et al. 2018) | 50 % | as for heat shock |
+
+Power = share of runs meeting the criterion. Requirement (step 3): ≥ 0.80 in at least one eligible
+representation. These effect sizes are assumptions taken from the sources' qualitative descriptions, not
+measured; the power is conditional on them, and the stage-2 predictions will use the same values.
+
 ## Amendments
 
 **R1 (2026-10-28, before prerequisite R is run).** (a) The CUT&RUN BAMs on disk are the first 4 M read pairs per
