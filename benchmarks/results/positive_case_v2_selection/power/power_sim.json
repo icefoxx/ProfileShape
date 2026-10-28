@@ -1,0 +1,237 @@
+{
+ "provenance": {
+  "commit": "c89213b8b2f69e7d36d946d98368257c52afceab",
+  "uncommitted": 0,
+  "regional_py_sha256": "21ffd82395ee207f",
+  "protocol_sha256": "8680b4bdcfc7ccf7",
+  "script_sha256": "df31cbc9182dab7c",
+  "seeds": "9800000+",
+  "runs": 100,
+  "started": "2026-10-28T10:46:13",
+  "noise": {
+   "replicate_sd": 0.10067247793741047,
+   "dispersion": 0.03581381709650682,
+   "source": "consistency_v2 PRO-seq cache (cons_proseq.npz)"
+  },
+  "skipped": {
+   "GSE199086 KL-2 FP-TT-seq": "estimated depth < 1 fragment per region: power 0 without simulation"
+  },
+  "finished": "2026-10-28T10:55:48"
+ },
+ "estimate": {
+  "GSE112379 heat shock RPB1 ChIP": {
+   "genome": "hg38",
+   "genes": 16081,
+   "selected": 8044,
+   "samples": {
+    "SRR6904142": {
+     "condition": "NHS",
+     "pilot_median": 33.0,
+     "run_reads": 47710698,
+     "linear_scale": 23.855349,
+     "linear_full_median": 787.226517,
+     "complexity": {
+      "points": [
+       [
+        435427,
+        422129
+       ],
+       [
+        870854,
+        819282
+       ],
+       [
+        1741708,
+        1547251
+       ]
+      ],
+      "C": 7196642.990068492,
+      "max_rel_residual": 0.0011525252962228713
+     },
+     "complexity_scale": 4.636783088882034,
+     "estimated_full_median": 153.01384193310713,
+     "paired": true,
+     "fragment_length": null,
+     "fragment_median": 225.0
+    },
+    "SRR6904139": {
+     "condition": "HS",
+     "pilot_median": 54.0,
+     "run_reads": 59369910,
+     "linear_scale": 29.684955,
+     "linear_full_median": 1602.98757,
+     "complexity": {
+      "points": [
+       [
+        439077,
+        425384
+       ],
+       [
+        878155,
+        825157
+       ],
+       [
+        1756310,
+        1555472
+       ]
+      ],
+      "C": 7074073.483277362,
+      "max_rel_residual": 0.0008232325091179191
+     },
+     "complexity_scale": 4.54499842387664,
+     "estimated_full_median": 245.42991488933853,
+     "paired": true,
+     "fragment_length": null,
+     "fragment_median": 218.0
+    }
+   },
+   "estimated_full_median_over_pilots": 199.22187841122283,
+   "linear_full_median_over_pilots": 1195.1070435,
+   "templates": "inputs/pilot_v2/templates_hg38_SRR6904142.npz"
+  },
+  "GSE205504 NELFB-AID Pol II ChIP": {
+   "genome": "mm10",
+   "genes": 16045,
+   "selected": 8138,
+   "samples": {
+    "SRR19544320": {
+     "condition": "EV_IAA",
+     "pilot_median": 9.0,
+     "run_reads": 47115975,
+     "linear_scale": 23.5579875,
+     "linear_full_median": 212.0218875,
+     "complexity": {
+      "points": [
+       [
+        403501,
+        394141
+       ],
+       [
+        807003,
+        783698
+       ],
+       [
+        1614006,
+        1552316
+       ]
+      ],
+      "C": 19853488.2377353,
+      "max_rel_residual": 0.013414676313743766
+     },
+     "complexity_scale": 10.905463550121576,
+     "estimated_full_median": 98.1491719510942,
+     "paired": false,
+     "fragment_length": 160.0,
+     "fragment_median": null
+    },
+    "SRR19544316": {
+     "condition": "NELFB_IAA",
+     "pilot_median": 8.0,
+     "run_reads": 30118664,
+     "linear_scale": 15.059332,
+     "linear_full_median": 120.474656,
+     "complexity": {
+      "points": [
+       [
+        410475,
+        401943
+       ],
+       [
+        820951,
+        799486
+       ],
+       [
+        1641903,
+        1583551
+       ]
+      ],
+      "C": 21821626.215030123,
+      "max_rel_residual": 0.011681954480381831
+     },
+     "complexity_scale": 9.34248045657569,
+     "estimated_full_median": 74.73984365260551,
+     "paired": false,
+     "fragment_length": 200.0,
+     "fragment_median": null
+    }
+   },
+   "estimated_full_median_over_pilots": 86.44450780184985,
+   "linear_full_median_over_pilots": 166.24827175,
+   "templates": "inputs/pilot_v2/templates_mm10_SRR19544320.npz"
+  }
+ },
+ "table": {
+  "GSE112379 heat shock RPB1 ChIP": {
+   "midpoint": {
+    "power": 0.0,
+    "runs": 100,
+    "share_any": 0.0,
+    "shift_sig": 0.0,
+    "toward": NaN,
+    "median_core": 195.915
+   },
+   "coverage": {
+    "power": 0.0,
+    "runs": 100,
+    "share_any": 0.0,
+    "shift_sig": 0.0,
+    "toward": NaN,
+    "median_core": 195.915
+   }
+  },
+  "GSE112379 heat shock RPB1 ChIP | dispersion 0.15": {
+   "midpoint": {
+    "power": 0.0,
+    "runs": 100,
+    "share_any": 0.0,
+    "shift_sig": 0.0,
+    "toward": NaN,
+    "median_core": 196.53
+   },
+   "coverage": {
+    "power": 0.0,
+    "runs": 100,
+    "share_any": 0.0,
+    "shift_sig": 0.0,
+    "toward": NaN,
+    "median_core": 196.53
+   }
+  },
+  "GSE205504 NELFB-AID Pol II ChIP": {
+   "midpoint": {
+    "power": 1.0,
+    "runs": 100,
+    "share_any": 0.4971443061387704,
+    "shift_sig": 516.6,
+    "toward": 0.895163746083444,
+    "median_core": 85.845
+   },
+   "coverage": {
+    "power": 1.0,
+    "runs": 100,
+    "share_any": 0.4820519686224587,
+    "shift_sig": 1386.03,
+    "toward": 0.9862465945282676,
+    "median_core": 85.845
+   }
+  },
+  "GSE205504 NELFB-AID Pol II ChIP | dispersion 0.15": {
+   "midpoint": {
+    "power": 1.0,
+    "runs": 100,
+    "share_any": 0.4822526900508695,
+    "shift_sig": 418.31,
+    "toward": 0.9077933371563042,
+    "median_core": 85.65
+   },
+   "coverage": {
+    "power": 1.0,
+    "runs": 100,
+    "share_any": 0.46741045770094836,
+    "shift_sig": 1349.49,
+    "toward": 0.9867482167462862,
+    "median_core": 85.65
+   }
+  }
+ }
+}

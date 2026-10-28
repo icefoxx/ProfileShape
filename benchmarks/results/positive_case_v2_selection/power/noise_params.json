@@ -1,0 +1,15 @@
+{
+ "commit": "c89213b8b2f69e7d36d946d98368257c52afceab",
+ "uncommitted": 0,
+ "regional_py_sha256": "21ffd82395ee207f",
+ "protocol_sha256": "8680b4bdcfc7ccf7",
+ "script_sha256": "df31cbc9182dab7c",
+ "seeds": "9800000+",
+ "runs": 100,
+ "started": "2026-10-28T10:46:13",
+ "noise": {
+  "replicate_sd": 0.10067247793741047,
+  "dispersion": 0.03581381709650682,
+  "source": "consistency_v2 PRO-seq cache (cons_proseq.npz)"
+ }
+}

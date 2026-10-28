@@ -91,16 +91,15 @@ def generate(job):
     _, c, peak, bg, strength = base_shapes(s, rng, templates)
     kind, size, share, direction = EFFECTS[name.split(" | ")[0]]
     rows = rng.choice(N_REGIONS, int(share * N_REGIONS), replace=False)
-    peak_alt = peak.copy()
-    peak_alt[rows] = _effect(peak[rows], c, kind, size)
     core = M.core_mask(edges, CFG["core_flank"])
     depth = target / np.median(strength * (peak + bg[:, None])[:, core].sum(1))
     values = np.empty((2 * N_REP, N_REGIONS, len(c)))
     for i in range(2 * N_REP):
-        pk = peak_alt if i >= N_REP else peak
         lib = rng.lognormal(-(s.library_sd ** 2) / 2, s.library_sd)
         rp = rng.lognormal(-(s.replicate_sd ** 2) / 2, s.replicate_sd, N_REGIONS)[:, None]
-        mean = depth * lib * strength[:, None] * (rp * pk + bg[:, None])
+        mean = depth * lib * strength[:, None] * (rp * peak + bg[:, None])
+        if i >= N_REP:  # the effect acts on the whole expected signal of the changed regions (amendment R4)
+            mean[rows] = _effect(mean[rows], c, kind, size)
         mean = mean * _ar_noise(rng, mean.shape, s.ar_rho, s.ar_sd)
         r = 1.0 / s.dispersion
         values[i] = rng.negative_binomial(r, r / (r + mean))

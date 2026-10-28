@@ -169,6 +169,16 @@ measured; the power is conditional on them, and the stage-2 predictions will use
 
 ## Amendments
 
+**R4 (2026-10-28, after the first step-3 run).** The first run (`positive_case_v2_selection/power`, kept) gave power
+0.00 for heat shock with not a single `shape_any` call in any run — implausible for halving the signal downstream of
++300 bp in 30 % of regions. Cause: an implementation error, not the specification — the script applied the effect to
+the template's peak component only, while the specification says the *signal* is halved (and the profile
+translated). With real Pol II templates much of the signal downstream of +300 bp sits in the template's background
+component (estimated from the window ends, floored at 0.05 of the apex): only ≈ 32 % of it was in the peak component
+for heat shock (≈ 56 % for NELF), so the inserted effect was far smaller than specified. Corrected to act on the whole
+expected signal of the changed regions; the specification (effects, shares, criteria, seeds) is unchanged and the
+full run is repeated into `positive_case_v2_selection/power_r4`. Both runs are reported.
+
 **R3 (2026-10-28, after the first step-2 estimate; before step 3 is run).** The step-2 estimate scaled
 deduplicated pilot counts linearly to the run size. Duplicate shares in the pilots grow with depth (heat shock: 3.1 /
 6.0 / 11.2 % at 25 / 50 / 100 % of the pilot, as expected for a library of ≈ 7 M distinct fragments), so linear
