@@ -170,13 +170,19 @@ def analyse(profiles: Profiles, config: Config, *, bootstrap: int | None = None)
         # e.g. MNase arrays, where the flanks carry as much signal as the core: fall back to the
         # clipped profile for those samples and say that aggregate shape metrics are unreliable.
         clipped = M.normalise(np.clip(agg[bad], 0, None))
-        if np.any(~np.isfinite(clipped)):
-            raise ValueError("an aggregate background-corrected profile has no positive mass; check the background window")
         p = p.copy()
         p[bad] = clipped
         flags.append(f"{int(bad.sum())} sample(s) have non-positive aggregate background-corrected mass; their aggregate "
                      "profile was clipped at zero. Aggregate shape metrics are unreliable here (background window "
                      "carries as much signal as the core); rely on the per-region tests")
+        empty = ~np.all(np.isfinite(p), axis=-1)
+        if empty.any():
+            # Not even the clipped profile has positive mass. Stopping here also stopped the per-region tests,
+            # which do not need the aggregate; the aggregate shape of those samples is undefined instead.
+            flags.append(f"{int(empty.sum())} sample(s) have no positive background-corrected aggregate mass even "
+                         "after clipping: their aggregate shape metrics are undefined (NaN). Check the background window "
+                         "(a flank that carries the signal, e.g. broad or periodic profiles) or use "
+                         "background.estimator: median; per-region tests are unaffected")
     shape = _shape_metrics(p, core_edges)
 
     # Naive comparator: no background correction, whole window, same pooled scaling.
@@ -212,7 +218,7 @@ def analyse(profiles: Profiles, config: Config, *, bootstrap: int | None = None)
         wc,
         raw / np.maximum(raw_pooled, M.EPS)[None, :, None],
         w,
-        bootstrap or config.bootstrap,
+        config.bootstrap if bootstrap is None else bootstrap,  # 0 = no bootstrap (it used to fall back to the config)
     )
     diagnostics(a, values, complete, Y, wc, ref, alt)
     a.values, a.core_signal, a.complete, a.core_mass = values, y, complete, mass
@@ -220,6 +226,12 @@ def analyse(profiles: Profiles, config: Config, *, bootstrap: int | None = None)
 
 
 # ---------------------------------------------------------------- inference helpers
+
+
+def _boot_q(x, q):
+    """Bootstrap quantile; NaN when no bootstrap was drawn (bootstrap = 0)."""
+    x = np.asarray(x, float)
+    return float(np.quantile(x, q)) if x.size else float("nan")
 
 
 def _welch(x, y, confidence):
@@ -370,8 +382,8 @@ def _effects(a: Analysis, values, complete, ref, alt, Y, wc, raw_scaled, w, n_bo
                 welch_high=float(hi),
                 welch_p=float(p_welch),
                 welch_df=float(df),
-                boot_low=float(np.quantile(bd, q)),
-                boot_high=float(np.quantile(bd, 1 - q)),
+                boot_low=_boot_q(bd, q),
+                boot_high=_boot_q(bd, 1 - q),
                 perm_p=p_perm,
                 perm_floor=floor,
                 n_assignments=len(labels),
@@ -425,8 +437,8 @@ def _effects(a: Analysis, values, complete, ref, alt, Y, wc, raw_scaled, w, n_bo
             welch_high=np.nan,
             welch_p=np.nan,
             welch_df=np.nan,
-            boot_low=float(np.quantile(w1_boot, q)),
-            boot_high=float(np.quantile(w1_boot, 1 - q)),
+            boot_low=_boot_q(w1_boot, q),
+            boot_high=_boot_q(w1_boot, 1 - q),
             perm_p=w1_perm[0],
             perm_floor=w1_perm[1],
             n_assignments=len(labels),
@@ -442,8 +454,8 @@ def _effects(a: Analysis, values, complete, ref, alt, Y, wc, raw_scaled, w, n_bo
         p_ref=p_ref,
         p_alt=p_alt,
         diff=p_alt - p_ref,
-        diff_low=np.quantile(ba - br, q, axis=0),
-        diff_high=np.quantile(ba - br, 1 - q, axis=0),
+        diff_low=np.quantile(ba - br, q, axis=0) if len(ba) else np.full(len(p_ref), np.nan),
+        diff_high=np.quantile(ba - br, 1 - q, axis=0) if len(ba) else np.full(len(p_ref), np.nan),
         raw_edges=a.profiles.edges,
         raw_samples=np.nanmean(values[:, complete], axis=1),
         corrected_samples=a.p,

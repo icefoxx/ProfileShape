@@ -701,3 +701,48 @@ def test_positive_case_bootstrap_keeps_each_chromosome_in_one_fold():
         assert len(idx) == 5 * len(pick)
         for c in set(pick):
             assert len(set(f[chrom[idx] == c])) == 1
+
+
+def test_consistency_tables_with_unequal_group_sizes(tmp_path):
+    """3 vs 2 replicates: the groups' rows carry different keys; writing must neither fail nor drop columns
+    (it raised KeyError when the 3-replicate group came first and dropped its columns when it came second)."""
+    from profileshape.consistency import group_consistency
+    from profileshape.report import write_consistency
+
+    for n_ref, n_alt in ((3, 2), (2, 3)):
+        profiles, _ = simulate("null", SimSettings(n_ref=n_ref, n_alt=n_alt, n_regions=200), seed=5)
+        c = group_consistency(profiles, Config())
+        out = tmp_path / f"{n_ref}v{n_alt}"
+        (out / "results" / "metrics").mkdir(parents=True)
+        (out / "reports").mkdir()
+        write_consistency(c, profiles, out)
+        lines = (out / "results" / "metrics" / "consistency_samples.tsv").read_text().splitlines()
+        header = lines[0].split("\t")
+        assert "most_deviant_share" in header and "F20_mates" in header
+        assert all(len(line.split("\t")) == len(header) for line in lines[1:])
+        two = [line.split("\t") for line in lines[1:] if line.split("\t")[1] == ("KO" if n_alt == 2 else "WT")]
+        assert two and all(row[header.index("most_deviant_share")] == "NA" for row in two)
+
+
+def test_empty_aggregate_does_not_stop_per_region_tests():
+    """A sample with no positive aggregate mass even after clipping used to raise; now its aggregate shape is
+    NaN with a flag and the per-region tests still run."""
+    profiles, _ = simulate("shift", SimSettings(n_ref=3, n_alt=3, n_regions=300), seed=3)
+    fl, core = M.flank_mask(profiles.edges, 500), M.core_mask(profiles.edges, 1000)
+    v0 = profiles.values[0]
+    excess = np.nanmean(v0[:, core] - v0[:, fl].mean(-1, keepdims=True), axis=-1)
+    v0[:, fl] += 1.5 * excess[:, None]
+    a = analyse(profiles, Config(reference="WT", alternative="KO"), bootstrap=20)
+    assert np.isnan(a.shape["centroid"][0]) and np.isfinite(a.shape["centroid"][1:]).all()
+    assert any("undefined" in f for f in a.flags)
+    res = per_region_tests(a)
+    assert (res.tests["shape_any"]["call"] == "Changed").sum() > 50
+
+
+def test_bootstrap_zero_means_none():
+    """bootstrap=0 used to fall back to the config's 1000 draws (and Config(bootstrap=0) crashed)."""
+    profiles, _ = simulate("shift", SimSettings(n_regions=200), seed=4)
+    for a in (analyse(profiles, Config(reference="WT", alternative="KO"), bootstrap=0),
+              analyse(profiles, Config(reference="WT", alternative="KO", bootstrap=0))):
+        assert np.isnan(a.effects[0]["boot_low"]) and np.isfinite(a.effects[0]["welch_low"])
+        assert np.isnan(a.curves["diff_low"]).all()

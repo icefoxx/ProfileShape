@@ -262,6 +262,20 @@ sample-wide by shifts of sd ≈ 20 bp (FDP 0.07–0.08), one kind of shared samp
 When most regions change, the p-values of the remaining unchanged regions are too small (a per-region,
 not a whole-list, problem).
 
+**Which shape list to read, fixed before looking.** `shape_any` gives the directional `shift` test equal
+weight; for changes without a common direction (broadening, redistribution) the `shift` p-value carries no
+evidence and roughly doubles the combined p-value, so regions near the threshold drop out (simulation,
+broadening: 15–25 % fewer calls than `shape_kernel`; on real data a list can vanish when all its calls are
+marginal). Use `shape_any` for directional hypotheses (translations, pausing) and `shape_kernel` for width or
+redistribution — chosen from the hypothesis, not from which list is longer (that inflates the FDR).
+
+**Background with a shape.** Background is the mean of the outer flanks, assumed flat. When it has a shape
+of its own around the anchor — CUT&RUN accessibility background, input or IgG enriched at the sites, nucleosome
+arrays — a change in the *share* of specific signal changes the background-corrected, mass-normalised profile
+even if the specific signal does not move: amplitude and shape are then not separated. Run the same analysis
+on the control track (IgG, input) as a check; a control-track background option is planned
+(`docs/PROFILESHAPE_NEXT_PLAN.md`).
+
 ## When to use the aggregate centroid (and when not)
 
 The aggregate `centroid` (and `iqr_width` / `sd_width`) describes the **typical region**: one number

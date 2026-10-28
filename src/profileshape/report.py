@@ -30,14 +30,17 @@ def _versions():
 
 
 def _tsv(path: Path, rows: list[dict]) -> None:
+    """Rows may carry different keys (e.g. consistency rows of a 3-replicate and a 2-replicate group): the
+    columns are the union in order of first appearance and a missing value is written as NA. Taking the first
+    row's keys raised KeyError when it had more keys, and silently dropped columns when it had fewer."""
     if not rows:
         path.write_text("")
         return
-    cols = list(rows[0])
+    cols = list(dict.fromkeys(k for r in rows for k in r))
     with open(path, "w", encoding="utf-8") as handle:
         handle.write("\t".join(cols) + "\n")
         for r in rows:
-            handle.write("\t".join(_fmt(r[c]) for c in cols) + "\n")
+            handle.write("\t".join(_fmt(r[c]) if c in r else "NA" for c in cols) + "\n")
 
 
 def _fmt(v):
@@ -248,10 +251,14 @@ condition has ≤ 3 replicates.
             f"[{e['welch_low']:.3g}, {e['welch_high']:.3g}]" if np.isfinite(e["welch_low"]) else "—"
         )
         holm_p = f"{e['p_holm']:.3g}" if np.isfinite(e.get("p_holm", np.nan)) else "—"
+        # A call rests on the Welch interval; when the permutation p cannot go below the level, say so next to it.
+        call = e["call"]
+        if call in ("higher", "lower") and e["perm_floor"] > 1 - c.confidence:
+            call += f" (Welch only; permutation p cannot go below {e['perm_floor']:.3g})"
         methods += (
             f"| {e['metric']} | {e.get('role', '')} | {e['estimate']:.3g} | {e['unit']} | {ci} | {holm_p} | "
             f"[{e['boot_low']:.3g}, {e['boot_high']:.3g}] | {e['perm_p']:.3g} ({e['perm_floor']:.3g}) | "
-            f"{e.get('replicate_consistency', '')} | {e['call']} |\n"
+            f"{e.get('replicate_consistency', '')} | {call} |\n"
         )
     calls = [e for e in a.effects if e["call"] in ("higher", "lower")]
     methods += "\n**Inferred:** "
@@ -453,6 +460,15 @@ def write_regional(a: Analysis, regional, out: Path) -> None:
               "direction and a cross-correlation shift (bp) only where the translation description is consistent (`translation_consistent`; otherwise Changed, with the reason in `translation_flag`); consistency is not proof of a translation (one-sided gains can pass), the bp value describes a spatial redistribution of signal in the population profile, not the movement of a particular nucleosome or polymerase, and estimates near the detection limit are biased upwards; `shift_bp_fit` keeps the earlier template fit; `shape_any` combines the two shape tests per region before one BH adjustment (one list instead of two). `centroid` / `mad_width` (full-window moments) are kept for continuity and have low "
               "power on broad profiles.", ""]
     lines += [f"* {n}" for n in regional.notes]
+    nk = int(np.sum(regional.tests.get("shape_kernel", {}).get("call", np.array([])) == "Changed"))
+    na = int(np.sum(regional.tests.get("shape_any", {}).get("call", np.array([])) == "Changed"))
+    if "shift" in regional.tests and nk >= 10 and na < 0.8 * nk:
+        lines += ["", f"**`shape_kernel` ({nk}) calls more regions than `shape_any` ({na}).** `shape_any` gives the "
+                  "directional `shift` p-value equal weight; for changes without a common direction (broadening, "
+                  "redistribution) that p-value carries no evidence and roughly doubles the combined p-value, so regions "
+                  "near the BH threshold drop out (simulation, broadening: 15–25 % fewer calls). Which list answers the "
+                  "question should be fixed by the hypothesis before looking — `shape_any` for directional changes, "
+                  "`shape_kernel` for width or redistribution — not by which list is longer."]
     if regional.depth:
         dep = regional.depth
         lines += ["", f"## Depth ({dep['source']})", "",

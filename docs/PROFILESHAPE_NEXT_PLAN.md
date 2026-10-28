@@ -116,6 +116,16 @@ code. The design below is kept for when the package is resumed.
   arrays). Real-data analogues by insertion into real-null splits. Criteria: whole-list FDP as in the
   calibration study; report where it breaks.
 
+### P1-H · Background with a shape (from a user report on Oct4 CUT&RUN, 2026-10-28)
+
+The flank-mean background assumes a flat background; CUT&RUN accessibility background and IgG / input
+enrichment at the sites are not flat (reported IgG asymmetry 0.26–0.39), so a change in the share of specific
+signal reads as a shape change. (i) **Stress test (run, protocol first):** mix a shaped control profile into
+the signal at known shares that differ between conditions, with no change of the specific signal; measure
+whether shape calls rise monotonically with the share difference. (ii) **Option:** background from a control
+track (its own profile, scaled) instead of the flank mean; evaluated against (i). (iii) Documented now in the
+guide.
+
 ### P1-G · Reproducibility (no run)
 
 - Pinned environment file; script that fetches all inputs (GEO/SRA accessions in `docs/DATA.md`) and rebuilds
