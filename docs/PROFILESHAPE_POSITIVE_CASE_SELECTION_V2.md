@@ -109,6 +109,15 @@ depth ≥ 0.70.
 
 Every result is reported; exploratory analyses are labelled as such and never replace a confirmatory verdict.
 
+## Outcome of prerequisite R (run representation_null_v1, 2026-10-28; recorded after the run)
+
+Coverage **eligible**: on CUT&RUN (10 × 3 vs 3), yeast (3 × 2 vs 2) and ATAC (18 analyses) no test had more calls
+with coverage than with midpoints and the difference in p < 0.01 share was −0.0006 to +0.0009 (margin 0.005).
+Limits of the evidence: every split had 0 whole-list calls in both representations, so the comparison of calls does
+not discriminate and the p < 0.01 shares carry the information; the CUT&RUN subsample is shallow (median 10
+fragments per region, 801 regions); the p < 0.01 share varies between splits (0.000–0.045) alike in both
+representations. "Eligible" means not worse than midpoints here, not shown calibrated in general.
+
 ## Amendments
 
 **R1 (2026-10-28, before prerequisite R is run).** (a) The CUT&RUN BAMs on disk are the first 4 M read pairs per
