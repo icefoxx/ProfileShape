@@ -1,0 +1,335 @@
+{
+ "GSE112379 heat shock RPB1 ChIP": {
+  "genome": "hg38",
+  "genes": 16081,
+  "selected": 8044,
+  "samples": {
+   "SRR6904142": {
+    "condition": "NHS",
+    "pilot_median": 33.0,
+    "run_reads": 47710698,
+    "linear_scale": 23.855349,
+    "linear_full_median": 787.226517,
+    "complexity": {
+     "points": [
+      [
+       435427,
+       422129
+      ],
+      [
+       870854,
+       819282
+      ],
+      [
+       1741708,
+       1547251
+      ]
+     ],
+     "C": 7196642.990068492,
+     "max_rel_residual": 0.0011525252962228713
+    },
+    "complexity_scale": 4.636783088882034,
+    "estimated_full_median": 153.01384193310713,
+    "region_complexity": {
+     "points": [
+      [
+       47790,
+       45498
+      ],
+      [
+       95581,
+       86946
+      ],
+      [
+       191163,
+       159104
+      ]
+     ],
+     "C": 503566.57354426855,
+     "max_rel_residual": 0.002073916236943452
+    },
+    "region_scale": 3.164645819316672,
+    "region_full_median": 104.43331203745016,
+    "paired": true,
+    "fragment_length": null,
+    "fragment_median": 225.0
+   },
+   "SRR6904139": {
+    "condition": "HS",
+    "pilot_median": 54.0,
+    "run_reads": 59369910,
+    "linear_scale": 29.684955,
+    "linear_full_median": 1602.98757,
+    "complexity": {
+     "points": [
+      [
+       439077,
+       425384
+      ],
+      [
+       878155,
+       825157
+      ],
+      [
+       1756310,
+       1555472
+      ]
+     ],
+     "C": 7074073.483277362,
+     "max_rel_residual": 0.0008232325091179191
+    },
+    "complexity_scale": 4.54499842387664,
+    "estimated_full_median": 245.42991488933853,
+    "region_complexity": {
+     "points": [
+      [
+       71590,
+       68027
+      ],
+      [
+       143180,
+       129988
+      ],
+      [
+       286361,
+       237594
+      ]
+     ],
+     "C": 741016.6137423586,
+     "max_rel_residual": 0.0031392410449001115
+    },
+    "region_scale": 3.118803044649087,
+    "region_full_median": 168.41536441105072,
+    "paired": true,
+    "fragment_length": null,
+    "fragment_median": 218.0
+   }
+  },
+  "estimated_full_median_over_pilots": 199.22187841122283,
+  "region_full_median_over_pilots": 136.42433822425045,
+  "linear_full_median_over_pilots": 1195.1070435,
+  "templates": "inputs/pilot_v2/templates_hg38_SRR6904142.npz"
+ },
+ "GSE199086 KL-2 FP-TT-seq": {
+  "genome": "hg38",
+  "genes": 16081,
+  "selected": 16081,
+  "samples": {
+   "SRR18401340": {
+    "condition": "DMSO",
+    "pilot_median": 0.0,
+    "run_reads": 7909263,
+    "linear_scale": 3.9546315,
+    "linear_full_median": 0.0,
+    "complexity": {
+     "points": [
+      [
+       30432,
+       26973
+      ],
+      [
+       60865,
+       50681
+      ],
+      [
+       121731,
+       92084
+      ]
+     ],
+     "C": 201843.91554078195,
+     "max_rel_residual": 0.047305115552470994
+    },
+    "complexity_scale": 1.9901029323379367,
+    "estimated_full_median": 0.0,
+    "region_complexity": {
+     "points": [
+      [
+       254,
+       238
+      ],
+      [
+       508,
+       444
+      ],
+      [
+       1017,
+       775
+      ]
+     ],
+     "C": 1788.147067249807,
+     "max_rel_residual": 0.005105991999132818
+    },
+    "region_scale": 2.063900235048377,
+    "region_full_median": 0.0,
+    "paired": true,
+    "fragment_length": null,
+    "fragment_median": 179.0
+   },
+   "SRR18401334": {
+    "condition": "KL2",
+    "pilot_median": 0.0,
+    "run_reads": 7529382,
+    "linear_scale": 3.764691,
+    "linear_full_median": 0.0,
+    "complexity": {
+     "points": [
+      [
+       30699,
+       26764
+      ],
+      [
+       61398,
+       50381
+      ],
+      [
+       122796,
+       91711
+      ]
+     ],
+     "C": 193318.23564496965,
+     "max_rel_residual": 0.06058720762672313
+    },
+    "complexity_scale": 1.9150179290784801,
+    "estimated_full_median": 0.0,
+    "region_complexity": {
+     "points": [
+      [
+       489,
+       444
+      ],
+      [
+       979,
+       838
+      ],
+      [
+       1959,
+       1506
+      ]
+     ],
+     "C": 3500.0590812213504,
+     "max_rel_residual": 0.02787662002763939
+    },
+    "region_scale": 2.0414962634595377,
+    "region_full_median": 0.0,
+    "paired": true,
+    "fragment_length": null,
+    "fragment_median": 181.0
+   }
+  },
+  "estimated_full_median_over_pilots": 0.0,
+  "region_full_median_over_pilots": 0.0,
+  "linear_full_median_over_pilots": 0.0,
+  "templates": "inputs/pilot_v2/templates_hg38_SRR18401340.npz"
+ },
+ "GSE205504 NELFB-AID Pol II ChIP": {
+  "genome": "mm10",
+  "genes": 16045,
+  "selected": 8138,
+  "samples": {
+   "SRR19544320": {
+    "condition": "EV_IAA",
+    "pilot_median": 9.0,
+    "run_reads": 47115975,
+    "linear_scale": 23.5579875,
+    "linear_full_median": 212.0218875,
+    "complexity": {
+     "points": [
+      [
+       403501,
+       394141
+      ],
+      [
+       807003,
+       783698
+      ],
+      [
+       1614006,
+       1552316
+      ]
+     ],
+     "C": 19853488.2377353,
+     "max_rel_residual": 0.013414676313743766
+    },
+    "complexity_scale": 10.905463550121576,
+    "estimated_full_median": 98.1491719510942,
+    "region_complexity": {
+     "points": [
+      [
+       21815,
+       21097
+      ],
+      [
+       43631,
+       40934
+      ],
+      [
+       87262,
+       77259
+      ]
+     ],
+     "C": 349908.25875686697,
+     "max_rel_residual": 0.0024594676957113396
+    },
+    "region_scale": 4.51630820438393,
+    "region_full_median": 40.64677383945536,
+    "paired": false,
+    "fragment_length": 160.0,
+    "fragment_median": null
+   },
+   "SRR19544316": {
+    "condition": "NELFB_IAA",
+    "pilot_median": 8.0,
+    "run_reads": 30118664,
+    "linear_scale": 15.059332,
+    "linear_full_median": 120.474656,
+    "complexity": {
+     "points": [
+      [
+       410475,
+       401943
+      ],
+      [
+       820951,
+       799486
+      ],
+      [
+       1641903,
+       1583551
+      ]
+     ],
+     "C": 21821626.215030123,
+     "max_rel_residual": 0.011681954480381831
+    },
+    "complexity_scale": 9.34248045657569,
+    "estimated_full_median": 74.73984365260551,
+    "region_complexity": {
+     "points": [
+      [
+       19313,
+       18704
+      ],
+      [
+       38627,
+       36307
+      ],
+      [
+       77255,
+       68632
+      ]
+     ],
+     "C": 318921.50049361814,
+     "max_rel_residual": 0.001995305320537366
+    },
+    "region_scale": 4.525809165819356,
+    "region_full_median": 36.20647332655485,
+    "paired": false,
+    "fragment_length": 200.0,
+    "fragment_median": null
+   }
+  },
+  "estimated_full_median_over_pilots": 86.44450780184985,
+  "region_full_median_over_pilots": 38.42662358300511,
+  "linear_full_median_over_pilots": 166.24827175,
+  "templates": "inputs/pilot_v2/templates_mm10_SRR19544320.npz"
+ }
+}
