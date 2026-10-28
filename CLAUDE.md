@@ -28,11 +28,13 @@ Start with `README.md`, then `docs/PROFILESHAPE_V3_REVIEW.md` (consolidated evid
 - Network: use `/usr/bin/curl` for downloads (TLS-intercepting gateway; conda's curl and prefetch fail).
 - The shell is zsh: an unquoted `$VAR` holding several arguments is not split; write commands out or use a script.
 
-## Open items (as of v3.1)
+## Open items (as of v3.1; current plan: `docs/PROFILESHAPE_NEXT_PLAN.md`)
 
 1. Independent positive confirmation on a deeper dataset with a larger per-region effect (depth as a selection
    criterion; the ATAC attempt replicated calibration only).
-2. Yeast MNase 2 vs 2 excess (associated with replicate structure); a replicate-structure diagnostic in the output.
+2. Yeast MNase 2 vs 2 excess (associated with replicate structure; cause open). The within-group consistency
+   module (`consistency.py`, report 07) flags such structure; evaluated in `benchmarks/results/consistency_v2`
+   (protocol `docs/PROFILESHAPE_CONSISTENCY_EVALUATION.md`; v1 kept on record with a defect).
 3. Separating translations from other redistributions (R² does not); selection-adjusted bp estimates.
 4. Per-class calibration with few regions; per-region absolute amplitude test.
 5. Regenerate the graphical abstract (`docs/figures/`) with the new name and corrected footer.

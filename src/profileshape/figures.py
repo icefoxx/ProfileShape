@@ -240,3 +240,29 @@ def regional_figure(a, regional, out: Path) -> list[Path]:
                    xlabel=f"{a.config.alternative} − {a.config.reference}", ylabel="−log10 p (moderated)")
         fig.suptitle("G · per-region tests (empirical-Bayes moderated t, BH FDR)", fontsize=9)
         return _save(fig, out, "G_region_volcano", a.config.dpi)
+
+
+def consistency_figure(c, out: Path, config) -> list[Path]:
+    """H: sample × sample distance matrices (shape per region, meta-profile, amplitude), samples ordered by group."""
+    out.mkdir(parents=True, exist_ok=True)
+    if not np.isfinite(c.shape_distance).any():
+        return []
+    order = np.concatenate([np.asarray(i) for i in c.groups.values()])
+    labels = [c.samples[i] for i in order]
+    panels = (("shape (median per-region kernel distance)", c.shape_distance),
+              ("meta-profile (kernel distance)", c.meta_distance), ("amplitude (robust sd of log2 ratio)", c.amplitude_distance))
+    size = max(2.6, 0.28 * len(order) + 1.2)
+    with plt.rc_context({**RC, "font.family": [config.font, "DejaVu Sans"]}):
+        fig, axes = plt.subplots(1, 3, figsize=(3 * size, size), layout="constrained")
+        bounds = np.cumsum([len(i) for i in c.groups.values()])[:-1] - 0.5
+        for ax, (title, D) in zip(axes, panels, strict=True):
+            im = ax.imshow(D[np.ix_(order, order)], cmap="viridis")
+            ax.set_xticks(range(len(order)), labels, rotation=90)
+            ax.set_yticks(range(len(order)), labels)
+            for b in bounds:
+                ax.axhline(b, color="white", lw=1)
+                ax.axvline(b, color="white", lw=1)
+            ax.set_title(title)
+            fig.colorbar(im, ax=ax, shrink=0.8)
+        fig.suptitle("H · within-group consistency: sample distances (blocks = conditions)", fontsize=9)
+        return _save(fig, out, "H_consistency_distances", config.dpi)

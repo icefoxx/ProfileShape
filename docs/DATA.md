@@ -13,6 +13,9 @@ comes from, what was built from it and which benchmark reads it. Paths below are
 | `inputs/chip_gse112560/` | GEO GSE112560 (HA ChIP-seq, ZNF384 WT / TAF15 / TCF3 fusions) | bigWigs; `semireal_config/` (config + manifest that build `caches/semireal_cache.npz`) | semi-real cells of `calibration_boundary.py` |
 | `inputs/cutrun_gse291134_bam/`, `inputs/cutrun_gse291134_bigwig/` | GEO GSE291134 (A673 FLI1 CUT&RUN) | BAMs (chr1/chr2) and bigWigs | `cutrun_null.py`, `realbam_cutrun.py` |
 | `inputs/atac_gse346229_bam/` | GEO GSE346229 (Sth1 / Snf2 anchor-away ATAC-seq; independent validation) | 14 deduplicated BAMs (bowtie2 `--very-sensitive -X 1000`, MAPQ ≥ 10, proper pairs, markdup) with logs | `independent_validation.py extract` |
+| `inputs/histone_chip_gse260577/` | GEO GSE260577 (mouse liver, Sham vs CLP) | H3K27ac and H3K4me3 ChIP-seq CPM bigWigs, 4 replicates per group (assembly mm39 by the bigWig header, although the GEO text also names mm10) | `consistency_eval.py build` |
+| `inputs/histone_cutrun_gse285245/` | GEO GSE285245 (mouse P14 CD8 T cells) | H3K27ac and H3K4me3 CUT&RUN bigWigs, Naive and Arm day 30, 4 replicates each (mm10) | `consistency_eval.py build` |
+| `inputs/annotation_mouse/` | UCSC `ncbiRefSeqSelect` for mm10 and mm39 | TSS anchors for H3K4me3 | `consistency_eval.py build` |
 | `inputs/annotation_tss/` | derived from public annotations and GSE112560 peaks | `consensus_top5000.bed`, `tss_1bp.bed`, `promoters_tss1kb.bed` | semi-real cache build |
 
 ## Caches (`inputs/caches/`)
@@ -25,6 +28,7 @@ comes from, what was built from it and which benchmark reads it. Paths below are
 | `ins_yeast.npz` | yeast MNase bigWigs | `insertion.py --build-yeast` | `insertion.py`, `replicate_structure.py`, `replicate_holdout.py`, `batch_aware.py` |
 | `ins_proseq.npz` | PRO-seq DMSO bigWigs (line-balanced) | `insertion.py --build-proseq` | `insertion.py` |
 | `psv_cache.npz` | `atac_gse346229_bam/` | `independent_validation.py extract` | `independent_validation.py run / aggregate` |
+| `cons_*.npz` | all datasets above, with region coordinates | `consistency_eval.py build` | `consistency_eval.py run` |
 | `cutrun_profiles.npz` | CUT&RUN bigWigs | `cutrun_null.py` | `cutrun_null.py` |
 
 ## Typical commands

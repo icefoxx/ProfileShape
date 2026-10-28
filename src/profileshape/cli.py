@@ -75,6 +75,9 @@ def main(argv=None):
     run = sub.add_parser("run", help="analyse data described by a config")
     run.add_argument("--config", required=True)
     run.add_argument("--out", help="output directory (default: config 'output')")
+    cons = sub.add_parser("consistency", help="within-group replicate consistency only (no contrast needed)")
+    cons.add_argument("--config", required=True)
+    cons.add_argument("--out", help="output directory (default: config 'output')")
     ex = sub.add_parser(
         "example", help="synthetic bigWigs → full analysis (+ optional pilot benchmark)"
     )
@@ -122,6 +125,17 @@ def main(argv=None):
 
         result = run_pipeline(load_config(args.config), args.out)
         _summary(result)
+        return 0
+    if args.command == "consistency":
+        from .data import load_config
+        from .report import run_consistency
+
+        result = run_consistency(load_config(args.config), args.out)
+        c = result["consistency"]
+        print(f"regions used: {len(c.regions)}; flags: {len(c.flags)}")
+        for f in c.flags:
+            print(f"  {f}")
+        print(f"report: {result['output'] / 'reports' / '07_consistency.md'}")
         return 0
     if args.command == "example":
         from .data import load_config

@@ -1,0 +1,12 @@
+{
+  "commit": "5f7b302cb498a5c05e876f424b2ec7802ad16219",
+  "uncommitted_src": 4,
+  "src_diff_sha256": "ce4afdd42a3aff64",
+  "regional_py_sha256": "21ffd82395ee207f",
+  "consistency_py_sha256": "e438035d7ba55f30",
+  "protocol_sha256": "3e15e7383709e1d5",
+  "script_sha256": "ffd6e0475dd4a3f6",
+  "seeds": "simulation 9970000+, semi-real 9980000+",
+  "started": "2026-10-27T20:22:23",
+  "finished": "2026-10-27T21:01:24"
+}

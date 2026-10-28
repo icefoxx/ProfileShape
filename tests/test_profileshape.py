@@ -227,6 +227,9 @@ def test_example_end_to_end_with_bigwig_extraction(tmp_path):
         "results/metrics/region_tests.tsv",
         "figures/E_effect_sizes.pdf",
         "figures/G_region_volcano.pdf",
+        "reports/07_consistency.md",
+        "results/metrics/consistency_samples.tsv",
+        "figures/H_consistency_distances.pdf",
         "run_log.json",
     ):
         assert (results / rel).is_file(), rel
@@ -595,3 +598,87 @@ def test_example_regional_benchmark_covers_every_reported_metric(tmp_path):
 
     rows = run_regional_benchmark(reps=1, seed=3, scenarios=("shift",))
     assert rows
+
+
+# ---------------------------------------------------------------- within-group consistency
+
+
+def _consistency(n, seed, modify=None, shallow=False):
+    from profileshape.consistency import group_consistency
+
+    profiles, _ = simulate("null", SimSettings(n_ref=n, n_alt=2, n_regions=600), seed=seed)
+    if shallow:  # same shapes (same seed), a third of the depth for the first replicate
+        thin, _ = simulate("null", SimSettings(n_ref=n, n_alt=2, n_regions=600, depth=12), seed=seed)
+        profiles.values[0] = thin.values[0]
+    if modify:
+        modify(profiles.values)
+    return group_consistency(profiles, Config(), groups={"WT": np.arange(n)})
+
+
+def test_consistency_quiet_for_exchangeable_replicates_even_with_unequal_depth():
+    for n, shallow in ((3, False), (4, False), (3, True), (4, True)):
+        c = _consistency(n, 61, shallow=shallow)
+        assert not c.flags, (n, shallow, c.flags)
+        assert all(0.7 < r["shape_deviation_ratio"] < 1.6 for r in c.sample_rows)
+    # the per-region distance is depth-confounded (descriptive), the offset test is not
+    c = _consistency(3, 61, shallow=True)
+    assert c.sample_rows[0]["shape_deviation_ratio"] > 1.2 and c.sample_rows[0]["offset_p"] > 0.01 / 3
+
+
+def test_consistency_finds_a_deviating_replicate_and_a_two_by_two_structure():
+    def shift_one(v):
+        v[1] = np.roll(v[1], 2, axis=-1)  # 40 bp, every region
+
+    c = _consistency(4, 62, shift_one)
+    assert any("WT_rep2 stands out" in f for f in c.flags)
+    assert not any("WT_rep1 stands out" in f or "sub-groups" in f for f in c.flags)
+
+    def shift_pair(v):
+        v[2:4] = np.roll(v[2:4], 1, axis=-1)  # replicates 3 and 4 by 20 bp
+
+    c = _consistency(4, 63, shift_pair)
+    best = min(c.partition_rows, key=lambda r: r["contrast_p"])
+    assert {best["half_a"], best["half_b"]} == {"WT_rep1+WT_rep2", "WT_rep3+WT_rep4"}
+    assert any("sub-groups" in f for f in c.flags)
+
+
+def test_consistency_with_two_replicates_reports_but_does_not_attribute():
+    def shift_one(v):
+        v[0] = np.roll(v[0], 2, axis=-1)
+
+    c = _consistency(2, 64, shift_one)
+    a, b = c.sample_rows
+    assert a["offset_p"] < 1e-6 and a["offset_p"] == b["offset_p"]  # one difference, two names
+    assert not c.flags and any("cannot be told" in n for n in c.notes)
+    assert not c.partition_rows
+
+
+def test_consistency_cli_runs_without_a_contrast(tmp_path):
+    from profileshape.cli import main
+    from profileshape.simulate import write_example
+
+    out = tmp_path / "ex"
+    write_example(out, SimSettings(n_regions=60), scenario="null")
+    assert main(["consistency", "--config", str(out / "config.yaml"), "--out", str(out / "qc")]) == 0
+    text = (out / "qc" / "reports" / "07_consistency.md").read_text()
+    assert "## Samples" in text and "not that the replicates are shown to be equivalent" in text
+    shape = (out / "qc" / "results" / "metrics" / "consistency_distance_shape.tsv").read_text().splitlines()
+    assert len(shape) == 1 + 6  # header + one row per sample
+
+
+def test_reports_state_calibration_limits(tmp_path):
+    """Default outputs must not claim more than the evaluations support."""
+    from profileshape.data import load_config
+    from profileshape.report import run
+    from profileshape.simulate import write_example
+
+    out = tmp_path / "ex"
+    write_example(out, SimSettings(n_regions=60), scenario="shift")
+    run(load_config(out / "config.yaml"), out / "res")
+    reg = (out / "res" / "reports" / "05_regional.md").read_text()
+    assert "**miscalibrated**" in reg and "log2_auc** (not calibrated)" not in reg
+    assert "| log2_auc **(not calibrated)** |" in reg and "| log2_signal **(not calibrated)** |" in reg
+    assert "**Few regions.**" in reg  # 60 regions, 3 vs 3: below the per-class calibration boundary
+    assert "not the movement of a particular nucleosome" in reg
+    cons = (out / "res" / "reports" / "07_consistency.md").read_text()
+    assert "approx. 95 % CI" in cons and "can be too small" in cons

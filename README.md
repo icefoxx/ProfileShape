@@ -20,6 +20,9 @@ Formerly **ProfileSeg**, developed inside the [GenomeCanvas](https://github.com/
 - **Translation description, only where it fits.** A direction and bp value are reported when a cross-correlation
   shift is consistent with the projection test, explains most of the difference and is unambiguous; otherwise the
   region is reported as `Changed` with the reason (`translation_flag`). The bp value is a descriptive effect size.
+- **Within-group consistency** (`profileshape consistency`): sample distance matrices, sample-wide offsets
+  of one replicate from its group-mates, sub-group structure among replicates, divergent regions. Descriptive QC;
+  not an equivalence test.
 - **Diagnostics**: depth per region (exact for BAM, estimated for bigWig), replicate influence, batch confounding
   (tests refused when condition and batch coincide), fragment-length QC for BAM.
 - **Inputs**: bigWig or BAM (fragment midpoints, coverage, read ends; MAPQ / duplicate / proper-pair / size filters),

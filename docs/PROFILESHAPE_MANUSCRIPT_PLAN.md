@@ -1,60 +1,82 @@
-# ProfileShape — manuscript plan (working draft)
+# ProfileShape — manuscript plan (working draft, rewritten 2026-10-27)
+
+Replaces the v2.4-era plan (its numbers — e.g. "98 % downstream, +17.5 bp", "V1–V3 pass in all cells" — are
+superseded; current evidence: `docs/PROFILESHAPE_V3_REVIEW.md`). Work packages referred to as P0-x / P1-x are
+in `docs/PROFILESHAPE_NEXT_PLAN.md`.
 
 ## Positioning
 
-**Core claim (narrow and defensible).** With as few as two biological replicates per condition,
-ProfileShape gives calibrated per-region tests of whether the *shape* of a coverage profile changed
-(omnibus `shape_kernel`; directional `shift` with an effect size in bp), separately from changes in
-*amplitude*, directly on coverage tracks.
+**Core claim.** At predefined genomic regions, ProfileShape screens for *replicate-supported spatial
+redistribution of signal* between two conditions with 2–3 biological replicates, separately from changes in
+amount, directly on coverage tracks or BAM files, and says what this adds beyond amount-based analysis.
 
-**Secondary claims.**
-1. Existing approaches are miscalibrated in replicated designs for identifiable reasons:
-   MMDiff2 combines dependent pairwise p-values with Fisher's method (34 % of regions called under
-   the null in our simulation); region-as-unit methods (IWTomics in its intended use, Wilcoxon over
-   peaks) are pseudo-replicated and respond to amplitude changes.
-2. A label-invariant stabilising constant is necessary for pooled-permutation shape tests: an s0
-   computed per label assignment makes the test anti-conservative when many regions change.
-3. Diagnostics for confounds that otherwise masquerade as shape changes (background change,
-   amplitude re-weighting, a deviant replicate).
+**How (the contribution is the combination and its evaluation, not a new theory):**
+1. a label-invariant stabilising constant in the per-region statistics;
+2. a permutation null pooled over regions within strata of a label-invariant covariate;
+3. one list from an omnibus (kernel) and a directional (projection) test, combined per region;
+4. a translation description (bp) reported only where it fits, as a descriptive effect size;
+5. replicate-consistency diagnostics (sample offsets, sub-group structure) and depth / batch diagnostics.
 
-**Not claimed.** The aggregate (typical-region) analysis is presented as descriptive support with
-explicit conditions of use (`docs/PROFILESHAPE.md`, "When to use the aggregate centroid"); its earlier
-validation failures are reported, not hidden. No claim of genome-wide discovery without anchors.
+**What it rests on (stated in the paper).** With 2 replicates per group there are 3 label assignments per
+region; inference is possible only through the cross-region assumption of the pooled null. Many regions do
+not replace biological replicates. The assumption held in simulation and several real-noise settings and
+failed on yeast MNase 2 vs 2 (FDP 0.10–0.13, associated with replicate structure).
+
+**Not claimed.** A proven FDR bound; exact permutation validity across regions; per-region absolute amplitude
+inference (miscalibrated, reported only for exploration); mechanism ("translation" is a fit-consistency
+description of a population profile, not observed movement of a nucleosome or polymerase); localisation of the
+changed sub-region (RegCFinder does this); genome-wide discovery without anchors; "amount unchanged" without an
+equivalence margin or an amount-adjusted model.
+
+## Prior work to position against
+
+MMDiff (kernel shape test with a replicate-derived null), DANPOS (position / fuzziness / occupancy), csaw
+(window counts; can detect local redistribution), RegCFinder (sub-regions of relative density change in
+predefined windows, DEXSeq), IWTomics (curves as units — different target; a misuse example when replicates
+are few), DiffBind / edgeR (amount). Details: `docs/PROFILESHAPE_LITERATURE.md`, `APPLICATIONS.md`.
 
 ## Evidence map
 
 | claim | evidence in hand | still needed |
 |---|---|---|
-| calibration with 2–3 replicates | three frozen validations on fresh seeds with pre-specified criteria (V1–V3 pass in all cells); semi-real data with real replicate noise; real nulls: 18 yeast 2 vs 2 splits (`shift`: 0 calls in all; `shape_kernel`: 0 in 15, calls only where the split coincides with batch-like replicate pairs) and four human PRO-seq 3 vs 3 line-balanced splits (0 calls); insertion on real replicates (FDP 0.03–0.05 yeast, < 0.02 PRO-seq) — `PROFILESHAPE_COMPARISON.md` §8 | a 3 vs 3 real null from a single cell line; batch-aware label assignments |
-| power and effect sizes | simulation, semi-real, insertion on real replicates; PRO-seq NELF: 98 % downstream, +17.5 bp vs ~18 bp independent meta-profile | — |
-| separation of amplitude and shape | amplitude-only scenarios in every benchmark, including insertion on real data | — |
-| competitor miscalibration | simulation (MMDiff2, IWTomics, edgeR); MMDiff2 source analysis; **real BAMs** (yeast MNase realigned from ENA reads): MMDiff2 called 7–17 of 134 genes in real nulls vs 0 for ProfileShape, and 27 vs 65 in the positive control (§9); conventional practice on real data: Wilcoxon over regions significant in 78–100 % of real null splits, pausing index FWER 0.75 (§8) | a second assay with BAMs |
-| practicality | bigWig input; runtime/memory vs MMDiff2 (simulated BAMs, 300–1000 regions: 3–8 s vs 7–15 min, 0.3–0.4 vs 6.6–7.8 GB); exact kernel feature map (19× faster default pipeline at 20,000 regions, 4 vs 4) — §10 | packaging as a stand-alone tool (planned separately) |
+| whole-list FDR of the shape tests near nominal | simulation and semi-real grid incl. a pre-specified confirmatory run on new seeds (`calibration/confirm_v3`); PRO-seq 3 vs 3 real nulls; ATAC (GSE346229) real nulls and insertions | stress tests beyond the simulated range: 70–100 % of regions changed, same-direction global shifts, shared perturbations, multimodal / asymmetric shapes, batch, spatial dependence (P1-F) |
+| per-class calibration | ≥ 3000 regions (2 vs 2), ≥ 1000 (3 vs 3) in the tested mix | a null for few regions (open) |
+| real-data limits | yeast MNase 2 vs 2 above nominal; associated with replicate structure; the consistency module flags that structure (`consistency_v2`) but flagged structure did not produce null calls in 62 new splits | cause; whether a pre-analysis rule can be validated on independent data |
+| sensitivity vs comparators | edgeR diffSpliceDGE, pre-specified (`round6/diffsplice`); MMDiff2 in simulation and on real BAMs (v2.x code, `PROFILESHAPE_COMPARISON.md` §2, §4, §9, §11.6) | RegCFinder; MMDiff2 with the current code (P0-C, deferred) |
+| positive cases | yeast remodeler mutants (ordering matches an independent phasing measure); NELFB PRO-seq (downstream redistribution) — development data, consistency with known biology | **an independent case** with matched assay, sufficient depth, an independent readout, and added explanatory value beyond amount, depth, expression and width (P0-D) |
+| translation description | direction correct in every evaluated cell for the selected subset; estimate ÷ true 0.94–1.08 for ≥ 50 bp with power ≥ 0.3; coverage of the description can be small | selection-adjusted intervals (open) |
+| replicate consistency | pre-specified evaluation on 11 datasets / 7 assays (`consistency_v2`): calibration passes; interval coverage fails in 2 of 31 cells; sub-region share (π̂₁) rough | user-set tolerance margins with calibrated upper bounds (P1-E) |
+| practicality | bigWig / BAM / matrix input; runtime and memory vs MMDiff2 (`COMPARISON.md` §10) | pinned environment, input-fetch script, tagged release (P1-G) |
+
+## Ablations (one result file each)
+
+| design element | evidence so far | to do |
+|---|---|---|
+| label-invariant s0 vs per-assignment s0 | development finding: 50 % of regions shifted, per-assignment s0 gave far more false calls than a common s0 (`COMPARISON.md` §4) | re-run as a clean ablation with the current code |
+| stratified vs unstratified pooled null | v2.4 null vs v3 null on the same seeds (`calibration/dev_v24` vs `dev_v3`; region-count boundary `round3/mixed_n_*`) | — (exists) |
+| Cauchy combination vs union of two BH lists | design argument; union not FDR-controlled | simulation result file |
+| translation consistency rule vs none; stricter R² | R² 0.8 rule chosen on development seeds and rejected on new seeds (`round5/shift_r2_0.8_rejected`) | report the rule's coverage vs direction errors in one table |
+| signed support normalisation vs clipped / whole-window | `COMPARISON.md` §11.3 (amplitude-only calls 1–3 % with clipping; power loss with whole-window mass) | result file with the current code |
 
 ## Figures (draft)
 
-1. Problem: amplitude vs shape confounds; why regions/reads are not replicates (schematic + IWTomics /
-   MMDiff2 null behaviour).
-2. Method: per-region statistics, pooled permutation null over regions and label assignments,
-   label-invariant s0 (with the per-assignment s0 failure as a panel).
-3. Calibration: frozen validation grid (sources × designs), real nulls, insertion on real data.
-4. Power: shift / broadening vs replicates; small-shift information limit (realised z).
-5. Real data: yeast remodeler mutants (phasing check), PRO-seq NELF (direction and size).
-6. Comparison and resources: MMDiff2, IWTomics, edgeR, conventional practice (Welch on centroids,
-   Wilcoxon over regions, pausing index); runtime and memory.
+1. Problem: amount vs shape; why regions and reads are not replicates; what RegCFinder / MMDiff / count models target.
+2. Method: per-region statistics, pooled stratified null, label-invariant s0 (ablation panel).
+3. Calibration: confirmatory grid, real nulls, region-count boundary, stress tests; the yeast failure shown, not hidden.
+4. Power and effect size: vs replicates and depth; translation description and its coverage.
+5. Independent positive case with the added-value analysis (P0-D).
+6. Replicate consistency and practical use (inputs, diagnostics, runtime).
 
-## Threats to validity (to state in the paper)
+## Threats to validity (to state)
 
-- Simulator and tuning seeds share a generative family; mitigated by fresh-seed validations,
-  semi-real noise and insertion on real replicates, but not eliminated.
-- Development history: the selection rule was amended (FDP constraint) and two defects were fixed
-  (per-assignment s0; dependent semi-real noise) before the final validations; all are documented.
-- The `shift` effect size is attenuated (up to ~27 %) at 2 vs 2 on broad profiles (criterion V4).
-- Replicate heterogeneity aligned with a contrast is detected as a difference (yeast double mutant
-  split); interpretation relies on representative replicates.
-- Small per-site effects are information-limited (50 bp at 2 vs 2).
+- One simulator family developed alongside the method; mitigated by fresh-seed confirmatory runs, real noise
+  and insertion, not eliminated.
+- Development history (amended rules, fixed defects, a defect found by the consistency evaluation v1) is
+  documented; criteria were pre-specified for confirmatory runs.
+- Real-data null splits reuse the same replicates; they are candidate nulls, not gold standards.
+- Shared-noise and replicate structure can make splits non-exchangeable (yeast).
 
 ## Target venues
 
-Mid-tier methods journals (NAR Genomics and Bioinformatics, BMC Bioinformatics, Bioinformatics)
-once the in-progress items are complete and the tool is packaged on its own.
+A focused methods / software paper (e.g. NAR Genomics and Bioinformatics, Bioinformatics, BMC Bioinformatics)
+once P0-A, P0-B and P0-D are complete; the independent positive case weighs more than further simulation.

@@ -127,8 +127,8 @@ BH FDR per metric (`inference.region_fdr`, default 0.05).
 
 | metric | meaning |
 |---|---|
-| `log2_auc` | window AUC (absolute; inherits upstream normalisation) |
-| `log2_signal` | background-corrected core signal (absolute) |
+| `log2_auc` | window AUC (absolute; inherits upstream normalisation). **Per-region test not calibrated** (complete nulls: FWER = FDR 0.20 and 0.275 in two designs); reported for exploration |
+| `log2_signal` | background-corrected core signal (absolute). **Per-region test not calibrated**, as `log2_auc` |
 | `log2_signal_relative` | `log2_signal` minus a per-sample offset estimated on presumed-unchanged regions: **site-specific** changes. Assumes most regions do not change |
 | `log2_enrichment` | centre signal / own background |
 | `shape_any` | **the list to use for shape changes**: per region, the p-values of `shape_kernel` and `shift` combined by a Cauchy combination, then one BH adjustment (taking the union of two separately adjusted lists does not control FDR). The Cauchy combination is approximately valid for dependent p-values through a tail approximation; its calibration on these empirical p-values is checked by simulation, not guaranteed |
@@ -173,6 +173,74 @@ Outputs: `reports/05_regional.md`, `results/metrics/region_tests.tsv` (region ×
 moderated t, df, p, FDR, call), `region_tests_summary.tsv`, `robust_global_shape.tsv`,
 `figures/G_region_volcano.*`.
 
+## Within-group consistency (descriptive)
+
+Do the replicates of each condition agree with each other? Run on every condition, without the contrast:
+`profileshape consistency --config config.yaml` (also part of `profileshape run`; report
+`reports/07_consistency.md`). Shape uses the same mass-normalised profiles and kernel as `shape_kernel`;
+amplitude is kept separate (robust sd of per-region log2 signal ratios).
+
+| output | question | notes |
+|---|---|---|
+| distance matrices (`consistency_distance_{shape,meta,amplitude}.tsv`, figure H) | which samples resemble each other, within and across conditions | shape distances include sampling noise: shallower samples look further away |
+| sample offset (`consistency_samples.tsv`) | does one replicate differ from its group-mates in the same way across regions (fragment length, alignment, IP)? | linear in the signal, amplitude direction removed, scaled-χ² test over regions; flagged when p < 0.01 / n **and** the offset is ≥ 2× the group-mates' own; ≥ 3 replicates |
+| replicate structure (`consistency_partitions.tsv`) | do the replicates form two sub-groups? | every split into halves of ≥ 2 (groups of ≥ 4); per-region across-minus-within pair-distance contrast, flagged at p < 0.01 / splits; meta-profile across / within ratio as effect size |
+| size in bp (`consistency_samples.tsv`, oriented anchors) | how large is a replicate's sample-wide offset, as a shift? | translation-equivalent bp with a 95 % interval from blocks of 10 neighbouring regions; `shift_share_of_offset`: how much of the offset a common shift explains |
+| F₁₀ / F₂₀ / F₅₀ (`consistency_samples.tsv`) | in how many regions does the estimated shift exceed 10 / 20 / 50 bp? | **descriptive, includes noise** (no difference at all: ~40 % of regions exceed 20 bp in simulation); read only against `F*_mates`, the group-mates' own values on the same scale |
+| split π̂₁ (`consistency_partitions.tsv`, experimental) | in how many regions do two halves of a group differ detectably? | Storey π̂₁ from per-region shape tests between the halves, block-bootstrap interval; biased downwards where power is low. Not computed for one sample versus the rest: that version was depth-confounded (π̂₁ ≈ 0.38 with no difference and one replicate at 30 % depth) |
+| divergent regions (`consistency_divergent_regions.tsv`) | which regions disagree most between replicates, and (≥ 3) which sample drives them | robust z > 3 of log within-group spread within signal-mass strata; a ranking, not a test |
+| leave-one-out stability (in 07, from `per_region_tests`) | do the contrast's calls depend on one replicate? | the existing `replicate_influence` retention table |
+
+How to read it:
+
+* **No flag is not evidence of consistency.** No equivalence margin is tested; a low score means no
+  inconsistency was seen at this depth.
+* **Two replicates:** a systematic difference between them can be measured (reported as a share of the
+  aggregate profile) but not attributed to one of them, and there is no third replicate to say how large
+  a replicate difference is usual; nothing is flagged.
+* **Significance alone is not a problem.** With thousands of regions nearly every real replicate has a
+  significant offset (yeast MNase, PRO-seq); hence the second condition (≥ 2× the group-mates).
+* **Depth:** the offset and split tests are built so that unequal depth alone does not trigger them; the
+  per-region distance, `shape deviation ratio` and `most deviant share` are depth-confounded and descriptive.
+* **Per-region power is low** for a single deviating replicate (a 80 bp shift of 50 regions in one of four
+  replicates was mostly not ranked divergent); use the region list for inspection, not to certify the rest.
+* **Shape consistency is not overall quality:** depth, library complexity, background and amplitude
+  need their own checks.
+
+Variances over regions (offset test, split contrast, bp interval, π̂₁ interval) come from blocks of 10
+consecutive regions along the genome, so overlapping windows do not make them too small. A pre-specified
+evaluation (simulation, semi-real nulls and insertions on MNase, ATAC, TF ChIP, TF CUT&RUN, PRO-seq, H3K27ac and
+H3K4me3 ChIP-seq and CUT&RUN, and functional consistency on real-null splits) is in
+`docs/PROFILESHAPE_CONSISTENCY_EVALUATION.md`, results in `benchmarks/results/consistency_v1/`.
+
+Pre-specified evaluation (`benchmarks/results/consistency_v2`; v1 found a defect and is kept on record, see
+the protocol's amendment A1). Simulation 4000 runs, semi-real nulls and insertions on 11 datasets (MNase, ATAC,
+TF ChIP-seq, TF CUT&RUN, PRO-seq, H3K27ac and H3K4me3 ChIP-seq and CUT&RUN; ATG, +1 nucleosome, peak, summit and
+TSS anchors), 62 new real-null splits:
+
+* **Calibration (K1–K3, K6, K7 pass).** Flag rates under the null ≤ 0.04 per cell in simulation, ≤ 2 / 20 in every
+  real-noise null; pooled offset-test P(p < 0.01) 0.011–0.013, split contrast 0.009–0.010, with and without a
+  replicate at 30 % depth.
+* **bp interval (K4 fails).** Pooled coverage 0.94 (simulation) and 0.95 (real noise), but 0.85 in two of 31
+  real-noise cells (H3K4me3 CUT&RUN summits, Naive; TF ChIP TAF15 pair, also 0.85 in v1, where the pair's offset
+  test gave p < 0.01 in 3 of 20 nulls). Read the interval as approximate; for two replicates the offset p-value
+  can be too small.
+* **Size (K5 pass).** +20 / +50 bp sample-wide shifts estimated as +20.0 / +51.0 bp in simulation; +21.6 / +57.1 bp
+  on real shapes (mean over datasets).
+* **Sensitivity (K9 pass).** A replicate shifted 20 bp, or broadened ×1.3, in every region: found in every
+  dataset. A replicate shifted 50 bp in 30 % of regions with random direction: 0.05–1.00 depending on the dataset;
+  in 10 % of regions: ≤ 0.12. A 2 + 2 sub-group (20 bp, all regions): found in MNase, H3K27ac and H3K4me3 ChIP-seq,
+  not in ATAC, H3K27ac CUT&RUN or TF CUT&RUN.
+* **Extent.** F₂₀ excess over the group-mates rises with the shifted share (≈ +0.03 at 10 %, +0.11 at 30 %, +0.22
+  for all regions at 20 bp); it is a monotone description, not an estimate of the share. Split π̂₁: 0.21 for a
+  true 0.20 in simulation, 0.05–0.32 on real noise.
+* **Functional consistency (K10 not evaluable).** No `shape_any` call in any of the 62 new real-null splits,
+  including the 4 that the split test flagged (H3K4me3 ChIP-seq "1+2 vs 3+4" in both groups): in these data a
+  flagged sub-group did not turn into false discoveries, so a flag is not by itself a prediction that the
+  differential tests fail.
+* **On real data** 17 of 30 groups carry a flag, often for offsets of 1–3 % of the profile and < 1 bp: the flag is
+  relative to the group-mates. An absolute margin of practical relevance has not been defined or evaluated.
+
 ## When to use the aggregate centroid (and when not)
 
 The aggregate `centroid` (and `iqr_width` / `sd_width`) describes the **typical region**: one number
@@ -213,6 +281,7 @@ results/
   reports/03_benchmark.md            (benchmark/example) call rates, bias, CI coverage with denominators
   reports/04_limitations.md
   reports/05_regional.md             per-region tests (v2)
+  reports/07_consistency.md          within-group replicate consistency (descriptive QC)
   reports/03b_benchmark_regional.md  (benchmark) per-region FDR and power
   results/metrics/effects.tsv        one row per metric: estimate, Welch CI, bootstrap CI, permutation p and floor
   results/metrics/shape_per_replicate.tsv, amplitude_per_profile.tsv, region_effects.tsv, group_distributions.tsv

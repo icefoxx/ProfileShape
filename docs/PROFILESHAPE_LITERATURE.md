@@ -20,6 +20,7 @@ For each one: what it does, and where ProfileShape agrees, borrows or differs.
 |---|---|---|
 | Schweikert *et al.* (2013) *BMC Genomics* 14:826, doi:10.1186/1471-2164-14-826 (MMDiff; Bioconductor MMDiff2) | per-peak kernel two-sample test (maximum mean discrepancy on read midpoints); null from replicate-vs-replicate comparisons binned by coverage; BH | **the closest prior art for shape**. Its authors found the plain MMD bootstrap rejected almost every replicate-vs-replicate comparison, so they built a replicate-derived null; this is the same lesson as ProfileShape's (replicates, not reads or regions, are the unit of inference). Differences: MMDiff gives one omnibus distance per peak and needs BAMs; ProfileShape reports interpretable components (centroid, spread, asymmetry, amplitude kept separate) at both aggregate and per-region level on coverage tracks. MMDiff reports poor sensitivity to count changes by design, i.e. it too separates shape from amplitude |
 | Chen *et al.* (2013) *Genome Res* 23(2):341–351 (DANPOS) | nucleosome position shift, fuzziness and occupancy changes from MNase-seq | same decomposition (position / spread / occupancy ≈ centroid / width / amplitude) for nucleosomes; ProfileShape applies it to anchored windows of any assay |
+| Weiß & Friedel (2023) *Bioinform Adv* 3(1):vbad085, doi:10.1093/bioadv/vbad085, PMID 37456509 (RegCFinder) | in user-defined windows (promoters, gene bodies, peaks; any short-read assay, BAM), finds sub-regions whose *relative* read density differs between two conditions: per-position densities normalised within the window and averaged over replicates, all maximal scoring subsequences of the difference (Ruzzo–Tompa), a filter against position-permuted differences, then DEXSeq differential usage of the found sub-regions versus the rest of the window; ≥ 2 replicates per condition; applied to PRO-seq and Pol II ChIP-seq | the closest prior work: same target (within-region redistribution, amplitude removed by within-window normalisation), predefined windows, replicates. It **localises** the change (sub-region coordinates), which ProfileShape does not. It differs in inference: segmentation ignores replicate variance, the permutation is over positions (not replicate labels), and sub-regions are selected and tested on the same data; no simulation or FDR calibration is reported. Not run here (comparison planned; `docs/PROFILESHAPE_NEXT_PLAN.md` P0-C) |
 
 ## 3. Functional data / local testing
 
@@ -45,22 +46,21 @@ For each one: what it does, and where ProfileShape agrees, borrows or differs.
 
 ## 5. What is new, and what is not
 
-**Not new:** empirical-Bayes per-region testing (limma, MAnorm2), region-level FDR (csaw),
-TMM-type relative normalisation, the position / spread / occupancy decomposition (DANPOS), and
-kernel-based shape testing with a replicate-derived null (MMDiff).
+**Not new:** empirical-Bayes per-region testing (limma, MAnorm2), region-level FDR (csaw), TMM-type relative
+normalisation, the position / spread / occupancy decomposition (DANPOS), kernel-based shape testing with a
+replicate-derived null (MMDiff), and testing within-window redistribution of signal at predefined windows with
+replicates (RegCFinder, which also localises the change). Window-level count methods (csaw) can detect local
+redistribution too; they are not "total-only" methods.
 
-**What ProfileShape contributes** (as an engineering and methodological combination, not a new
-statistical theory):
-1. a single analysis that keeps **amplitude and shape apart**, at both aggregate and per-region level,
-   with **replicates as the unit** and the permutation floor stated;
-2. explicit handling of the **re-weighting confound**: when regions change amplitude unequally, the
-   aggregate shape can move with no region changing shape; the median-of-regions estimator and a
-   diagnostic flag address it;
-3. a **background-corrected relative amplitude**, which avoids the artefact where weak regions look
-   relatively "up" whenever IP efficiency drops. Window counts that include background have this
-   artefact; it was found on real data (GSE112560 TCF3: Spearman −0.33 → +0.07);
-4. built-in **benchmarks with known truth on the user's own profile shapes**, plus power guidance.
+**What ProfileShape contributes** — a combination of inference details, not a new statistical theory:
+replicate-supported screening of spatial signal redistribution at predefined regions with 2–3 replicates, via
+(i) a label-invariant stabilising constant (a per-assignment one makes pooled-permutation shape tests
+anti-conservative when many regions change), (ii) a permutation null pooled over regions within strata of a
+label-invariant covariate, (iii) a per-region combination of an omnibus and a directional test into one list,
+on coverage tracks (bigWig) as well as BAM, with replicate-consistency diagnostics and a constrained,
+descriptive shift (bp) reported only where a translation describes the change.
 
-No published method I found reports interpretable per-region shape components (centroid, spread)
-with replicate-level empirical-Bayes inference on coverage tracks. This is a search result, not
-proof of absence.
+What this rests on: inference with 2 replicates per group is possible only through the cross-region
+assumption of the pooled null (regions comparable within strata), which is studied empirically
+(`PROFILESHAPE_CALIBRATION.md`), not guaranteed, and was violated on yeast MNase 2 vs 2. Each element above
+needs an ablation in the paper (`PROFILESHAPE_MANUSCRIPT_PLAN.md`).

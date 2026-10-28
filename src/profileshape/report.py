@@ -13,7 +13,10 @@ import numpy as np
 
 from .analysis import Analysis, analyse
 from .data import Config, Profiles, extract, read_deeptools_matrix, read_manifest, read_regions
-from .figures import benchmark_figure, make_figures
+from .figures import benchmark_figure, consistency_figure, make_figures
+
+# Per-region absolute amplitude tests: miscalibrated under complete nulls (docs/PROFILESHAPE_V3_REVIEW.md §1).
+AMPLITUDE_UNCALIBRATED = ("log2_auc", "log2_signal")
 
 
 def _versions():
@@ -81,9 +84,15 @@ def run(config: Config, output: str | Path | None = None) -> dict:
     from .regional import per_region_tests
 
     regional = per_region_tests(a, fdr=config.region_fdr)
+    from .consistency import group_consistency
+
+    consistency = group_consistency(profiles, config)
+    a.flags.extend(f"consistency: {f}" for f in consistency.flags)
     write_tables(a, out)
     write_regional(a, regional, out)
-    figures = make_figures(a, out / "figures") + regional_figure(a, regional, out / "figures")
+    write_consistency(consistency, profiles, out, regional)
+    figures = (make_figures(a, out / "figures") + regional_figure(a, regional, out / "figures")
+               + consistency_figure(consistency, out / "figures", config))
     write_reports(a, out, manifest_flags, samples)
     log = dict(
         config={k: v for k, v in vars(config).items()},
@@ -96,7 +105,7 @@ def run(config: Config, output: str | Path | None = None) -> dict:
         flags=manifest_flags + a.flags,
     )
     (out / "run_log.json").write_text(json.dumps(log, indent=2, default=str))
-    return dict(analysis=a, regional=regional, output=out, log=log)
+    return dict(analysis=a, regional=regional, consistency=consistency, output=out, log=log)
 
 
 def write_tables(a: Analysis, out: Path) -> None:
@@ -417,16 +426,31 @@ def write_regional(a: Analysis, regional, out: Path) -> None:
         f"{len(a.ref_idx)} {c.reference}) using empirical-Bayes moderated t statistics (Smyth 2004; numerically "
         f"identical to limma::eBayes). Benjamini–Hochberg FDR < {c.region_fdr} per metric. Calls: Higher / Lower / "
         "Not_significant (`shape_kernel`: Changed / Not_significant). `Not_significant` is **not** evidence of no "
-        "change (equivalence testing is not implemented).",
+        "change (equivalence testing is not implemented); at low depth it carries little information.",
+        "",
+        "**Calibration status.** The shape tests (`shape_kernel`, `shift`, `shape_any`) had whole-list FDR near or "
+        "below the nominal level in the simulated and semi-real scenarios studied (an empirical result, not a proven "
+        "bound; their null is pooled over regions, which assumes regions are comparable). The per-region absolute "
+        f"amplitude tests (`{AMPLITUDE_UNCALIBRATED[0]}`, `{AMPLITUDE_UNCALIBRATED[1]}`) were **miscalibrated** under "
+        "complete nulls (FWER = FDR 0.20 and 0.275 in two designs): their calls are reported for exploration and are "
+        "not a calibrated inference.",
         "", "| metric | meaning | regions tested | higher | lower | changed | prior df | median estimate |",
         "|---|---|---|---|---|---|---|---|",
     ]
     for s in summary:
-        lines.append(f"| {s['metric']} | {s['description']} | {s['tested']} | {s['higher']} | {s['lower']} | "
+        caveat = " **(not calibrated)**" if s["metric"] in AMPLITUDE_UNCALIBRATED else ""
+        lines.append(f"| {s['metric']}{caveat} | {s['description']} | {s['tested']} | {s['higher']} | {s['lower']} | "
                      f"{s['changed']} | {s['prior_df']:.3g} | {s['median_estimate']:.3g} |")
+    n_small = min(len(a.ref_idx), len(a.alt_idx))
+    need = 3000 if n_small <= 2 else 1000
+    if regional.shape_regions < need:
+        lines += ["", f"**Few regions.** {regional.shape_regions} regions entered the shape tests. Calibration within "
+                  f"classes of regions (narrow, broad, shallow) was seen only with ≥ {need} regions at this design in the "
+                  "tested mix; with fewer, the whole-list FDR still held but narrow peaks were up to 2.6× liberal at "
+                  "p < 0.01 (2 vs 2). Treat calls in a subgroup of regions with caution."]
     lines += ["", f"Shape tests use the {regional.shape_regions} regions with positive pooled background-corrected "
               "signal. `shape_kernel` is the most powerful shape test (it uses the whole profile); `shift` gives the "
-              "direction and a cross-correlation shift (bp) only where the translation description is consistent (`translation_consistent`; otherwise Changed, with the reason in `translation_flag`); consistency is not proof of a translation (one-sided gains can pass) and estimates near the detection limit are biased upwards; `shift_bp_fit` keeps the earlier template fit; `shape_any` combines the two shape tests per region before one BH adjustment (one list instead of two). `centroid` / `mad_width` (full-window moments) are kept for continuity and have low "
+              "direction and a cross-correlation shift (bp) only where the translation description is consistent (`translation_consistent`; otherwise Changed, with the reason in `translation_flag`); consistency is not proof of a translation (one-sided gains can pass), the bp value describes a spatial redistribution of signal in the population profile, not the movement of a particular nucleosome or polymerase, and estimates near the detection limit are biased upwards; `shift_bp_fit` keeps the earlier template fit; `shape_any` combines the two shape tests per region before one BH adjustment (one list instead of two). `centroid` / `mad_width` (full-window moments) are kept for continuity and have low "
               "power on broad profiles.", ""]
     lines += [f"* {n}" for n in regional.notes]
     if regional.depth:
@@ -449,7 +473,8 @@ def write_regional(a: Analysis, regional, out: Path) -> None:
         _tsv(m / "shape_classes.tsv", regional.classes)
     lines += ["", "## Reading the amplitude tests", "",
               "* `log2_auc` (window AUC) and `log2_signal` (background-corrected core signal) are absolute and inherit "
-              "upstream normalisation: a global change in IP efficiency makes most regions 'Lower' or 'Higher'.",
+              "upstream normalisation: a global change in IP efficiency makes most regions 'Lower' or 'Higher'. Their "
+              "per-region tests were miscalibrated under complete nulls (see Calibration status above).",
               "* `log2_signal_relative` removes a per-sample offset estimated on presumed-unchanged regions, so it finds "
               "regions that change **more than the bulk**. It assumes most regions do not change. It is built on "
               "background-corrected signal because window AUC contains background, which makes weak regions look "
@@ -475,6 +500,144 @@ def write_regional(a: Analysis, regional, out: Path) -> None:
     lines += ["", "The median-of-regions estimator is unaffected by regions changing amplitude unequally; when it disagrees "
               "with the aggregate shape metric, prefer it for statements about a typical region."]
     (out / "reports" / "05_regional.md").write_text("\n".join(lines) + "\n")
+
+
+def run_consistency(config: Config, output: str | Path | None = None) -> dict:
+    """Within-group consistency only (no contrast): TSVs, reports/07_consistency.md and figure H."""
+    from .consistency import group_consistency
+
+    out = Path(output) if output else config.path(config.output)
+    for sub in ("reports", "results/metrics", "figures"):
+        (out / sub).mkdir(parents=True, exist_ok=True)
+    profiles, _, _ = load_inputs(config)
+    c = group_consistency(profiles, config)
+    write_consistency(c, profiles, out)
+    consistency_figure(c, out / "figures", config)
+    return dict(consistency=c, output=out)
+
+
+def write_consistency(c, profiles: Profiles, out: Path, regional=None) -> None:
+    """Sample, split, region and distance tables plus reports/07_consistency.md."""
+    m = out / "results" / "metrics"
+    _tsv(m / "consistency_samples.tsv", c.sample_rows)
+    _tsv(m / "consistency_groups.tsv", c.group_rows)
+    _tsv(m / "consistency_partitions.tsv", c.partition_rows)
+    regions = profiles.regions
+    _tsv(m / "consistency_divergent_regions.tsv",
+         [dict(region=regions[r["region_index"]]["name"], chrom=regions[r["region_index"]]["chrom"],
+               start=regions[r["region_index"]]["start"], end=regions[r["region_index"]]["end"],
+               **{k: v for k, v in r.items() if k != "region_index"}) for r in c.region_rows])
+    for name, D in (("shape", c.shape_distance), ("meta", c.meta_distance), ("amplitude", c.amplitude_distance)):
+        _tsv(m / f"consistency_distance_{name}.tsv",
+             [dict(sample=s, condition=c.conditions[i], **{t: float(D[i, j]) for j, t in enumerate(c.samples)})
+              for i, s in enumerate(c.samples)])
+    lines = [
+        "# 07 · Within-group consistency", "",
+        "Do the replicates of each condition agree with each other? Descriptive QC, computed on every condition "
+        "without using the contrast. Shape is compared on background-corrected, mass-normalised profiles with the "
+        "kernel of the differential shape test; amplitude separately on log2 background-corrected core signal.", "",
+        "**Reading.** Absence of a flag means no inconsistency was seen at this depth, not that the replicates are "
+        "shown to be equivalent (no equivalence margin is tested). Distances grow with sampling noise, so a shallower "
+        "sample sits further from its group-mates; the sample offset and split tests below are built so that unequal "
+        "depth alone does not make them significant (checked in simulation and on real-noise data; "
+        "benchmarks/results/consistency_v2). With two replicates a difference can be detected but not attributed to one "
+        "of them, and the pair's offset p-value can be too small (one of five real-noise pairs gave p < 0.01 in 3 of 20 "
+        "nulls). A flag does not by itself mean that the differential tests are affected: in the evaluation, flagged "
+        "sub-groups gave no false calls when used as real-data nulls.", "",
+        "## Flags", "",
+    ]
+    lines += [f"* {f}" for f in c.flags] or ["* none"]
+    lines += ["", "## Groups", "",
+              "| group | samples | median shape distance (within / to other groups) | median meta-profile distance (within / to other groups) | median amplitude distance (log2) | divergent regions | most separated split (meta ratio, p) |",
+              "|---|---|---|---|---|---|---|"]
+    f3 = lambda v: "—" if v is None or not np.isfinite(v) else f"{v:.3g}"  # noqa: E731
+    for g in c.group_rows:
+        split = (f"{g['best_partition']} ({f3(g['best_partition_meta_ratio'])}, p = {g['best_partition_p']:.2g})"
+                 if "best_partition" in g else "—")
+        lines.append(f"| {g['group']} | {g['samples']} | {f3(g['median_shape_distance'])} / "
+                     f"{f3(g.get('median_shape_distance_to_other_groups'))} | {f3(g['median_meta_distance'])} / "
+                     f"{f3(g.get('median_meta_distance_to_other_groups'))} | {f3(g['median_amplitude_distance'])} | "
+                     f"{g['divergent_regions']} ({g['divergent_share']:.1%}) | {split} |")
+    lines += ["", "## Samples", "",
+              "`offset p`: is the sample's shape offset from the mean of its group-mates the same across regions "
+              "(a sample-wide difference such as fragment length or alignment)? Mean over regions of a linear offset "
+              "with the amplitude direction removed, tested against its across-region variability (scaled χ²); "
+              "variances come from blocks of neighbouring regions; with thousands of regions real replicates are nearly always "
+              "significant, so a sample is flagged only when its offset is also ≥ 2× that of its group-mates "
+              "(`offset vs mates`). The flag is relative: in a very consistent group an offset of ~1 % of the profile and < 1 bp "
+              "can be flagged, so judge practical relevance by the size columns. `offset (% of profile)`: size relative to "
+              "the aggregate profile. `shape deviation ratio`: median per-region distance to the "
+              "group-mates' mean relative to the group (≈ 1 for exchangeable replicates of equal depth; larger for "
+              "shallower samples). `most deviant share`: how often the sample is furthest from the others (expected "
+              "1 / n; also larger for shallower samples).", "",
+              "| sample | group | offset (% of profile) | offset vs mates | offset p | shape deviation ratio | most deviant share (expected) | divergent regions driven | amplitude deviation (log2) | depth |",
+              "|---|---|---|---|---|---|---|---|---|---|"]
+    for r in c.sample_rows:
+        share = (f"{r['most_deviant_share']:.2f} ({r['expected_share']:.2f})" if "most_deviant_share" in r else "—")
+        lines.append(f"| {r['sample']} | {r['group']} | {100 * r['offset_relative']:.2f} % | {f3(r['offset_vs_mates'])} | "
+                     f"{r['offset_p']:.2g} | "
+                     f"{f3(r['shape_deviation_ratio'])} | {share} | {r.get('divergent_regions_driven', '—')} | "
+                     f"{f3(r['amplitude_deviation'])} | {f3(r['depth'])} |")
+    if any(np.isfinite(r.get("shift_bp", float("nan"))) for r in c.sample_rows):
+        lines += ["", "### Size in bp (oriented anchors)", "",
+                  "`shift (bp)`: translation-equivalent size of the sample's sample-wide offset from its group-mates "
+                  "(positive: towards higher coordinates / downstream), with an **approximate** 95 % interval from blocks of "
+                  "neighbouring regions (in the evaluation, coverage was 0.94–0.95 pooled but 0.85 in 2 of 31 real-noise "
+                  "settings, including a two-replicate pair); `explained`: share of the offset that a common shift accounts for (low: broadening or "
+                  "redistribution rather than a shift). The projection is attenuated for shifts large relative to the "
+                  "peak. `F10 / F20 / F50`: **descriptive** share of regions whose estimated per-region shift exceeds "
+                  "10 / 20 / 50 bp, followed in brackets by the same for the group-mates (each against the others, on "
+                  "the same scale). Per-region estimates are noisy: in simulation with no difference at all ~40 % of "
+                  "regions exceed 20 bp, so only the excess over the group-mates carries information, and a shallower or "
+                  "noisier sample has a larger excess without any shape difference. These are shares of the analysed "
+                  "regions, not of the genome.", "",
+                  "| sample | group | shift (bp) [approx. 95 % CI] | explained | median abs shift (mates) | F10 (mates) | F20 (mates) | F50 (mates) |",
+                  "|---|---|---|---|---|---|---|---|"]
+        for r in c.sample_rows:
+            mates = lambda k: f" ({r[k + '_mates']:.2f})" if np.isfinite(r.get(k + "_mates", float("nan"))) else ""  # noqa: E731
+            lines.append(f"| {r['sample']} | {r['group']} | {r['shift_bp']:+.1f} [{r['shift_bp_low']:+.1f}, "
+                         f"{r['shift_bp_high']:+.1f}] | {f3(r['shift_share_of_offset'])} | "
+                         f"{r['median_abs_shift_bp']:.1f}"
+                         + (f" ({r['median_abs_shift_bp_mates']:.1f})" if np.isfinite(r.get("median_abs_shift_bp_mates", float("nan"))) else "")
+                         + " | "
+                         f"{r['F10']:.2f}{mates('F10')} | {r['F20']:.2f}{mates('F20')} | {r['F50']:.2f}{mates('F50')} |")
+    if c.partition_rows:
+        lines += ["", "## Replicate structure (groups of ≥ 4)", "",
+                  "Every split of a group into two halves of ≥ 2 samples. `contrast p`: per-region pair distances "
+                  "across the halves exceed those within (mean over regions; each sample's noise enters both sides "
+                  "equally, so unequal depth cancels). `meta ratio`: across / within distance of the samples' mean "
+                  "profiles (effect size; ≈ 1 plus noise without structure). A split with structure is not a valid "
+                  "real-data null, and a contrast whose groups follow it mixes condition with that structure. "
+                  "`shift (bp)`: translation-equivalent offset of the second half from the first. `regions differing` "
+                  "(**experimental**, not yet evaluated): π̂₁ = 1 − π̂₀ (Storey) from per-region shape tests between the "
+                  "halves (equal halves only), with a block-bootstrap interval; it counts *detectably* differing regions. In the "
+                  "evaluation (benchmarks/results/consistency_v2) it was accurate in simulation (0.21 for a true 0.20) but "
+                  "0.05–0.32 for a true 0.20 on real-noise data: a rough indication only. `called`: regions at BH 5 % (a lower bound).", "",
+                  "| group | split | meta ratio | contrast z | contrast p | shift (bp) [approx. 95 % CI] | regions differing (experimental) [95 % CI] | called |",
+                  "|---|---|---|---|---|---|---|---|"]
+        for r in sorted(c.partition_rows, key=lambda r: (r["group"], r["contrast_p"])):
+            sh = (f"{r['shift_bp']:+.1f} [{r['shift_bp_low']:+.1f}, {r['shift_bp_high']:+.1f}]"
+                  if np.isfinite(r["shift_bp"]) else "—")
+            lines.append(f"| {r['group']} | {r['half_a']} \\| {r['half_b']} | {f3(r['meta_ratio'])} | "
+                         f"{r['contrast_z']:+.2f} | {r['contrast_p']:.2g} | {sh} | "
+                         f"{r['regions_differing_share']:.3f} [{r['regions_differing_low']:.3f}, "
+                         f"{r['regions_differing_high']:.3f}] | {r['regions_called']} |")
+    lines += ["", "## Divergent regions", "",
+              "Regions whose within-group spread is unusually large for their signal mass (robust z > 3 within "
+              "mass strata; a ranking cut-off, not a test). For ≥ 3 replicates, `driver` is the sample furthest "
+              "from the others in that region. Per-region detection of a single deviating replicate has little "
+              "power at typical depth; use the list to inspect regions, not to certify the rest. Full list: "
+              "`results/metrics/consistency_divergent_regions.tsv`."]
+    if regional is not None and regional.influence.get("rows"):
+        lines += ["", "## Stability of the differential calls (leave one replicate out)", "",
+                  "Share of the contrast's shape calls that remain when each replicate is dropped (from 05_regional; "
+                  "with 2 replicates per group mostly lost power).", "",
+                  "| sample | group | shape_kernel retained | shift retained |", "|---|---|---|---|"]
+        for r in regional.influence["rows"]:
+            lines.append(f"| {r['sample']} | {r['group']} | {f3(r.get('shape_kernel_retained'))} | "
+                         f"{f3(r.get('shift_retained'))} |")
+    lines += ["", "## Notes", ""] + [f"* {n}" for n in c.notes]
+    (out / "reports" / "07_consistency.md").write_text("\n".join(lines) + "\n")
 
 
 def write_regional_benchmark(result: dict, out: Path) -> None:
