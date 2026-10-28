@@ -146,6 +146,9 @@ def main(argv=None):
     (out / "noise_params.json").write_text(json.dumps(prov, indent=1))  # written before any candidate runs
     print("noise", noise, flush=True)
     est = json.loads(Path(a.estimate).read_text())
+    prov["skipped"] = {k: "estimated depth < 1 fragment per region: power 0 without simulation" for k, e in est.items()
+                       if e["estimated_full_median_over_pilots"] < 1}
+    est = {k: e for k, e in est.items() if k not in prov["skipped"]}
     jobs = []
     for ci, (name, e) in enumerate(est.items()):
         for mode in MODES:
