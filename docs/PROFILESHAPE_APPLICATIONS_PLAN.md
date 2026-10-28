@@ -98,6 +98,16 @@ mechanism, the same direction in every case, superiority over every tool in ever
 ATAC GSE346229 (independent validation): calibration held, no per-region detection at 18–44 fragments per region
 with a ≈ 2 bp genome-wide effect. Reported as the depth boundary, with the GSE218269 depth story; no new analysis.
 
+## Clarifications (before the scenario they concern is run)
+
+- **B, phasing lag window (2026-10-28, before B is run).** The page says "lags 150–180 bp, the lag window of the
+  meta-profile measure already reported"; that measure (`positive_cases.phasing`) uses lags 150–190 bp (15–19 bins).
+  The stated intent — the same window as the reported measure — is followed: 150–190 bp, gene-body side (0 to
+  +1200 bp), mass-normalised per gene and sample. Counts for diffSplice and edgeR come from the CPM coverage tracks
+  as area / (count quantum × single-fragment footprint) per bin (fragment equivalents, rounded) — an approximation
+  stated with the result. Bootstrap intervals: 2000 resamples of genes, seed 9 910 000. Held-out "agrees in sign":
+  the held-out difference of medians (called − not called) has the same sign as the main one.
+
 ## Order and stop
 
 A → B → C, each with its page completed by its result and grade. Three graded cases (whatever the grades) end
