@@ -1,0 +1,213 @@
+{
+ "assignments": [
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_2",
+    "DMSO_3"
+   ],
+   "median_bp": -1.4180328738752903,
+   "share_negative": 0.6143674507310871,
+   "observed": true
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_2",
+    "CDK7i_1"
+   ],
+   "median_bp": -0.31954163714924155,
+   "share_negative": 0.540495867768595,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_2",
+    "CDK7i_2"
+   ],
+   "median_bp": -0.3521900188217858,
+   "share_negative": 0.543801652892562,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_2",
+    "CDK7i_3"
+   ],
+   "median_bp": -0.39605381698568043,
+   "share_negative": 0.5515575333757152,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_3",
+    "CDK7i_1"
+   ],
+   "median_bp": -0.37633337969872815,
+   "share_negative": 0.5516846789574062,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_3",
+    "CDK7i_2"
+   ],
+   "median_bp": -0.5076512432559609,
+   "share_negative": 0.5685950413223141,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "DMSO_3",
+    "CDK7i_3"
+   ],
+   "median_bp": -0.48495675603495203,
+   "share_negative": 0.5632549268912905,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "CDK7i_1",
+    "CDK7i_2"
+   ],
+   "median_bp": 0.43203412340400593,
+   "share_negative": 0.4441195168467896,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "CDK7i_1",
+    "CDK7i_3"
+   ],
+   "median_bp": 0.40472113067060717,
+   "share_negative": 0.4445009535918627,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_1",
+    "CDK7i_2",
+    "CDK7i_3"
+   ],
+   "median_bp": 0.3166926121850201,
+   "share_negative": 0.4579783852511125,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_2",
+    "DMSO_3",
+    "CDK7i_1"
+   ],
+   "median_bp": -0.3166926121850201,
+   "share_negative": 0.5418944691671964,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_2",
+    "DMSO_3",
+    "CDK7i_2"
+   ],
+   "median_bp": -0.40472113067060717,
+   "share_negative": 0.5553719008264463,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_2",
+    "DMSO_3",
+    "CDK7i_3"
+   ],
+   "median_bp": -0.43203412340400593,
+   "share_negative": 0.5557533375715193,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_2",
+    "CDK7i_1",
+    "CDK7i_2"
+   ],
+   "median_bp": 0.48495675603495203,
+   "share_negative": 0.43661792752701845,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_2",
+    "CDK7i_1",
+    "CDK7i_3"
+   ],
+   "median_bp": 0.5076512432559609,
+   "share_negative": 0.4312778130959949,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_2",
+    "CDK7i_2",
+    "CDK7i_3"
+   ],
+   "median_bp": 0.37633337969872815,
+   "share_negative": 0.4481881754609027,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_3",
+    "CDK7i_1",
+    "CDK7i_2"
+   ],
+   "median_bp": 0.39605381698568054,
+   "share_negative": 0.44831532104259375,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_3",
+    "CDK7i_1",
+    "CDK7i_3"
+   ],
+   "median_bp": 0.3521900188217868,
+   "share_negative": 0.456071201525747,
+   "observed": false
+  },
+  {
+   "ref": [
+    "DMSO_3",
+    "CDK7i_2",
+    "CDK7i_3"
+   ],
+   "median_bp": 0.31954163714924155,
+   "share_negative": 0.45937698664971394,
+   "observed": false
+  },
+  {
+   "ref": [
+    "CDK7i_1",
+    "CDK7i_2",
+    "CDK7i_3"
+   ],
+   "median_bp": 1.4180328738752903,
+   "share_negative": 0.38461538461538464,
+   "observed": false
+  }
+ ],
+ "observed_share_negative": 0.6143674507310871,
+ "one_sided_p": 0.05,
+ "p_floor": 0.05,
+ "rule": "share of regions with a negative (upstream) cross-correlation shift, CDK7i vs DMSO; one-sided p = rank of the observed share among all label assignments (ties counted against)",
+ "provenance": {
+  "commit": "d65370a9487343b025e06a593a1f132529dcf046",
+  "script_sha256": "06f845d37ae6aacc",
+  "note": "replaces the 10-assignment direction test of positive_case_gse218269_diag (kept as recorded)"
+ }
+}

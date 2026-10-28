@@ -44,13 +44,25 @@ def genes(path: Path) -> list[dict]:
     return out
 
 
-def complexity(bam: str, seed: int = 1) -> dict:
+def _mid(a):
+    """Fragment midpoint as `extract` counts it: proper-pair TLEN for pairs (leftmost mate), 5' end + 90 bp otherwise."""
+    if a.is_unmapped:
+        return None
+    if a.is_paired:
+        return a.reference_start + a.template_length // 2 if a.template_length > 0 else None
+    return a.reference_end - 90 if a.is_reverse else a.reference_start + 90
+
+
+def complexity(bam: str, seed: int = 1, windows: list | None = None) -> dict:
     """Distinct fragments at 25 / 50 / 100 % of the pilot and a least-squares Poisson complexity C (amendment R3):
     distinct(n) = C (1 − exp(−n / C))."""
     import pysam
     from scipy.optimize import minimize_scalar
     keys = []
-    for a in pysam.AlignmentFile(bam):
+    f = pysam.AlignmentFile(bam)
+    reads = f if windows is None else (a for c, lo, hi in windows for a in f.fetch(c, max(lo - 1000, 0), hi + 1000)
+                                      if _mid(a) is not None and lo <= _mid(a) < hi)
+    for a in reads:
         if a.is_secondary or a.is_supplementary or a.is_unmapped:
             continue
         if a.is_paired:
@@ -83,14 +95,20 @@ def estimate(pilot: Path, genome: str, runs: dict) -> dict:
         med = float(np.median(core[i]))
         q = prof.qc.get(r, {})
         cx = complexity(str(pilot / f"{r}.bam"))
+        win = [(g["chrom"], g["start"] - CFG["core_flank"], g["start"] + CFG["core_flank"]) for g, k in zip(regs, keep, strict=True) if k]
+        cr = complexity(str(pilot / f"{r}.bam"), windows=win)  # amendment R5: core windows only
+        nr, ur = cr["points"][-1]
+        ur_full = cr["C"] * (1 - np.exp(-(nr * total / PILOT_N) / cr["C"]))
         n_pilot, u_pilot = cx["points"][-1]
         n_full = n_pilot * total / PILOT_N  # pilot reads after alignment and filters, scaled to the run
         u_full = cx["C"] * (1 - np.exp(-n_full / cx["C"]))
         out["samples"][r] = dict(condition=cond, pilot_median=med, run_reads=total, linear_scale=total / PILOT_N,
                                  linear_full_median=med * total / PILOT_N, complexity=cx, complexity_scale=u_full / u_pilot,
-                                 estimated_full_median=med * u_full / u_pilot, paired=q.get("paired"),
+                                 estimated_full_median=med * u_full / u_pilot, region_complexity=cr, region_scale=ur_full / ur,
+                                 region_full_median=med * ur_full / ur, paired=q.get("paired"),
                                  fragment_length=q.get("fragment_length"), fragment_median=q.get("median"))
     out["estimated_full_median_over_pilots"] = float(np.median([s["estimated_full_median"] for s in out["samples"].values()]))
+    out["region_full_median_over_pilots"] = float(np.median([s["region_full_median"] for s in out["samples"].values()]))
     out["linear_full_median_over_pilots"] = float(np.median([s["linear_full_median"] for s in out["samples"].values()]))
     # condition-blind templates for step 3: pooled pilot counts of the selected regions; fragment lengths
     qc = [prof.qc[r] for r in runs]
@@ -112,6 +130,8 @@ def main(argv):
     for k, v in res.items():
         print(k, "| selected", v["selected"], "| complexity-adjusted", round(v["estimated_full_median_over_pilots"]),
               {r: (round(s["estimated_full_median"]), round(s["complexity"]["C"] / 1e6, 1), round(s["complexity"]["max_rel_residual"], 4))
+               for r, s in v["samples"].items()}, "| region-level", round(v["region_full_median_over_pilots"]),
+              {r: (round(s["region_full_median"]), round(s["region_complexity"]["C"] / 1e6, 2), round(s["region_complexity"]["max_rel_residual"], 4))
                for r, s in v["samples"].items()}, "| linear", round(v["linear_full_median_over_pilots"]))
 
 

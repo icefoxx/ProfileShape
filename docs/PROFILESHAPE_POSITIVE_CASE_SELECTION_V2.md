@@ -175,7 +175,7 @@ measured; the power is conditional on them, and the stage-2 predictions will use
 | GSE205504 NELF depletion | 86 (166) | 1.00 / 1.00 (1.00 / 1.00) | +60 bp translation in 50 % of regions; predicted-direction share 0.90 (midpoint) / 0.99 (coverage) |
 | GSE199086 KL-2 | 0 (0) | not simulated | library ≈ 0.2 M distinct fragments; alignment 30 % |
 
-Requirement met: NELF only. Open points before any full download (not decided here): (1) NELF's complexity-adjusted
+No candidate meets all conditions (see R5). NELF met the simulated A1 criterion under the assumed translation model only. Open points before any full download (not decided here): (1) NELF's complexity-adjusted
 depth (86, conservative for single-end) is below step 5's ≥ 100, so the case may become not evaluable after download
 under the rule as written; (2) NELF's readout (RNA-seq) comes from the floxed/Cre system, not the AID lines, so A2 is
 weak or not definable; (3) heat shock fails step 3 only because of the window: a design with the core window covering
@@ -183,6 +183,18 @@ the gene-body part (e.g. TSS ± 1 kb) is a new specification and would have to b
 full download.
 
 ## Amendments
+
+**R5 (2026-10-28, after an external review of steps 2–3; before the region-level estimate is computed).** R3 scaled
+promoter counts by the growth of distinct fragments in the whole library. That assumes the selected core windows
+gain distinct fragments at the same rate as the library; at dense promoters duplicates saturate earlier, so R3 may
+**overstate** depth there, not understate it as R3 claimed. Added: the same Poisson fit restricted to fragments with
+a midpoint in the selected core windows (25 / 50 / 100 % points), and the region-level scale reported beside the
+library-wide one. Both are model-based extrapolations from three shallow points; they are reported as estimates
+with model uncertainty, not as expected depths. Also corrected in the record: (a) step 3 has **not** found a
+candidate meeting all conditions — NELF met the simulated A1 criterion only under an assumed rigid +60 bp translation
+in 50 % of regions, which is not a quantitative effect from an independent source as S1 requires, and its readout
+comes from another system; (b) heat shock's failure is shown only for the fixed TSS ± 500 bp window — that the
+window is the only cause is not shown.
 
 **R4 (2026-10-28, after the first step-3 run).** The first run (`positive_case_v2_selection/power`, kept) gave power
 0.00 for heat shock with not a single `shape_any` call in any run — implausible for halving the signal downstream of
