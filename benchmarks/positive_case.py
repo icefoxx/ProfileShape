@@ -159,14 +159,15 @@ def added_value(base: np.ndarray, shape: np.ndarray, y: np.ndarray, chrom: np.nd
                 std_coef_signed_shift=float(beta[1 + base.shape[1]]), std_coef_kernel=float(beta[2 + base.shape[1]]))
 
 
-def run(cache: Path, out: Path) -> None:
+def run(cache: Path, out: Path, exploratory: bool = False) -> None:
     out.mkdir(parents=True, exist_ok=True)
     git = lambda *a: subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()  # noqa: E731
     sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()[:16]  # noqa: E731
     prov = dict(commit=git("rev-parse", "HEAD"), uncommitted_src=len(git("status", "--porcelain", "--", "src").splitlines()),
                 src_diff_sha256=hashlib.sha256(git("diff", "HEAD", "--", "src").encode()).hexdigest()[:16],
                 regional_py_sha256=sha(ROOT / "src/profileshape/regional.py"), protocol_sha256=sha(PROTOCOL),
-                script_sha256=sha(Path(__file__)), started=time.strftime("%Y-%m-%dT%H:%M:%S"))
+                script_sha256=sha(Path(__file__)), started=time.strftime("%Y-%m-%dT%H:%M:%S"),
+                exploratory=exploratory)
     d = np.load(cache, allow_pickle=True)
     frags = d["fragments"] if d["fragments"].size else None
     prof = Profiles(d["values"], d["edges"], json.loads(str(d["samples"])), json.loads(str(d["regions"])), True,
@@ -187,7 +188,7 @@ def run(cache: Path, out: Path) -> None:
         R["depth"] = dict(S3_met=None, note="count quantum not recoverable from the tracks: depth not estimable")
     cons = group_consistency(prof, cfg)
     R["consistency"] = dict(flags=cons.flags, samples=cons.sample_rows, groups=cons.group_rows)
-    if R["depth"].get("S3_met") is False:
+    if R["depth"].get("S3_met") is False and not exploratory:
         R["verdict"] = "not evaluable: S3 (depth) not met"
         _write(out, R)
         return
@@ -240,7 +241,11 @@ def run(cache: Path, out: Path) -> None:
 def _write(out: Path, R: dict) -> None:
     R["provenance"]["finished"] = time.strftime("%Y-%m-%dT%H:%M:%S")
     (out / "positive_case.json").write_text(json.dumps(R, indent=2, default=lambda v: v.item() if isinstance(v, np.generic) else str(v)))
-    L = ["# Independent positive case · GSE218269 (CDK7 inhibition, Pol II MNase-ChIP-seq)", "",
+    L = ["# Independent positive case · GSE218269 (CDK7 inhibition, Pol II MNase-ChIP-seq)", ""]
+    if R["provenance"].get("exploratory"):
+        L += ["**EXPLORATORY (amendment B4): S3 (depth) was not met; the confirmatory case is \"not evaluable\". "
+              "This run is not a confirmation and is not counted as one.**", ""]
+    L += [
          "Protocol `docs/PROFILESHAPE_POSITIVE_CASE_PROTOCOL.md` (stage 2) sha256 `{protocol_sha256}`; commit `{commit:.10}`, "
          "uncommitted src files {uncommitted_src} (diff `{src_diff_sha256}`); regional.py `{regional_py_sha256}`; script "
          "`{script_sha256}`; {started} → {finished}.".format(**R["provenance"]), "",
@@ -276,4 +281,4 @@ if __name__ == "__main__":
     elif cmd == "build-bam":
         build_bam(Path(sys.argv[2]), Path(sys.argv[3]), Path(sys.argv[4]))
     else:
-        run(Path(sys.argv[2]), Path(sys.argv[3]))
+        run(Path(sys.argv[2]), Path(sys.argv[3]), exploratory="--exploratory" in sys.argv[4:])

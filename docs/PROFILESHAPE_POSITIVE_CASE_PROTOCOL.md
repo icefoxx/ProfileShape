@@ -151,3 +151,19 @@ folds: the same genes entered training and test folds together (seed 30, first d
 affected). Corrected in `benchmarks/positive_case.py` (`bootstrap_folds`): every copy keeps its chromosome's
 original fold; a resample in which all draws fall in one fold is skipped. The point estimate of the gain was not
 affected. Criterion and model unchanged.
+
+**Outcome of B2 (2026-10-28, recorded after the A0 check; no A1 / A2 result computed before this entry).** All six
+samples aligned (overall alignment 86.8–94.6 %). Exact fragments (20–120 bp, midpoint in TSS ± 500 bp) per region,
+median per sample: DMSO 86, 95, 84; CDK7i 77, 82, 93; median over samples 85 < 100. **S3 not met; the
+confirmatory case is final as "not evaluable"** (`benchmarks/results/positive_case_gse218269_bam`). Open item 1
+stays open. Duplicate removal step of the alignment script used an invalid option (`samtools markdup -n`) and
+produced no statistics; the duplicate share is computed afterwards from the BAMs (same position, mate position
+and fragment length) and reported in the revision report. This does not affect the BAMs, which keep duplicates
+by design.
+
+**B4 (2026-10-28, written before running; exploratory, not a confirmation).** A1 and A2 are run once on the B2
+cache with the S3 gate disabled, unchanged otherwise (same predictions, model, seeds, readouts), into
+`benchmarks/results/positive_case_gse218269_bam_exploratory`, whose report is headed as exploratory with S3
+failed. Whatever it shows, it is not counted as independent positive confirmation, is not used to choose a
+replacement dataset, and is reported in full (including predictions not met). Its purpose is to see whether the
+method's output points in the expected direction at this depth, as information for planning the next search.
