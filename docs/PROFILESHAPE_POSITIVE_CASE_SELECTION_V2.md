@@ -167,6 +167,21 @@ Power = share of runs meeting the criterion. Requirement (step 3): ≥ 0.80 in a
 representation. These effect sizes are assumptions taken from the sources' qualitative descriptions, not
 measured; the power is conditional on them, and the stage-2 predictions will use the same values.
 
+## Steps 2–3 result (2026-10-28)
+
+| candidate | step 2: depth, complexity-adjusted (linear) | step 3 power, midpoint / coverage (dispersion 0.15) | note |
+|---|---|---|---|
+| GSE112379 heat shock | 199 (1195) | 0.00 / 0.00 (0.00 / 0.00) | only ≈ 8 % of the core-window signal lies in +300…+500 bp, so halving the signal downstream of +300 bp moves ≈ 4 % of the mass: the specified effect is mostly outside the core window (TSS ± 500 bp) |
+| GSE205504 NELF depletion | 86 (166) | 1.00 / 1.00 (1.00 / 1.00) | +60 bp translation in 50 % of regions; predicted-direction share 0.90 (midpoint) / 0.99 (coverage) |
+| GSE199086 KL-2 | 0 (0) | not simulated | library ≈ 0.2 M distinct fragments; alignment 30 % |
+
+Requirement met: NELF only. Open points before any full download (not decided here): (1) NELF's complexity-adjusted
+depth (86, conservative for single-end) is below step 5's ≥ 100, so the case may become not evaluable after download
+under the rule as written; (2) NELF's readout (RNA-seq) comes from the floxed/Cre system, not the AID lines, so A2 is
+weak or not definable; (3) heat shock fails step 3 only because of the window: a design with the core window covering
+the gene-body part (e.g. TSS ± 1 kb) is a new specification and would have to be written and simulated before any
+full download.
+
 ## Amendments
 
 **R4 (2026-10-28, after the first step-3 run).** The first run (`positive_case_v2_selection/power`, kept) gave power
