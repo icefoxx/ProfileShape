@@ -159,6 +159,66 @@ def added_value(base: np.ndarray, shape: np.ndarray, y: np.ndarray, chrom: np.nd
                 std_coef_signed_shift=float(beta[1 + base.shape[1]]), std_coef_kernel=float(beta[2 + base.shape[1]]))
 
 
+def a1_results(a, res) -> dict:
+    """A1 quantities (P1–P3) from an analysis and its per-region tests."""
+    any_ = res.tests["shape_any"]
+    sh = res.tests["shift"]
+    called = np.isin(any_["call"], ("Changed",))
+    tested = any_["call"] != "not_tested"
+    sig_shift = sh["fdr"] < 0.05
+    upstream = sh["direction"][sig_shift] < 0
+    cen = next(e for e in a.effects if e["metric"] == "centroid")
+    return dict(tested=int(tested.sum()), shape_any_share=float(called.sum() / max(tested.sum(), 1)),
+                P1=bool(called.sum() / max(tested.sum(), 1) >= 0.20),
+                shift_significant=int(sig_shift.sum()), upstream_share=float(upstream.mean()) if upstream.size else float("nan"),
+                P2=bool(upstream.size and upstream.mean() >= 0.80),
+                centroid_bp=cen["estimate"], centroid_low=cen["welch_low"], centroid_high=cen["welch_high"],
+                P3=bool(cen["welch_high"] < 0),
+                translation_consistent=int(np.sum(sh["translation_consistent"] & sig_shift)),
+                median_consistent_shift_bp=float(np.nanmedian(sh["estimate"][sh["translation_consistent"] & sig_shift]))
+                if np.any(sh["translation_consistent"] & sig_shift) else float("nan"))
+
+
+def a2_design(a, res, prof, readout, length) -> dict:
+    """A2 inputs on the shape-tested regions (same order as the shape tests): base covariates and readout per
+    time point, the two shape statistics, chromosomes."""
+    any_ = res.tests["shape_any"]
+    sh = res.tests["shift"]
+    idx = any_["region_index"]
+    ref = a.ref_idx
+    mass = a.core_mass[:, idx]
+    base_pol = np.log(np.maximum(mass[: len(ref)].mean(0), 1e-12))
+    amount = np.log2(np.maximum(mass[len(ref):].mean(0), 1e-12)) - np.log2(np.maximum(mass[: len(ref)].mean(0), 1e-12))
+    raw = (np.nan_to_num(prof.values[:, idx]) * M.widths(prof.edges)).sum(-1)
+    depth = np.log(np.maximum(raw.mean(0), 1e-12))
+    pooled = np.clip(np.nan_to_num(a.core_signal[:, idx]).mean(0), 0, None)
+    width = M.mean_abs_deviation(M.normalise(pooled * M.widths(a.core_edges)), a.core_edges)
+    chrom = np.array([prof.regions[i]["chrom"] for i in idx])
+    out = dict(chrom=chrom, signed_shift=sh["direction"] * -np.log10(np.maximum(sh["p"], 1e-300)),
+               kernel=-np.log10(np.maximum(res.tests["shape_kernel"]["p"], 1e-300)), readouts={})
+    for minutes in (30, 15, 60):
+        dm = np.mean([readout[k][idx] for k in readout if k.startswith(f"DMSO_{minutes}min")], 0)
+        cd = np.mean([readout[k][idx] for k in readout if k.startswith(f"CDK7i_{minutes}min")], 0)
+        pc = 0.01 * np.nanmedian(np.r_[dm, cd][np.r_[dm, cd] > 0])
+        y = np.log2(cd + pc) - np.log2(dm + pc)
+        out["readouts"][minutes] = (np.c_[base_pol, amount, depth, np.log(dm + pc), np.log(length[idx]), width], y)
+    return out
+
+
+def case_results(prof, readout, length, cfg, bootstrap: int = 200, minutes=(30, 15, 60)):
+    """A1 and A2 of the protocol on one set of profiles (used by `run` and the B5 diagnostics)."""
+    a = analyse(prof, cfg, bootstrap=bootstrap)
+    res = per_region_tests(a)
+    D = a2_design(a, res, prof, readout, length)
+    A2 = {}
+    for m in minutes:
+        base, y = D["readouts"][m]
+        A2[f"{m}min"] = added_value(base, np.c_[D["signed_shift"], D["kernel"]], y, D["chrom"], seed=m)
+    if 30 in minutes:
+        A2["criterion_met_30min"] = bool(A2["30min"]["gain_low"] > 0)
+    return a1_results(a, res), A2, res
+
+
 def run(cache: Path, out: Path, exploratory: bool = False) -> None:
     out.mkdir(parents=True, exist_ok=True)
     git = lambda *a: subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()  # noqa: E731
@@ -192,48 +252,9 @@ def run(cache: Path, out: Path, exploratory: bool = False) -> None:
         R["verdict"] = "not evaluable: S3 (depth) not met"
         _write(out, R)
         return
-    # ---- A1
-    a = analyse(prof, cfg, bootstrap=200)
-    res = per_region_tests(a)
-    any_ = res.tests["shape_any"]
-    sh = res.tests["shift"]
-    called = np.isin(any_["call"], ("Changed",))
-    tested = any_["call"] != "not_tested"
-    sig_shift = sh["fdr"] < 0.05
-    upstream = sh["direction"][sig_shift] < 0
-    cen = next(e for e in a.effects if e["metric"] == "centroid")
-    R["A1"] = dict(tested=int(tested.sum()), shape_any_share=float(called.sum() / max(tested.sum(), 1)),
-                   P1=bool(called.sum() / max(tested.sum(), 1) >= 0.20),
-                   shift_significant=int(sig_shift.sum()), upstream_share=float(upstream.mean()) if upstream.size else float("nan"),
-                   P2=bool(upstream.size and upstream.mean() >= 0.80),
-                   centroid_bp=cen["estimate"], centroid_low=cen["welch_low"], centroid_high=cen["welch_high"],
-                   P3=bool(cen["welch_high"] < 0),
-                   translation_consistent=int(np.sum(sh["translation_consistent"] & sig_shift)),
-                   median_consistent_shift_bp=float(np.nanmedian(sh["estimate"][sh["translation_consistent"] & sig_shift]))
-                   if np.any(sh["translation_consistent"] & sig_shift) else float("nan"))
-    # ---- A2: per-region covariates on the shape-tested regions (same order as the shape tests)
-    idx = any_["region_index"]
-    ref, alt = a.ref_idx, a.alt_idx
-    mass = a.core_mass[:, idx]
-    base_pol = np.log(np.maximum(mass[: len(ref)].mean(0), 1e-12))
-    amount = np.log2(np.maximum(mass[len(ref):].mean(0), 1e-12)) - np.log2(np.maximum(mass[: len(ref)].mean(0), 1e-12))
-    raw = (np.nan_to_num(prof.values[:, idx]) * M.widths(prof.edges)).sum(-1)
-    depth = np.log(np.maximum(raw.mean(0), 1e-12))
-    pooled = np.clip(np.nan_to_num(a.core_signal[:, idx]).mean(0), 0, None)
-    width = M.mean_abs_deviation(M.normalise(pooled * M.widths(a.core_edges)), a.core_edges)
-    length = np.log(d["length"][idx])
-    chrom = np.array([prof.regions[i]["chrom"] for i in idx])
-    signed_shift = sh["direction"] * -np.log10(np.maximum(sh["p"], 1e-300))
-    kern = -np.log10(np.maximum(res.tests["shape_kernel"]["p"], 1e-300))
-    R["A2"] = {}
-    for minutes in (30, 15, 60):
-        dm = np.mean([readout[k][idx] for k in readout if k.startswith(f"DMSO_{minutes}min")], 0)
-        cd = np.mean([readout[k][idx] for k in readout if k.startswith(f"CDK7i_{minutes}min")], 0)
-        pc = 0.01 * np.nanmedian(np.r_[dm, cd][np.r_[dm, cd] > 0])
-        y = np.log2(cd + pc) - np.log2(dm + pc)
-        base = np.c_[base_pol, amount, depth, np.log(dm + pc), length, width]
-        R["A2"][f"{minutes}min"] = added_value(base, np.c_[signed_shift, kern], y, chrom, seed=minutes)
-    R["A2"]["criterion_met_30min"] = bool(R["A2"]["30min"]["gain_low"] > 0)
+    # ---- A1, A2
+    A1, A2, res = case_results(prof, readout, d["length"], cfg)
+    R["A1"], R["A2"] = A1, A2
     R["notes"] = res.notes
     _write(out, R)
 
