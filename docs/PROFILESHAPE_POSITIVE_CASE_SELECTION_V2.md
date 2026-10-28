@@ -116,7 +116,7 @@ with coverage than with midpoints and the difference in p < 0.01 share was −0.
 Limits of the evidence: every split had 0 whole-list calls in both representations, so the comparison of calls does
 not discriminate and the p < 0.01 shares carry the information; the CUT&RUN subsample is shallow (median 10
 fragments per region, 801 regions); the p < 0.01 share varies between splits (0.000–0.045) alike in both
-representations. "Eligible" means not worse than midpoints here, not shown calibrated in general.
+representations. "Eligible" means not worse than midpoints here, not shown calibrated in general. The criterion compares shares averaged over splits, so differences of opposite sign can cancel; single splits differ by more (e.g. ATAC, an NDR split, `shape_kernel` 0.0350 → 0.0485, +0.0135). Coverage met the pre-specified average criterion; per-split non-inferiority is not shown (added after an external review; the verdict is not changed after the fact).
 
 ## Step 1 result (2026-10-28; metadata and literature only, nothing downloaded)
 
