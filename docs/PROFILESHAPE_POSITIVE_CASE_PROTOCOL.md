@@ -167,3 +167,36 @@ cache with the S3 gate disabled, unchanged otherwise (same predictions, model, s
 failed. Whatever it shows, it is not counted as independent positive confirmation, is not used to choose a
 replacement dataset, and is reported in full (including predictions not met). Its purpose is to see whether the
 method's output points in the expected direction at this depth, as information for planning the next search.
+
+**B5 (2026-10-28, diagnostic supplement after an external review of B4; written before any of it is run).**
+Exploratory throughout: none of it replaces or updates the confirmatory verdict ("not evaluable"), none of it is
+used to choose a dataset, a fragment range or a representation for a later claim, and every variant listed below
+is reported, whatever it shows. Script `benchmarks/positive_case_diag.py`; output
+`benchmarks/results/positive_case_gse218269_diag`. Code under study unchanged (`regional.py` hash recorded).
+
+- **D1 · A2 ablation.** On the B2 cache, the same rows, folds (chromosome → fold as in `added_value`) and the same
+  500 chromosome bootstrap draws for all models (seed = readout minutes, as in A2): base; base + signed shift;
+  base + kernel; base + both. Reported per readout (15, 30, 60 min): CV R² of each, gains over base with 95 %
+  intervals, and the paired difference full − (base + shift) and full − (base + kernel). Question: which shape
+  statistic carries the added prediction; no criterion.
+- **D2 · Per-region width and its replicate support.** Per region and sample, the mean absolute deviation of the
+  mass-normalised core profile (the `mad_width` statistic). Reported: (a) the distribution (quantiles, share < 0)
+  of the group difference CDK7i − DMSO among `shape_any`-called and not-called regions; (b) the share of regions
+  where all three CDK7i widths lie below all three DMSO widths, and above (each 1/20 under exchangeable labels),
+  in both region sets; (c) the subset behind the reported `shift` estimate: its selection condition and size, and
+  the estimate's quantiles there. (d) Detectability (real data, insertion): in 500 randomly chosen regions
+  (seed 9 700 000 + k), the three CDK7i profiles are narrowed about the background by f ∈ {0.95, 0.90, 0.80}
+  (`insertion.insert`, kind `broaden<f>`); reported: the share of those regions called by `mad_width` and by
+  `shape_kernel` (FDR 0.05) with and without the insertion, 3 draws per f. The aggregate IQR change of B4 is
+  converted to the equivalent f for orientation. Question: does the aggregate narrowing correspond to a common
+  per-region change, and could the per-region test have seen one of that size?
+- **D3 · Processing and replicate sensitivity.** (a) From the same BAMs and regions, six representations:
+  fragment range 20–70, 20–120 (= B2), 70–120 bp × midpoint or coverage; all other BAM options as in B2. For each:
+  core-window depth (median over samples), A1 quantities (P1–P3 as defined, with `shift`-significant count) and
+  the A2 30-min gain with interval. (b) On the B2 cache, each of the six 2 vs 3 designs that drop one replicate
+  (DMSO_1, DMSO_2, DMSO_3, CDK7i_1, CDK7i_2, CDK7i_3): the same quantities. DMSO_1 and CDK7i_1 (flagged by the
+  consistency module in B4) are named but not treated differently. Question: does the failure of the expected
+  direction depend on the processing or on one replicate?
+
+The diagnostic statistics on ranks of 10 label assignments (3 vs 3) are reported with their permutation p and
+the note that 0.1 is the floor.
