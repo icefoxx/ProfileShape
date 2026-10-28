@@ -158,34 +158,34 @@ H3K27ac 与 H3K4me3 的 ChIP-seq 和 CUT&RUN），5 类区域（ATG、+1 核小�
 5. 区域少时的分类别校准、逐区域绝对 amplitude 检验、区分平移与其他再分布：沿用 v3.1 的遗留项。
 6. 图形摘要需按新名称和修正后的说明重新生成。
 
-## 进展记录（按时间；每个问题写明如何发现、如何处理）
+## 进展记录（新条目在最上方；每个问题写明如何发现、如何处理）
 
 | 时间 | 进展 | 发现的问题 | 处理 | 记录 |
 |---|---|---|---|---|
-| 10-27 | 组内一致性模块完成；预先注册评估 v1 运行 | ATAC、k27ac_chip 的拆分 z 全部为 ±1：近乎空的窗口除以极小 mass，数值约 10¹⁶；不等分拆分中浅样本推高 π̂₁ | 加 mass 下限（中位数的 10 %）；π̂₁ 只用等分拆分；v1 保留原样，用新种子重跑 v2 | `consistency_v1`、`consistency_v2`，修正说明 A1 |
-| 10-27 | 按单个样本估计"不一致区域比例" | 零假设下有一个浅样本时就达 0.38（受深度影响） | 撤销该指标，只保留等分拆分的 π̂₁（标为实验性） | 用户指南、`consistency.py` |
-| 10-27 | 默认输出与证据对齐；加入 RegCFinder；重写 manuscript plan | — | commit 并 push | `960677c` |
-| 10-28 | 界值框架评估 margin_v1 | M2–M4 未通过：stretch 在真实形状上估计为真值的 0.25–1.26 倍；所有区间欠覆盖 | 按方案撤销 stretch 判定；平移、偏移判定保留；区间标为近似 | `margin_v1`，界值方案"Outcome" |
-| 10-28 | 压力测试 stress_v1 | 2 vs 2 + 每个重复 sd 20 bp 的整体平移时 FDP 明确超标；90 % 改变时未改变区域 p 值偏小 | 写入 review 文档 §7 第 9 条与指南；本轮不改方法 | `stress_v1` |
-| 10-28 | 阳性案例选择 | 排名 2（GSE152595）的原文报告的是总量下降，不是形状变化 | 撤出，主案例只用 GSE218269 | 方案第二阶段"Decision" |
-| 10-28 | GSE218269 用作者处理的 bigWig | S3 不满足：估计中位数 58 个片段/区域/样本（作者只保留 < 70 bp 片段） | 报告"无法评估"（B1）；决定从原始 reads 重新比对，片段 20–120 bp（B2，下载前写定） | `positive_case_gse218269`，修正说明 B1、B2 |
-| 10-28 | 下载 FASTQ | 串行与并行两次下载竞争同一文件，`SRR22327376_2` 一度不完整 | 删除残留的 `.part`；比对脚本在每个样本前等两份 FASTQ 都通过 `gzip -t` | `align_mnase_chip.sh` |
-| 10-28 | 外部评审本报告 | 5 项：A2 bootstrap 跨折泄漏（同一染色体副本进入训练与测试）；"ok"被写成"正常"；平移判定适用范围被夸大；酵母机制被写成已确认；比较表暗示能分类 | 修复 bootstrap 并加测试（B3，A2 运行之前）；按意见修改措辞；补充证据：酵母重复差异的平移等价量仅 1.2–3.7 bp，不是整体平移 | 修正说明 B3；本报告、review 文档、指南 |
 | 10-28 | 比对 6 个 Pol II 样本开始 | — | 进行中 | `inputs/cdk7_gse218269_bam` |
+| 10-28 | 外部评审本报告 | 5 项：A2 bootstrap 跨折泄漏（同一染色体副本进入训练与测试）；"ok"被写成"正常"；平移判定适用范围被夸大；酵母机制被写成已确认；比较表暗示能分类 | 修复 bootstrap 并加测试（B3，A2 运行之前）；按意见修改措辞；补充证据：酵母重复差异的平移等价量仅 1.2–3.7 bp，不是整体平移 | 修正说明 B3；本报告、review 文档、指南；`45f48d5` |
+| 10-28 | 下载 FASTQ | 串行与并行两次下载竞争同一文件，`SRR22327376_2` 一度不完整 | 删除残留的 `.part`；比对脚本在每个样本前等两份 FASTQ 都通过 `gzip -t` | `align_mnase_chip.sh` |
+| 10-28 | GSE218269 用作者处理的 bigWig | S3 不满足：估计中位数 58 个片段/区域/样本（作者只保留 < 70 bp 片段） | 报告"无法评估"（B1）；决定从原始 reads 重新比对，片段 20–120 bp（B2，下载前写定） | `positive_case_gse218269`，修正说明 B1、B2 |
+| 10-28 | 阳性案例选择 | 排名 2（GSE152595）的原文报告的是总量下降，不是形状变化 | 撤出，主案例只用 GSE218269 | 方案第二阶段"Decision" |
+| 10-28 | 压力测试 stress_v1 | 2 vs 2 + 每个重复 sd 20 bp 的整体平移时 FDP 明确超标；90 % 改变时未改变区域 p 值偏小 | 写入 review 文档 §7 第 9 条与指南；本轮不改方法 | `stress_v1` |
+| 10-28 | 界值框架评估 margin_v1 | M2–M4 未通过：stretch 在真实形状上估计为真值的 0.25–1.26 倍；所有区间欠覆盖 | 按方案撤销 stretch 判定；平移、偏移判定保留；区间标为近似 | `margin_v1`，界值方案"Outcome" |
+| 10-27 | 默认输出与证据对齐；加入 RegCFinder；重写 manuscript plan | — | commit 并 push | `960677c` |
+| 10-27 | 按单个样本估计"不一致区域比例" | 零假设下有一个浅样本时就达 0.38（受深度影响） | 撤销该指标，只保留等分拆分的 π̂₁（标为实验性） | 用户指南、`consistency.py` |
+| 10-27 | 组内一致性模块完成；预先注册评估 v1 运行 | ATAC、k27ac_chip 的拆分 z 全部为 ±1：近乎空的窗口除以极小 mass，数值约 10¹⁶；不等分拆分中浅样本推高 π̂₁ | 加 mass 下限（中位数的 10 %）；π̂₁ 只用等分拆分；v1 保留原样，用新种子重跑 v2 | `consistency_v1`、`consistency_v2`，修正说明 A1 |
 
 ## 9. 结果文件、版本与可复现性
 
 | 内容 | 位置 | 版本状态 |
 |---|---|---|
 | 一致性模块、评估 v1/v2、定位与计划文档 | `benchmarks/results/consistency_v1`、`consistency_v2` | 已提交并 push（`960677c`） |
-| 界值框架评估 | `benchmarks/results/margin_v1` | 未提交 |
-| 压力测试 | `benchmarks/results/stress_v1` | 未提交 |
-| 阳性案例（bigWig 阶段：无法评估） | `benchmarks/results/positive_case_gse218269` | 未提交 |
-| 方案 | `docs/PROFILESHAPE_*_EVALUATION.md`、`*_PROTOCOL.md` | 一致性方案已提交；其余未提交 |
-| 环境与输入 | `environment.yml`（锁定版本）、`benchmarks/fetch_inputs.py`、`docs/INPUT_MANIFEST.tsv`（200 个输入的来源与 sha256） | 未提交 |
+| 界值框架评估 | `benchmarks/results/margin_v1` | 已提交（`45f48d5`，未 push） |
+| 压力测试 | `benchmarks/results/stress_v1` | 已提交（`45f48d5`，未 push） |
+| 阳性案例（bigWig 阶段：无法评估） | `benchmarks/results/positive_case_gse218269` | 已提交（`45f48d5`，未 push） |
+| 方案 | `docs/PROFILESHAPE_*_EVALUATION.md`、`*_PROTOCOL.md` | 已提交（`45f48d5`，未 push） |
+| 环境与输入 | `environment.yml`（锁定版本）、`benchmarks/fetch_inputs.py`、`docs/INPUT_MANIFEST.tsv`（200 个输入的来源与 sha256） | 已提交（`45f48d5`，未 push） |
 | 统计核心 | `src/profileshape/regional.py` | 本轮未改动 |
 
-结果文件记录了运行时的 commit 和未提交改动的哈希，因此未提交的结果仍可追溯到具体代码状态；正式引用前会一并提交。
+结果文件记录了运行时的 commit 和未提交改动的哈希，可追溯到具体代码状态。Docs 版（供评审评论）与本文件内容同步。
 
 ### 参考文献
 
