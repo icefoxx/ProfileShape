@@ -107,6 +107,14 @@ with a ≈ 2 bp genome-wide effect. Reported as the depth boundary, with the GSE
   as area / (count quantum × single-fragment footprint) per bin (fragment equivalents, rounded) — an approximation
   stated with the result. Bootstrap intervals: 2000 resamples of genes, seed 9 910 000. Held-out "agrees in sign":
   the held-out difference of medians (called − not called) has the same sign as the main one.
+- **C, held-out agreement (2026-10-28, before C is run; A and B results seen).** Measures: per region and sample,
+  the mean absolute deviation (width) and the centroid of the mass-normalised core profile. Calls: `shape_any` on
+  DMSO 1–2 vs CDK7i 1–2. Direction of a called region: sign of (mean CDK7i 1–2 − mean DMSO 1–2); held-out sign:
+  CDK7i 3 − DMSO 3. "In both directions" = for width and for centroid separately, the agreement share among regions
+  that narrowed and among those that widened (shifted upstream / downstream) has a 95 % Clopper–Pearson interval
+  above 0.5 in each subgroup. Consistent: this and ≥ 25 % of the 3 vs 3 `shape_any` calls without an edgeR amount
+  call (core-window counts, FDR 0.05); partly: one of the two; not supported: neither. Counts are exact (CPM × library
+  / 10⁶ from the BAM cache).
 
 ## Order and stop
 

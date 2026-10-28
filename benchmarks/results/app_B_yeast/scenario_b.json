@@ -1,0 +1,116 @@
+{
+ "provenance": {
+  "commit": "490b14a6eee4f0349fa8b5b8b26740ff0e1f58fb",
+  "uncommitted": 1,
+  "regional_py_sha256": "21ffd82395ee207f",
+  "plan_sha256": "610bdd4e5922cc64",
+  "script_sha256": "17a925700bd9338d",
+  "seed": 9910000,
+  "started": "2026-10-28T13:03:19",
+  "finished": "2026-10-28T13:03:34"
+ },
+ "main": {
+  "tested": 1555,
+  "shape_any": 1433,
+  "shift_called": 553,
+  "shift_directional": 0,
+  "flags": {
+   "direction_mismatch": 2,
+   "poor_translation_fit": 551
+  }
+ },
+ "phasing_main": {
+  "called_median": -0.24203120563719707,
+  "not_called_median": -0.12023978543530178,
+  "diff": -0.12179142020189529,
+  "low": -0.14222660741578488,
+  "high": -0.09357486811167792,
+  "n_called": 1433,
+  "n_not": 122
+ },
+ "phasing_per_sample_median": {
+  "WT_rep1": 0.33968085767716283,
+  "WT_rep2": 0.3341774966437028,
+  "WT_rep3": 0.34189669615902457,
+  "WT_rep4": 0.359165525092225,
+  "dKO_rep1": 0.1422851587840763,
+  "dKO_rep2": 0.11670635152758048,
+  "dKO_rep3": 0.09922293869147664,
+  "dKO_rep4": 0.0865871465017167
+ },
+ "heldout": {
+  "called_on_reps12": 1321,
+  "tested_on_reps12": 1476,
+  "called_median": -0.27137121053019003,
+  "not_called_median": -0.16876331557252494,
+  "diff": -0.10260789495766509,
+  "low": -0.1433322485277131,
+  "high": -0.08090608087817105,
+  "n_called": 1320,
+  "n_not": 155
+ },
+ "comparators": {
+  "units": {
+   "WT_rep1": [
+    0.161154002,
+    2.0
+   ],
+   "WT_rep2": [
+    0.169743001,
+    2.0
+   ],
+   "WT_rep3": [
+    0.131031007,
+    2.0
+   ],
+   "WT_rep4": [
+    0.123488002,
+    2.0
+   ],
+   "dKO_rep1": [
+    0.118731998,
+    2.0
+   ],
+   "dKO_rep2": [
+    0.165095001,
+    2.0
+   ],
+   "dKO_rep3": [
+    0.232026994,
+    2.0
+   ],
+   "dKO_rep4": [
+    0.195008993,
+    2.0
+   ]
+  },
+  "diffsplice": {
+   "called": 2549,
+   "overlap_with_shape_any": 1086,
+   "phasing": {
+    "called_median": -0.24662377926964973,
+    "not_called_median": -0.20585244278132753,
+    "diff": -0.04077133648832221,
+    "low": -0.059463608298434764,
+    "high": -0.024770728154010435,
+    "n_called": 1138,
+    "n_not": 417
+   }
+  },
+  "edger_amount": {
+   "called": 82,
+   "overlap_with_shape_any": 33,
+   "shape_any_without_amount": 1400,
+   "phasing": {
+    "called_median": -0.19102012126688092,
+    "not_called_median": -0.23596251982401595,
+    "diff": 0.04494239855713503,
+    "low": 0.010276885708760067,
+    "high": 0.09852568831509456,
+    "n_called": 34,
+    "n_not": 1521
+   }
+  }
+ },
+ "grade": "consistent"
+}
