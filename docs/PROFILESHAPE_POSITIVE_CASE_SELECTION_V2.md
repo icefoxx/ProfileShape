@@ -118,6 +118,28 @@ not discriminate and the p < 0.01 shares carry the information; the CUT&RUN subs
 fragments per region, 801 regions); the p < 0.01 share varies between splits (0.000–0.045) alike in both
 representations. "Eligible" means not worse than midpoints here, not shown calibrated in general.
 
+## Step 1 result (2026-10-28; metadata and literature only, nothing downloaded)
+
+GEO E-utilities, four queries (Pol II / nascent RNA with perturbation; MNase with remodelers; H3K4me3 breadth
+regulators; pause-release perturbations: flavopiridol, NVP-2, CDK9, DRB, triptolide, NELF, SPT5, heat shock),
+human / mouse (yeast for MNase), 2016–2026: 2725 series; automated screen of sample titles for ≥ 2 groups of the
+profiled assay with ≥ 3 replicates: 113 series; read by hand for S1–S6. The title-based screen misses series whose
+sample titles do not encode replicates; this is a limitation of the search, not a selection after data.
+
+| series | perturbation · profiled assay (design) | independent readout | S1 (independent source) | status |
+|---|---|---|---|---|
+| GSE112379 | heat shock vs none, HEK293 · RPB1 ChIP-seq (scramble 3 vs 3) | PRO-seq 4 vs 4 (same study) | Mahat et al. 2016 (PRO-seq): heat shock represses thousands of genes by reduced pause release → Pol II concentrated at the pause relative to downstream | **long list** |
+| GSE205504 | NELFB-AID +IAA, empty vector vs NELFB rescue, MEF · Pol II ChIP-seq (3 vs 3, spike-in) | RNA-seq GSE205388, but in the floxed/Cre system, not the AID lines | Aoi et al. 2020: after NELF depletion Pol II accumulates at a second, downstream pause associated with the +1 nucleosome | long list; S4 weak (readout from another system) |
+| GSE199086 | SEC disruptor KL-2 vs DMSO, SHEP · TT-seq / FP-TT-seq (3 vs 3) | RNA-seq 3 vs 3 | Liang et al. 2018: impaired release from pause, slower elongation | long list; assay–hypothesis match weaker (TT-seq near the TSS) |
+| GSE120201 | dominant-negative TFIIS (Dox) vs H2O · Pol II ChIP (3 vs 3) | GRO-seq / NET-seq 2 vs 2 | only the study itself | S1 not met (no independent source) |
+| GSE97527 | shPAF1 vs control · Pol II ChIP (3 vs 3) | — | conflicting literature on PAF1 and pause release | S1 not met |
+| GSE260852 | cohesin degradation · RPB1 ChIP | mNET-seq | — | S2 not met (2 replicates) |
+| GSE288059 | CFP1 deletion, GC B · H3K4me3 ChIP (3 vs 3) | RNA-seq 3 vs 3 | the paper reports loss at a subset of genes (amount), not breadth | S1 not met |
+| GSE289627 / GSE289600 | CFP1 deletion, pro-B · H3K4me3 CUT&Tag | RNA-seq | CFP1 broad domains | S2 not met (2 knockout replicates) |
+| GSE295011 · GSE216057 · GSE234251 | KDM5-C70 · SMARCA4/5 KD MNase · ISWI subunit KO MNase | none found / — | — | S4 not met (no readout found) or S2 not met |
+
+Next: step 2 (pilot depth) for the three long-list candidates, then step 3 (power simulation); ranking after both.
+
 ## Amendments
 
 **R1 (2026-10-28, before prerequisite R is run).** (a) The CUT&RUN BAMs on disk are the first 4 M read pairs per
