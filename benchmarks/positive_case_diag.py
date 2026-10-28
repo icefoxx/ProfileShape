@@ -139,14 +139,14 @@ def d2_shift_subset(a, res):
                          "ambiguity < 0.9, not at the search edge (regional.py:848–858)",
                regions=int(sub.sum()), of_tested=int(len(est)), estimate_quantiles_bp=_q(est[sub]),
                flags=flags, shift_fdr_calls_in_subset=int(np.sum(sub & (np.asarray(sh["fdr"]) < 0.05))))
-    # all regions, every 3 vs 3 label assignment (the observed one included); rank of the observed share
+    # all regions, every label assignment (the observed one included); rank of the observed share. The statistic is
+    # signed, so complementary assignments are distinct: all 20 for 3 vs 3 (the first version kept only 10; corrected
+    # after review, results in positive_case_gse218269_diag_direction)
     sidx = sh["region_index"]
     y = np.nan_to_num(a.core_signal[:, sidx])
     ids = list(a.ref_idx) + list(a.alt_idx)
     rows = []
-    for A in itertools.combinations(ids, 3):
-        if ids[0] not in A:
-            continue
+    for A in itertools.combinations(ids, len(a.ref_idx)):
         B = [i for i in ids if i not in A]
         s = np.asarray(translation_estimate(y, np.array(A), np.array(B), M.centers(a.core_edges), smooth=TEMPLATE_SMOOTH)["shift"], float)
         rows.append(dict(ref=[a.profiles.samples[i]["sample_id"] for i in A], median_bp=float(np.nanmedian(s)),
@@ -156,7 +156,7 @@ def d2_shift_subset(a, res):
     out["all_regions_xcorr"] = dict(assignments=rows, observed_share_negative=obs["share_negative"],
                                     one_sided_p=rank / len(rows), p_floor=1 / len(rows),
                                     rule="share of regions with a negative (upstream) cross-correlation shift, CDK7i vs DMSO; "
-                                         "one-sided p = rank of the observed share among the 10 assignments (ties counted against)")
+                                         "one-sided p = rank of the observed share among all label assignments (ties counted against)")
     return out
 
 
@@ -308,7 +308,7 @@ def report(R):
     L += ["", "Reported `shift` estimate: " + s["condition"] + f"; {s['regions']} of {s['of_tested']} regions; quantiles 5/25/50/75/95 % "
           + " / ".join(f"{v:+.1f}" for v in s["estimate_quantiles_bp"]) + f" bp; flags {s['flags']}.", "",
           f"All regions, cross-correlation shift: observed share negative {x['observed_share_negative']:.3f}; one-sided p = "
-          f"{x['one_sided_p']:.1f} (floor {x['p_floor']:.1f}, 10 assignments). Rule: {x['rule']}.", "",
+          f"{x['one_sided_p']:.2f} (floor {x['p_floor']:.2f}, {len(x['assignments'])} assignments). Rule: {x['rule']}.", "",
           "## D3 · Processing and replicate sensitivity", "",
           "| variant | depth (median) | `shape_any` share | `shift` sig. | upstream share | centroid bp [95 %] | A2 30 min gain [95 %] |",
           "|---|---|---|---|---|---|---|"]
@@ -322,5 +322,24 @@ def report(R):
     return "\n".join(L) + "\n"
 
 
+def direction(argv):
+    """Corrected direction diagnostic only (all label assignments), into its own result directory."""
+    cache, out = argv[0], Path(argv[1])
+    out.mkdir(parents=True, exist_ok=True)
+    d, prof, readout = _load(cache)
+    a = analyse(prof, _cfg(), bootstrap=0)
+    r = d2_shift_subset(a, per_region_tests(a))["all_regions_xcorr"]
+    git = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    r["provenance"] = dict(commit=git, script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16],
+                           note="replaces the 10-assignment direction test of positive_case_gse218269_diag (kept as recorded)")
+    (out / "direction.json").write_text(json.dumps(r, indent=1, default=float))
+    for row in sorted(r["assignments"], key=lambda z: -z["share_negative"]):
+        print(f"{'*' if row['observed'] else ' '} {'+'.join(row['ref']):<26} share_negative {row['share_negative']:.3f}  median {row['median_bp']:+.1f}")
+    print("observed", round(r["observed_share_negative"], 3), "one-sided p", r["one_sided_p"], "floor", r["p_floor"])
+
+
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    if sys.argv[1] == "direction":
+        direction(sys.argv[2:])
+    else:
+        main(sys.argv[1:])
