@@ -182,6 +182,12 @@ weak or not definable; (3) heat shock fails step 3 only because of the window: a
 the gene-body part (e.g. TSS ± 1 kb) is a new specification and would have to be written and simulated before any
 full download.
 
+## Stopped (2026-10-28)
+
+The paper's route changed to application scenarios on existing data (`PROFILESHAPE_APPLICATIONS_PLAN.md`). This
+search stops after steps 1–3 with no candidate meeting all conditions; no full dataset was downloaded; the heat-shock
+window change discussed above is not pursued. Records kept as written.
+
 ## Amendments
 
 **R5 (2026-10-28, after an external review of steps 2–3; before the region-level estimate is computed).** R3 scaled
