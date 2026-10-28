@@ -191,6 +191,20 @@ amplitude is kept separate (robust sd of per-region log2 signal ratios).
 | divergent regions (`consistency_divergent_regions.tsv`) | which regions disagree most between replicates, and (≥ 3) which sample drives them | robust z > 3 of log within-group spread within signal-mass strata; a ranking, not a test |
 | leave-one-out stability (in 07, from `per_region_tests`) | do the contrast's calls depend on one replicate? | the existing `replicate_influence` retention table |
 
+**Tolerance margins** (`consistency: {margin_offset_pct, margin_shift_bp}`, set before the analysis; none by
+default). Each replicate's (or pair's) sample-wide difference is given as an offset (% of the aggregate profile,
+bias-corrected, one-sided 95 % bounds), a shift (bp, 90 % interval) and a stretch (% about the anchor), and judged
+against the margins as *within* (the interval inside the margin), *beyond* or *inconclusive*; the upper bound is
+always shown, so any margin can be compared afterwards. Evaluation (`docs/PROFILESHAPE_MARGIN_EVALUATION.md`,
+`benchmarks/results/margin_v1`): the **shift** verdict kept its wrong-*within* rate within the criterion in
+simulation and on real noise in 11 datasets; the **offset** verdict in simulation; the **stretch** verdict
+failed on real shapes (estimates 0.25–1.26 × truth) and is not offered. All three intervals failed their coverage
+checks and are approximate. Margins on "the share of regions that differ" are not offered.
+
+**Assay presets** (`assay: atac | mnase | tf_chip | tf_cutrun | histone_narrow | histone_broad | proseq`, or
+`profileshape init --assay …`): window, bin, background and core settings as used in the evaluations, for keys
+the config does not set. They do not set tolerance margins.
+
 How to read it:
 
 * **No flag is not evidence of consistency.** No equivalence margin is tested; a low score means no
@@ -240,6 +254,13 @@ TSS anchors), 62 new real-null splits:
   differential tests fail.
 * **On real data** 17 of 30 groups carry a flag, often for offsets of 1–3 % of the profile and < 1 bp: the flag is
   relative to the group-mates. An absolute margin of practical relevance has not been defined or evaluated.
+
+**Stress tests of the pooled null** (`benchmarks/results/stress_v1`). No clear exceedance of the whole-list FDP
+(which is not proof of control) with 70–90 % of regions changed, one-directional changes, partly confounded
+batches, real multimodal shapes and overlapping windows; a clear exceedance at 2 vs 2 when replicates differ
+sample-wide by shifts of sd ≈ 20 bp (FDP 0.07–0.08), one kind of shared sample-level perturbation. Check the consistency report (07) for such offsets before relying on a 2 vs 2 list.
+When most regions change, the p-values of the remaining unchanged regions are too small (a per-region,
+not a whole-list, problem).
 
 ## When to use the aggregate centroid (and when not)
 

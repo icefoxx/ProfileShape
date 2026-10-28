@@ -601,6 +601,31 @@ def write_consistency(c, profiles: Profiles, out: Path, regional=None) -> None:
                          + (f" ({r['median_abs_shift_bp_mates']:.1f})" if np.isfinite(r.get("median_abs_shift_bp_mates", float("nan"))) else "")
                          + " | "
                          f"{r['F10']:.2f}{mates('F10')} | {r['F20']:.2f}{mates('F20')} | {r['F50']:.2f}{mates('F50')} |")
+    lines += ["", "## Size against tolerance margins", "",
+              "How large is each replicate's sample-wide difference from its group-mates (two replicates: the pair's "
+              "difference), in three units: **offset** as % of the aggregate profile (bias-corrected for noise; one-sided "
+              "95 % bounds), **shift** in bp (oriented anchors) and **stretch** in % about the anchor (broadening of a "
+              "domain, wider spacing of an array), the last two with 90 % intervals (two one-sided tests at 0.05). "
+              "The upper bound says which differences the data exclude, whatever margin one has in mind. With margins "
+              "set in the config (`consistency: {margin_offset_pct, margin_shift_bp, margin_stretch_pct}`, chosen before "
+              "the analysis), each is judged **within** (the interval inside the margin), **beyond** (entirely outside) "
+              "or **inconclusive**. Region-specific differences without a common direction are not covered by these "
+              "sizes (see F10 / F20 / F50).", "",
+              "**Evaluation status** (benchmarks/results/margin_v1). Shift verdict: wrong *within* at or beyond the margin "
+              "stayed within its criterion in simulation and on real-noise data from 11 datasets. Offset verdict: within "
+              "its criterion in simulation (not evaluable on real shapes). Stretch: **no verdict** — on real shapes the "
+              "estimate was 0.25–1.26 × the true stretch, and wrong *within* exceeded the criterion in 24 groups; the "
+              "estimate is shown for description only. **All three intervals failed their coverage checks** (shift: 0.82 "
+              "in the worst simulated cell, 0.23–0.92 on real noise, because a small bias of the linear estimate meets "
+              "very narrow intervals; offset upper bound 0.90 against 0.93), so read them as approximate.", "",
+              "| sample | group | offset % [lower, upper] | verdict | shift bp [90 % CI] | verdict | stretch % [90 % CI] (descriptive) |",
+              "|---|---|---|---|---|---|---|"]
+    for r in c.sample_rows:
+        sh = (f"{r['shift_bp_est']:+.1f} [{r['shift_bp_low90']:+.1f}, {r['shift_bp_high90']:+.1f}]"
+              if np.isfinite(r.get("shift_bp_est", float("nan"))) else "—")
+        lines.append(f"| {r['sample']} | {r['group']} | {r['offset_pct']:.2f} [{r['offset_pct_lower']:.2f}, "
+                     f"{r['offset_pct_upper']:.2f}] | {r['offset_verdict'] or '—'} | {sh} | {r['shift_verdict'] or '—'} | "
+                     f"{r['stretch_pct']:+.2f} [{r['stretch_pct_low90']:+.2f}, {r['stretch_pct_high90']:+.2f}] |")
     if c.partition_rows:
         lines += ["", "## Replicate structure (groups of ≥ 4)", "",
                   "Every split of a group into two halves of ≥ 2 samples. `contrast p`: per-region pair distances "

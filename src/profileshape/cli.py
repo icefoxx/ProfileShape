@@ -72,6 +72,8 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     init = sub.add_parser("init", help="write an example config.yaml")
     init.add_argument("--out", default="config.yaml")
+    init.add_argument("--assay", default="", help="fill window settings from a preset: atac, mnase, tf_chip, tf_cutrun, "
+                      "histone_narrow, histone_broad, proseq")
     run = sub.add_parser("run", help="analyse data described by a config")
     run.add_argument("--config", required=True)
     run.add_argument("--out", help="output directory (default: config 'output')")
@@ -114,9 +116,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     if args.command == "init":
-        from .data import EXAMPLE_CONFIG
+        from .data import example_config
 
-        Path(args.out).write_text(EXAMPLE_CONFIG)
+        Path(args.out).write_text(example_config(args.assay))
         print(f"wrote {args.out}")
         return 0
     if args.command == "run":

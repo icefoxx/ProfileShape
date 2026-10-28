@@ -108,26 +108,36 @@ def shape_features(y: np.ndarray, centers: np.ndarray, sigma_bp: float = KERNEL_
     return p @ L, mass[:, ok], ok, L
 
 
-def _linear_features(y: np.ndarray, mass: np.ndarray, L: np.ndarray, centers: np.ndarray):
+def _linear_features(y: np.ndarray, mass: np.ndarray, L: np.ndarray, centers: np.ndarray, stretch: bool = False):
     """Profiles scaled linearly (see :func:`linear_offsets`) in feature space, with the unit amplitude
     direction u, the aggregate norm and the translation direction t (−d/dx of the aggregate profile,
-    orthogonal to u; an offset δ·t is a shift by δ bp towards higher coordinates)."""
+    orthogonal to u; an offset δ·t is a shift by δ bp towards higher coordinates). With ``stretch`` also the
+    stretch direction w (d/ds of P(x/s)/s at s = 1, i.e. −P − x·P′, about the anchor, orthogonal to u and t;
+    an offset σ·w is a stretch by a factor 1 + σ: broadening of a domain, wider spacing of an array)."""
     pooled = mass.mean(0)
     x = y / (pooled + np.median(pooled))[None, :, None]
     x = x / np.median(mass / pooled[None], axis=1)[:, None, None]
     agg_bins = x.mean((0, 1))
     agg = agg_bins @ L
     u = agg / max(np.linalg.norm(agg), 1e-300)
-    t = -np.gradient(agg_bins, centers) @ L
+    deriv = np.gradient(agg_bins, centers)
+    t = -deriv @ L
     t = t - (t @ u) * u
-    return x @ L, u, float(np.linalg.norm(agg)), t
+    if not stretch:
+        return x @ L, u, float(np.linalg.norm(agg)), t
+    w = (-agg_bins - centers * deriv) @ L
+    w = w - (w @ u) * u
+    tn = t / max(np.linalg.norm(t), 1e-300)
+    w = w - (w @ tn) * tn
+    return x @ L, u, float(np.linalg.norm(agg)), t, w
 
 
 def _remove(delta: np.ndarray, u: np.ndarray) -> np.ndarray:
     return delta - (delta @ u)[..., None] * u
 
 
-def linear_offsets(y: np.ndarray, mass: np.ndarray, L: np.ndarray, centers: np.ndarray | None = None):
+def linear_offsets(y: np.ndarray, mass: np.ndarray, L: np.ndarray, centers: np.ndarray | None = None,
+                   stretch: bool = False):
     """Per-region shape offset of each sample from the mean of the others, linear in the signal.
 
     Dividing each sample's profile by its own noisy mass (as the distances do) biases the normalised
@@ -138,10 +148,11 @@ def linear_offsets(y: np.ndarray, mass: np.ndarray, L: np.ndarray, centers: np.n
     the norm of the aggregate profile on the same scale and the translation direction.
     """
     n = len(y)
-    psi, u, norm, t = _linear_features(y, mass, L, np.arange(y.shape[-1], dtype=float) if centers is None else centers)
+    out = _linear_features(y, mass, L, np.arange(y.shape[-1], dtype=float) if centers is None else centers, stretch)
+    psi, u, norm, t = out[:4]
     tot = psi.sum(0)
     delta = np.stack([psi[k] - (tot - psi[k]) / (n - 1) for k in range(n)])
-    return _remove(delta, u), norm, t
+    return (_remove(delta, u), norm, t) + ((out[4],) if stretch else ())
 
 
 def region_blocks(regions: list[dict], ridx: np.ndarray, size: int = BLOCK_REGIONS) -> np.ndarray:
@@ -193,6 +204,85 @@ def translation_part(delta: np.ndarray, t: np.ndarray, confidence: float = 0.95,
     mm = float(m @ m)
     return dict(bp=bp, low=bp - zq * se, high=bp + zq * se, share=bp * bp * tt / mm if mm > 0 else float("nan"),
                 per_region=d)
+
+
+def projection_part(delta: np.ndarray, direction: np.ndarray, blocks: np.ndarray | None = None) -> dict:
+    """Mean over regions of the least-squares coefficient of ``direction`` in each region's offset, with
+    two-sided 95 % and 90 % intervals (block variance). The 90 % interval is the one compared with an
+    equivalence margin (two one-sided tests at 0.05)."""
+    dd = float(direction @ direction)
+    if dd <= 0:
+        return {k: float("nan") for k in ("est", "low95", "high95", "low90", "high90")}
+    c = delta @ direction / dd
+    est, se = float(c.mean()), float(np.sqrt(_block_cov(c, blocks)[0, 0] / len(c)))
+    z95, z90 = stats.norm.ppf(0.975), stats.norm.ppf(0.95)
+    return dict(est=est, low95=est - z95 * se, high95=est + z95 * se, low90=est - z90 * se, high90=est + z90 * se)
+
+
+def offset_size(delta: np.ndarray, blocks: np.ndarray | None, agg_norm: float, level: float = 0.95) -> dict:
+    """Bias-corrected size of the mean offset over regions, as a share of the aggregate profile.
+
+    ‖mean‖² overestimates ‖μ‖² by tr(Σ)/R (noise); the estimate subtracts it. Bounds: R‖mean‖²/g is
+    approximately non-central χ²(h, λ = R‖μ‖²/g) with the Satterthwaite g, h of :func:`offset_test`; the
+    one-sided ``level`` upper and lower bounds on λ are found by inverting its distribution function.
+    """
+    nan = dict(estimate=float("nan"), lower=float("nan"), upper=float("nan"))
+    R = len(delta)
+    m = delta.mean(0)
+    S = _block_cov(delta, blocks)
+    tr, tr2 = float(np.trace(S)), float((S ** 2).sum())
+    if tr <= 0 or tr2 <= 0 or agg_norm <= 0:
+        return nan
+    g, h = tr2 / tr, tr ** 2 / tr2
+    x = R * float(m @ m) / g
+    from scipy.optimize import brentq
+
+    def bound(prob):  # λ with P(X ≤ x | λ) = prob; 0 if even λ = 0 gives a smaller probability
+        f = lambda lam: stats.ncx2.cdf(x, h, lam) - prob if lam > 0 else stats.chi2.cdf(x, h) - prob  # noqa: E731
+        if f(0.0) <= 0:
+            return 0.0
+        hi = max(10.0, 2 * x)
+        while f(hi) > 0:
+            hi *= 2
+        return brentq(f, 0.0, hi)
+
+    to_rel = lambda lam: float(np.sqrt(max(lam, 0.0) * g / R)) / agg_norm  # noqa: E731
+    est = float(np.sqrt(max(float(m @ m) - tr / R, 0.0))) / agg_norm
+    return dict(estimate=est, lower=to_rel(bound(level)), upper=to_rel(bound(1 - level)))
+
+
+def tolerance(delta: np.ndarray, blocks, agg_norm: float, t: np.ndarray, w: np.ndarray, oriented: bool,
+              margins: dict) -> dict:
+    """Size of a sample-wide (or half-versus-half) offset in three units with intervals, and the verdict
+    against each user margin: offset (% of the aggregate profile; one-sided 95 % bounds), shift (bp; for
+    oriented anchors) and stretch (%; about the anchor), the last two with 90 % intervals for the verdict."""
+    size = offset_size(delta, blocks, agg_norm)
+    out = dict(offset_pct=100 * size["estimate"], offset_pct_lower=100 * size["lower"], offset_pct_upper=100 * size["upper"],
+               offset_verdict=verdict(100 * size["lower"], 100 * size["upper"], margins.get("offset"), symmetric=False))
+    sh = projection_part(delta, t, blocks) if oriented else {}
+    out.update(shift_bp_est=sh.get("est", float("nan")), shift_bp_low90=sh.get("low90", float("nan")),
+               shift_bp_high90=sh.get("high90", float("nan")),
+               shift_verdict=verdict(sh.get("low90", float("nan")), sh.get("high90", float("nan")), margins.get("shift")))
+    st = projection_part(delta, w, blocks)
+    # No stretch verdict: in the margin evaluation (benchmarks/results/margin_v1) a wrong "within" exceeded the
+    # criterion in 24 real-noise groups — on real shapes the estimate was 0.25–1.26 × the inserted stretch.
+    out.update(stretch_pct=100 * st["est"], stretch_pct_low95=100 * st["low95"], stretch_pct_high95=100 * st["high95"],
+               stretch_pct_low90=100 * st["low90"], stretch_pct_high90=100 * st["high90"], stretch_verdict="")
+    return out
+
+
+def verdict(low: float, high: float, margin: float | None, symmetric: bool = True) -> str:
+    """Compare an interval with a user tolerance margin: 'within' (the whole interval inside ±margin, or
+    below margin for a size), 'beyond' (entirely outside), 'inconclusive' (it crosses the margin)."""
+    if margin is None or not (np.isfinite(low) and np.isfinite(high)):
+        return ""
+    if symmetric:
+        if -margin < low and high < margin:
+            return "within"
+        return "beyond" if (low > margin or high < -margin) else "inconclusive"
+    if high < margin:
+        return "within"
+    return "beyond" if low > margin else "inconclusive"
 
 
 def shift_shares(d: np.ndarray, thresholds=SHIFT_THRESHOLDS) -> dict:
@@ -312,6 +402,16 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
     depth_v = depth if depth is not None else np.median(raw, axis=1)
     blocks = region_blocks(profiles.regions, ridx)
     oriented = bool(profiles.oriented)
+    margins = dict(offset=getattr(config, "consistency_margin_offset_pct", None),
+                   shift=getattr(config, "consistency_margin_shift_bp", None),
+                   stretch=getattr(config, "consistency_margin_stretch_pct", None))
+    if any(v is not None for v in margins.values()):
+        notes.append("tolerance margins (set by the user before the analysis): "
+                     + ", ".join(f"{k} {v:g}{' %' if k != 'shift' else ' bp'}" for k, v in margins.items() if v is not None)
+                     + "; verdicts: within / beyond / inconclusive")
+    if margins.get("stretch") is not None:
+        notes.append("margin_stretch_pct is ignored: the stretch verdict failed its evaluation on real-noise data "
+                     "(benchmarks/results/margin_v1); the stretch estimate is shown without a verdict")
 
     sample_rows, partition_rows, region_rows, group_rows = [], [], [], []
     for g, idx in groups.items():
@@ -357,7 +457,7 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
         # Per-sample systematic offset (shared across regions): mean over regions of the linear offset
         # vector, tested against its own across-region variability.
         yg = np.nan_to_num(y[idx][:, ridx])
-        lin, agg_norm, t_dir = linear_offsets(yg, mass_all[idx], L, centers)
+        lin, agg_norm, t_dir, w_dir = linear_offsets(yg, mass_all[idx], L, centers, stretch=True)
         offset = [offset_test(lin[k], blocks) for k in range(n)]
         sizes = np.array([o["size"] for o in offset])
         tr = [translation_part(lin[k], t_dir, blocks=blocks) if oriented else None for k in range(n)]
@@ -383,6 +483,7 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
         n_div = int(divergent.sum())
         for k, i in enumerate(idx):
             tk = tr[k] or {}
+            tol = tolerance(lin[k], blocks, agg_norm, t_dir, w_dir, oriented, margins)
             row = dict(sample=names[i], group=gname, offset_size=offset[k]["size"],
                        offset_relative=offset[k]["size"] / agg_norm if agg_norm > 0 else float("nan"),
                        offset_vs_mates=float(sizes[k] / mates[k]) if n >= 3 and mates[k] > 0 else float("nan"),
@@ -391,7 +492,7 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
                        amplitude_deviation=float(amp_loo[k]), depth=float(depth_v[i]),
                        shift_bp=tk.get("bp", float("nan")), shift_bp_low=tk.get("low", float("nan")),
                        shift_bp_high=tk.get("high", float("nan")), shift_share_of_offset=tk.get("share", float("nan")),
-                       **shares[k], **mate_shares[k])
+                       **shares[k], **mate_shares[k], **tol)
             if n >= 3:
                 row.update(most_deviant_share=float(np.mean(driver == k)), expected_share=1.0 / n,
                            divergent_regions_driven=int(np.sum(divergent & (driver == k))),
@@ -415,7 +516,7 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
             md = meta_d[np.ix_(idx, idx)]
             pair = {(i, j): ((phi[i] - phi[j]) ** 2).sum(-1) for i, j in itertools.combinations(range(n), 2)}
             seen, rows_g = set(), []
-            psi_g, u_g, _, t_g = _linear_features(yg, mass_all[idx], L, centers)
+            psi_g, u_g, norm_g, t_g, w_g = _linear_features(yg, mass_all[idx], L, centers, stretch=True)
             for size in range(2, n // 2 + 1):
                 for a in itertools.combinations(range(n), size):
                     b = tuple(sorted(set(range(n)) - set(a)))
@@ -434,6 +535,7 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
                     zc = float(c.mean() / np.sqrt(var_c / len(c))) if var_c > 0 else 0.0
                     d_ab = _remove(psi_g[list(b)].mean(0) - psi_g[list(a)].mean(0), u_g)
                     ts = translation_part(d_ab, t_g, blocks=blocks) if oriented else {}
+                    tol_ab = tolerance(d_ab, blocks, norm_g, t_g, w_g, oriented, margins)
                     # π̂₁ only for halves of equal size: there each sample's noise enters every label assignment
                     # alike; with unequal halves a shallow replicate inflated it (evaluation v1: 0.044 with no
                     # difference, 6 replicates, one at 30 % depth).
@@ -447,7 +549,7 @@ def group_consistency(profiles: Profiles, config: Config, groups: dict | None = 
                                        shift_bp=ts.get("bp", float("nan")), shift_bp_low=ts.get("low", float("nan")),
                                        shift_bp_high=ts.get("high", float("nan")),
                                        regions_differing_share=ext["share"], regions_differing_low=ext["low"],
-                                       regions_differing_high=ext["high"], regions_called=ext["called"]))
+                                       regions_differing_high=ext["high"], regions_called=ext["called"], **tol_ab))
             partition_rows.extend(rows_g)
             best = min(rows_g, key=lambda r: r["contrast_p"])
             grow.update(partitions=len(rows_g), best_partition=f"{best['half_a']} | {best['half_b']}",

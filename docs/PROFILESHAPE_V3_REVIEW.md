@@ -475,6 +475,17 @@ ProfileShape's simulator, comparator configurations chosen by us, no real-count 
 6. Per-region absolute amplitude test.
 7. Spatial dependence beyond duplicated windows; multimodal and asymmetric real shapes beyond the semi-real cells.
 8. All simulation evidence comes from one simulator family developed alongside the method.
+9. Stress tests beyond the calibration range (`benchmarks/results/stress_v1`, protocol
+   `docs/PROFILESHAPE_STRESS_PROTOCOL.md`, 100 runs per cell): whole-list FDP stayed at or below nominal with
+   70–100 % of regions changed, all changes in one direction, partly confounded batches, real multimodal shapes and
+   triple-tiled windows — "no clear exceedance", not proof of FDR ≤ 0.05 (22 cells evaluable; the two 100 %
+   cells have no true nulls). It **exceeded** nominal when every replicate carried its own sample-wide shift of
+   sd 20 bp at 2 vs 2 (`shape_kernel` 0.080 [0.051, 0.109]; `shape_any` 0.068): a candidate mechanism for
+   excesses like yeast's, not a confirmed one — the yeast replicate differences are not translations (offsets
+   2.6–37 % of the profile but only 1.2–3.7 bp shift-equivalent, `consistency_v2`). sd ≤ 10 bp and 3 vs 3 showed
+   no clear exceedance (e.g. sd 20 bp, 3 vs 3, `shape_any` 0.053 [0.032, 0.074]). With 90 % of regions changed,
+   the null tail of the unchanged regions was liberal (p < 0.01 share up to 0.069 at 2 vs 2) while the
+   whole-list FDP stayed low because the list is dominated by true changes.
 
 ## 8. Graphical abstract
 

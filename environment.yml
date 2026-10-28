@@ -1,0 +1,20 @@
+# Environment used for the results under benchmarks/results/ from consistency_v1 on (versions as installed).
+# Python package: pip install -e ".[all]". R (edgeR) is needed only for the diffSplice comparisons; bowtie2,
+# samtools and sra-tools only to rebuild the BAM-based inputs (docs/DATA.md).
+name: profileshape
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11.5
+  - numpy=1.26.4
+  - scipy=1.17.1
+  - matplotlib=3.11.1
+  - pyyaml=6.0
+  - pybigwig=0.3.25
+  - pysam=0.24.1
+  - pytest
+  - bowtie2=2.5.5
+  - samtools=1.24
+  - sra-tools
+  - r-base=4.3.2
+  - bioconductor-edger=4.0.16
+  - r-jsonlite

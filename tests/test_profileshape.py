@@ -682,3 +682,22 @@ def test_reports_state_calibration_limits(tmp_path):
     assert "not the movement of a particular nucleosome" in reg
     cons = (out / "res" / "reports" / "07_consistency.md").read_text()
     assert "approx. 95 % CI" in cons and "can be too small" in cons
+
+
+def test_positive_case_bootstrap_keeps_each_chromosome_in_one_fold():
+    """Amendment B3: repeated draws of a chromosome must not be split across training and test folds."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "benchmarks"))
+    from positive_case import bootstrap_folds
+
+    chrom = np.repeat([f"chr{i}" for i in range(1, 23)], 5)
+    chroms = np.unique(chrom)
+    fold_of = {c: i % 10 for i, c in enumerate(chroms)}
+    rng = np.random.default_rng(30)
+    for _ in range(50):
+        pick = rng.choice(chroms, len(chroms), replace=True)
+        idx, f = bootstrap_folds(pick, chrom, fold_of)
+        assert len(idx) == 5 * len(pick)
+        for c in set(pick):
+            assert len(set(f[chrom[idx] == c])) == 1

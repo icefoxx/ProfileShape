@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import gzip
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -74,6 +75,12 @@ class Config:
     # region spread or depth (FDR within each stratum, e.g. low-depth regions; the combined list is then
     # not FDR-controlled at the same level).
     fdr_strata: str = "none"
+    # Within-group consistency: tolerance margins set by the user before the analysis (none by default) and an
+    # assay preset that fills window settings not given explicitly (see ASSAY_PRESETS).
+    consistency_margin_offset_pct: float | None = None
+    consistency_margin_shift_bp: float | None = None
+    consistency_margin_stretch_pct: float | None = None
+    assay: str = ""
     # BAM input (v3; signal files ending in .bam/.cram): see profileshape/bamio.py
     bam_mode: str = "midpoint"  # midpoint | coverage | end5 | end3
     bam_min_mapq: int = 10
@@ -113,6 +120,11 @@ def load_config(path: str | Path, overrides: dict | None = None) -> Config:
         else:
             flat[key] = value
     flat.update({k: v for k, v in (overrides or {}).items() if v is not None})
+    if flat.get("assay"):
+        if flat["assay"] not in ASSAY_PRESETS:
+            raise ValueError(f"assay must be one of {sorted(ASSAY_PRESETS)}")
+        for key, value in ASSAY_PRESETS[flat["assay"]].items():
+            flat.setdefault(key, value)  # explicit settings win
     known = Config.__dataclass_fields__
     unknown = sorted(set(flat) - set(known))
     if unknown:
@@ -123,7 +135,22 @@ def load_config(path: str | Path, overrides: dict | None = None) -> Config:
     return config
 
 
+# Window settings per assay, as used in the evaluations (benchmarks/consistency_eval.py). They are defaults for
+# keys the config does not set; they do not set tolerance margins, which depend on the user's purpose.
+ASSAY_PRESETS = {
+    "atac": dict(anchor="center", flank=600, binsize=10, background_width=200, core_flank=300),
+    "mnase": dict(anchor="start", flank=1500, binsize=10, background_width=300, core_flank=1000),
+    "tf_chip": dict(anchor="center", flank=2000, binsize=20, background_width=500, core_flank=1000),
+    "tf_cutrun": dict(anchor="center", flank=1000, binsize=10, background_width=300, core_flank=600),
+    "histone_narrow": dict(anchor="center", flank=2000, binsize=25, background_width=400, core_flank=1500),
+    "histone_broad": dict(anchor="center", flank=3000, binsize=50, background_width=500, core_flank=2500),
+    "proseq": dict(anchor="start", flank=1000, binsize=10, background_width=300, core_flank=500),
+}
+
 _ALIASES = {
+    "consistency.margin_offset_pct": "consistency_margin_offset_pct",
+    "consistency.margin_shift_bp": "consistency_margin_shift_bp",
+    "consistency.margin_stretch_pct": "consistency_margin_stretch_pct",
     "contrast.reference": "reference",
     "contrast.alternative": "alternative",
     "background.width": "background_width",
@@ -172,6 +199,10 @@ def validate_config(c: Config) -> None:
         raise ValueError("bam.strand must be any, sense or antisense")
     if c.batch_permutation not in ("free", "within"):
         raise ValueError("inference.batch_permutation must be free or within")
+    for key in ("consistency_margin_offset_pct", "consistency_margin_shift_bp", "consistency_margin_stretch_pct"):
+        v = getattr(c, key)
+        if v is not None and not (isinstance(v, (int, float)) and v > 0):
+            raise ValueError(f"consistency.{key.replace('consistency_', '')} must be a positive number")
     if c.fdr_strata not in ("none", "spread", "depth"):
         raise ValueError("inference.fdr_strata must be none, spread or depth")
     if c.bootstrap < 10:
@@ -217,9 +248,30 @@ inference:
   bootstrap: 1000
   confidence: 0.95
   seed: 7201
+# Within-group consistency (report 07). Tolerance margins are your decision, made before looking at the
+# results; without them only estimates and bounds are reported. Units: offset as % of the aggregate profile,
+# shift in bp (oriented anchors), stretch in % about the anchor (domain breadth, array spacing).
+# consistency: {margin_offset_pct: 5, margin_shift_bp: 10}   # verdicts for offset and shift; stretch is
+#   reported without a verdict (it failed its evaluation on real shapes)
 output: ProfileShape_out
 figures: {palette: ["#0072B2", "#D55E00"], font: DejaVu Sans, dpi: 300}
 """
+
+
+def example_config(assay: str = "") -> str:
+    """The annotated template, with an assay preset's window settings written in (``assay`` key kept)."""
+    if not assay:
+        return EXAMPLE_CONFIG
+    if assay not in ASSAY_PRESETS:
+        raise ValueError(f"assay must be one of {sorted(ASSAY_PRESETS)}")
+    pr = ASSAY_PRESETS[assay]
+    text = EXAMPLE_CONFIG.replace("# ProfileShape configuration (v1)\n",
+                                  f"# ProfileShape configuration (v1), assay preset: {assay}\nassay: {assay}\n")
+    text = re.sub(r"^anchor: \S+", f"anchor: {pr['anchor']}", text, flags=re.M)
+    text = re.sub(r"^flank: \d+", f"flank: {pr['flank']}", text, flags=re.M)
+    text = re.sub(r"^binsize: \d+", f"binsize: {pr['binsize']}", text, flags=re.M)
+    text = re.sub(r"background: \{width: \d+", f"background: {{width: {pr['background_width']}", text)
+    return re.sub(r"core_flank: \d+", f"core_flank: {pr['core_flank']}", text)
 
 
 # ---------------------------------------------------------------- manifest
