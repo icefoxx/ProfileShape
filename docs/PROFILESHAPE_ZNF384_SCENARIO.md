@@ -60,3 +60,44 @@ used in development. The two usable designs answer neighbouring questions:
 ## Results
 
 (recorded below after the pilot, unchanged above)
+
+### Paused and moved to HPC (2026-11-12)
+
+The pilot was stopped at the user's request on 2026-10-28 (the user holds this part of the analysis and the data
+are on HPC). Nothing above was changed; no criterion has been evaluated; no grade is given.
+
+State at the pause:
+
+- **(i) GSE112560, processed-track depth (done, from the local bigWigs):** median core-window (± 1 kb) fragments at
+  `consensus_top5000.bed`, area / (quantum × footprint):
+
+  | sample | quantum | footprint (bp) | median | 25 % |
+  |---|---|---|---|---|
+  | WT C10 (GSM3073020) | 0.365 | 190 | 189 | 153 |
+  | WT C11 (GSM3073021) | 0.399 | 210 | 187 | 152 |
+  | WT C6 (GSM3073022) | 0.394 | 210 | 141 | 116 |
+  | TAF15 C13 (GSM3073023) | 0.445 | 205 | 104 | 80 |
+  | TAF15 C14 (GSM3073024) | 0.366 | 210 | 162 | 131 |
+  | TCF3 C16 (GSM3073025) | 0.297 | 200 | 121 | 98 |
+  | TCF3 C17 (GSM3073026) | 0.389 | 180 | 85 | 68 |
+
+  Not a pass: the five constructs' median for WT vs TCF3 (141–189 vs 85–121) is from processed tracks (B1: their
+  fragment selection need not match the analysis), at the 5000 strongest pooled regions (a favourable selection),
+  and duplicate handling of the tracks is not stated (Picard marked, removal unclear). Recorded only. The number is
+  printed by `gse112560()` in `benchmarks/pilot_znf384.py` (not written to a results JSON yet).
+- **(ii) GSE181617 pilot (not completed):** SRR15365234 (+e8 rep 1) was aligned (2 M pairs; 97.0 % overall,
+  73.6 % concordant unique; BAM in `inputs/pilot_znf384/`, its region counts **not looked at**); SRR15365232
+  (−e8 rep 1) was stopped during alignment (FASTQ only). The GEO narrowPeak files have 21 685 (+e8, GSM5508181) and
+  3 521 (−e8, GSM5508179) peaks: the region set is dominated by +e8 peaks, consistent with the study's report of
+  increased +e8 binding; the condition-blind top-half rule stays as specified.
+- GEO file names and titles disagree on replicate numbers in GSE181617 (e.g. GSM5508179 "−e8 HA Replicate 1",
+  file `…-no-e8-rep2-HA-AB`); ENA maps SRR15365232 → GSM5508179 and SRR15365234 → GSM5508181. Use GSM / SRR, not
+  titles.
+
+To continue on HPC (as specified above; nothing re-tuned): run `benchmarks/pilot_depth.sh` for the two runs (mm10
+bowtie2 index), put the two narrowPeak files as `PEAK_DIR/GSM5508181.narrowPeak.gz` and
+`PEAK_DIR/GSM5508179.narrowPeak.gz`, then `PYTHONPATH=benchmarks python benchmarks/pilot_znf384.py PILOT_DIR PEAK_DIR
+benchmarks/results/znf384_pilot/pilot.json`; record the result here under a dated heading. Part (i) needs the
+GSE112560 bigWigs at `inputs/chip_gse112560/`. Local environment used: Python 3.11.5, numpy 1.26.4, scipy 1.17.1,
+pysam 0.24.1, pyBigWig 0.3.25, profileshape 3.1.0 (editable). Next decisions after the pilot (the user's): power
+simulation with a stated effect, and whether the scenario replaces C or stays follow-up work.
