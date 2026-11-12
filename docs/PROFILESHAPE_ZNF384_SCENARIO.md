@@ -101,3 +101,6 @@ benchmarks/results/znf384_pilot/pilot.json`; record the result here under a date
 GSE112560 bigWigs at `inputs/chip_gse112560/`. Local environment used: Python 3.11.5, numpy 1.26.4, scipy 1.17.1,
 pysam 0.24.1, pyBigWig 0.3.25, profileshape 3.1.0 (editable). Next decisions after the pilot (the user's): power
 simulation with a stated effect, and whether the scenario replaces C or stays follow-up work.
+
+Execution protocol for the user's HPC data (readouts A TF profile, B H3K27ac, C accessibility / nucleosomes),
+written 2026-11-12 before any of those analyses: `PROFILESHAPE_ZNF384_HPC_PROTOCOL.md`.
